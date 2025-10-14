@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Contests - {{ parent() }}{% endblock %}
+{% block title %}대회 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Contests</h1>
+    <h1>대회</h1>
 
-    <h3>Current contests</h3>
+    <h3>현재 진행 중인 대회</h3>
 
     {% for contest in current_contests %}
         <div class="row mb-4">
@@ -27,7 +27,7 @@
                     <div class="card-body">
                         {% if not contest.starttimeEnabled and contest.finalizetime is not empty %}
                             <div class="alert alert-warning">
-                                <strong>Warning:</strong> start time is undefined, but contest is finalized!
+                                <strong>경고:</strong> 시작 시간이 정의되지 않았지만, 대회가 종료 처리되었습니다!
                             </div>
                         {% endif %}
                         <table class="table table-hover">
@@ -63,28 +63,28 @@
     {% else %}
         {% if upcoming_contest is empty %}
             <div class="alert alert-danger">
-                No upcoming contest
+                예정된 대회가 없습니다
             </div>
         {% else %}
             <div class="alert alert-warning">
-                <strong>No active contest.</strong> Upcoming:<br/>
+                <strong>활성화된 대회가 없습니다.</strong> 예정된 대회:<br/>
                 <p>
                     <i>{{ upcoming_contest.name }} ({{ upcoming_contest.shortname }})</i>;
-                    active from {{ upcoming_contest.activatetime | printtime('D d M Y H:i:s T') }}
+                    활성화 시작 {{ upcoming_contest.activatetime | printtime('D d M Y H:i:s T') }}
                 </p>
-                {{ button(path('jury_contest_donow', {'contestId': upcoming_contest.cid, 'time': 'activate'}), 'Activate now', 'primary') }}
+                {{ button(path('jury_contest_donow', {'contestId': upcoming_contest.cid, 'time': 'activate'}), '지금 활성화', 'primary') }}
             </div>
         {% endif %}
     {% endfor %}
 
-    <h3>All available contests</h3>
+    <h3>이용 가능한 모든 대회</h3>
 
     {{ macros.table(contests_table, table_fields) }}
 
     {% if is_granted('ROLE_ADMIN') %}
         <p>
-            {{ button(path('jury_contest_add'), 'Add new contest', 'primary', 'plus') }}
-            {{ button(path('jury_import_export', {'_fragment':'contests'}), 'Import contest', 'primary', 'upload') }}
+            {{ button(path('jury_contest_add'), '새 대회 추가', 'primary', 'plus') }}
+            {{ button(path('jury_import_export', {'_fragment':'contests'}), '대회 가져오기', 'primary', 'upload') }}
         </p>
     {% endif %}
 

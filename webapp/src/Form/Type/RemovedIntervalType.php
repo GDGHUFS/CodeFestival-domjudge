@@ -14,12 +14,15 @@ class RemovedIntervalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('starttimeString', TextType::class, [
+            'label' => '시작 시간',
             'required' => true,
         ]);
         $builder->add('endtimeString', TextType::class, [
+            'label' => '종료 시간',
             'required' => true,
         ]);
         $builder->add('add', SubmitType::class, [
+            'label' => '추가',
             'attr' => [
                 'class' => 'btn-sm btn-primary',
             ],

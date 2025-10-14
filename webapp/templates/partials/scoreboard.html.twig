@@ -9,7 +9,7 @@
 {% endif %}
 
 {% if current_contest is null %}
-    <p class="nodata">No active contest</p>
+    <p class="nodata">활성 대회가 없습니다</p>
 {% else %}
     {% if current_contest.warningMessage %}
         <div class="alert alert-danger" role="alert">
@@ -25,22 +25,22 @@
                     {{ current_contest | printContestStart }}
                 {% elseif scoreboard.freezeData.showFinal(jury) %}
                     {% if current_contest.finalizetime is empty %}
-                        preliminary results - not final
+                        예비 결과 - 최종 아님
                     {% else %}
-                        final standings
+                        최종 순위
                     {% endif %}
                 {% elseif scoreboard.freezeData.stopped %}
-                    contest over, waiting for results
+                    대회 종료, 결과 대기 중
                 {% elseif static %}
                     {% set now = 'now'|date('U') %}
                     {{ current_contest.starttime | printelapsedminutes(now) }}
                 {% else %}
                     {% if current_contest.freezeData.started %}
-                        started:
+                        시작:
                     {% else %}
-                        starts:
+                        시작:
                     {% endif %}
-                    {{ current_contest.starttime | printtime }} - ends: {{ current_contest.endtime | printtime }}
+                    {{ current_contest.starttime | printtime }} - 종료: {{ current_contest.endtime | printtime }}
                 {% endif %}
             </span>
         </div>
@@ -89,18 +89,17 @@
 
         {% if show_balloon_public_message is defined and show_balloon_public_message %}
             <div class="alert alert-warning" role="alert" style="font-size: 80%;">
-                You are seeing the public scoreboard, since you are a balloon runner.
+                당신은 풍선 주자이므로 공개 점수판을 보고 있습니다.
             </div>
         {% endif %}
 
         {% if scoreboard.freezeData.showFrozen(false) %}
             <div class="alert alert-warning" role="alert" style="font-size: 80%;">
                 {% if jury %}
-                    <a href="{{ path('public_index') }}">The public scoreboard</a>
-                    was frozen with {{ current_contest.minutesRemaining }} minutes remaining
+                    <a href="{{ path('public_index') }}">공개 점수판</a>
+                    은 {{ current_contest.minutesRemaining }}분 남기고 동결되었습니다
                 {% else %}
-                    The scoreboard was frozen with {{ current_contest.minutesRemaining }} minutes remaining - solutions
-                    submitted in the last {{ current_contest.minutesRemaining }} minutes of the contest {% if showPending %}are still shown as pending{% else %}are not shown{% endif %}.
+                    점수판은 {{ current_contest.minutesRemaining }}분 남기고 동결되었습니다. 대회 종료 전 마지막 {{ current_contest.minutesRemaining }}분 동안 제출된 해결책은 {% if showPending %}여전히 보류 중으로 표시되지만{% else %}표시되지 않습니다{% endif %}.
                 {% endif %}
             </div>
         {% endif %}
@@ -114,9 +113,9 @@
                 aria-haspopup="true" aria-expanded="false" id="filter-toggle">
                 <i class="fas fa-filter"></i>
                 {% if scoreFilter.filteredOn is empty %}
-                    Filter
+                    필터
                 {% else %}
-                    Filtered ({{ scoreFilter.filteredOn }})
+                    필터링됨 ({{ scoreFilter.filteredOn }})
                 {% endif %}
             </button>
 
@@ -126,7 +125,7 @@
                         <div class="row mb-3">
                         {% if filterValues.affiliations | length > 1 %}
                             <div class="col">
-                            <label for="scoreboard-filter-affil">Affiliations</label>
+                            <label for="scoreboard-filter-affil">소속</label>
                             <select id="scoreboard-filter-affil" class="form-control me-2" multiple size="8" name="affiliations[]">
                                 {% for affiliationId, affiliation in filterValues.affiliations %}
                                     <option {% if affiliationId in scoreFilter.affiliations %}selected{% endif %}
@@ -137,7 +136,7 @@
                         {% endif %}
                         {% if filterValues.countries | length > 1 %}
                             <div class="col">
-                            <label for="scoreboard-filter-country">Countries</label>
+                            <label for="scoreboard-filter-country">국가</label>
                             <select id="scoreboard-filter-country" class="form-control me-2" multiple size="8" name="countries[]">
                                 {% for country in filterValues.countries %}
                                     {% if country is not empty %}
@@ -150,7 +149,7 @@
                         {% endif %}
                         {% if filterValues.categories | length > 1 %}
                             <div class="col">
-                            <label for="scoreboard-filter-category">Categories</label>
+                            <label for="scoreboard-filter-category">카테고리</label>
                             <select id="scoreboard-filter-category" class="form-control me-2" multiple size="8" name="categories[]">
                                 {% for categoryId, category in filterValues.categories %}
                                     <option {% if categoryId in scoreFilter.categories %}selected{% endif %}
@@ -160,8 +159,8 @@
                             </div>
                         {% endif %}
                         </div>
-                        <input type="submit" class="btn btn-primary btn-sm align-top" name="filter" value="filter"/>
-                        <input type="submit" class="btn btn-secondary btn-sm align-top" name="clear" value="clear"/>
+                        <input type="submit" class="btn btn-primary btn-sm align-top" name="filter" value="필터링"/>
+                        <input type="submit" class="btn btn-secondary btn-sm align-top" name="clear" value="지우기"/>
                     </div>
                 </form>
             </div>
@@ -175,7 +174,7 @@
     {% endif %} {# not scoreboard is null and not jury #}
 
     <p id="lastmod">
-        Last Update: {{ null | printtime('D d M Y H:i:s T') }}<br/>
-        using <a href="https://www.domjudge.org/" target="_top">DOMjudge</a>
+        마지막 업데이트: {{ null | printtime('D d M Y H:i:s T') }}<br/>
+        <a href="https://www.domjudge.org/" target="_top">DOMjudge</a> 사용
     </p>
 {% endif %}

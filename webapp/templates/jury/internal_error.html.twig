@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Internal error e{{ internalError.errorid }} - {{ parent() }}{% endblock %}
+{% block title %}내부 오류 e{{ internalError.errorid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,32 +10,32 @@
 
 {% block content %}
 
-    <h1>Internal error e{{ internalError.errorid }}</h1>
+    <h1>내부 오류 e{{ internalError.errorid }}</h1>
 
     <div class="row">
         <div class="col-lg-6">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Description</th>
+                    <th>설명</th>
                     <td>
                         {% if internalError.description is empty %}
-                            <span class="nodata">None</span>
+                            <span class="nodata">없음</span>
                         {% else %}
                             {{ internalError.description }}
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Time</th>
+                    <th>시간</th>
                     <td>{{ internalError.time | printtime('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
-                    <th>Status</th>
+                    <th>상태</th>
                     <td>{{ internalError.status | capitalize }}</td>
                 </tr>
                 {% if internalError.judging is not null %}
                     <tr>
-                        <th>Related judging</th>
+                        <th>관련 심사</th>
                         <td>
                             <a href="{{ path('jury_submission_by_judging', {jid: internalError.judging.judgingid}) }}">
                                 j{{ internalError.judging.judgingid }}
@@ -45,7 +45,7 @@
                 {% endif %}
                 {% if internalError.affectedJudgings is not null %}
                     <tr>
-                        <th>Additional affected judgings</th>
+                        <th>추가 영향 심사</th>
                         <td>
                             <ul>
                             {%- for judging in internalError.affectedJudgings -%}
@@ -61,7 +61,7 @@
                 {% endif %}
                 {% if internalError.contest is not null %}
                     <tr>
-                        <th>Related contest</th>
+                        <th>관련 대회</th>
                         <td>
                             <a href="{{ path('jury_contest', {'contestId': internalError.contest.cid}) }}">
                                 c{{ internalError.contest.cid }}
@@ -71,7 +71,7 @@
                 {% endif %}
                 {% if affectedText is not null %}
                     <tr>
-                        <th>Affected {{ internalError.disabled.kind }}</th>
+                        <th>영향을 받은 {{ internalError.disabled.kind }}</th>
                         <td>
                             {% if affectedLink %}
                                 <a href="{{ affectedLink }}">{{ affectedText }}</a>
@@ -82,7 +82,7 @@
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Judgehost log snippet</th>
+                    <th>Judgehost 로그 발췌</th>
                     <td>
                         <pre class="output_text">{{ internalError.judgehostlog | base64_decode }}</pre>
                     </td>
@@ -95,14 +95,14 @@
         <form action="{{ path('jury_internal_error_handle', {errorId: internalError.errorid, action: 'ignore'}) }}"
               method="post" class="d-inline">
             <button type="submit" class="btn btn-danger">
-                <i class="fas fa-times"></i> Ignore error
+                <i class="fas fa-times"></i> 오류 무시
             </button>
         </form>
 
         <form action="{{ path('jury_internal_error_handle', {errorId: internalError.errorid, action: 'resolve'}) }}"
               method="post" class="d-inline">
             <button type="submit" class="btn btn-success">
-                <i class="fas fa-check"></i> Mark as resolved and re-enable {{ internalError.disabled.kind }}
+                <i class="fas fa-check"></i> 해결됨으로 표시 및 {{ internalError.disabled.kind }} 재활성화
             </button>
         </form>
     {% endif %}

@@ -6,7 +6,7 @@
                 <td>{{ externalContestSource.extsourceid }}</td>
             </tr>
             <tr>
-                <th>Source</th>
+                <th>소스</th>
                 <td>
                     {{ externalContestSource.getReadableType }}
                     at
@@ -15,13 +15,13 @@
             </tr>
             {% if externalContestSource.username %}
                 <tr>
-                    <th>Username</th>
+                    <th>사용자 이름</th>
                     <td><code>{{ externalContestSource.username }}</code></td>
                 </tr>
             {% endif %}
             {% if externalContestSource.password %}
                 <tr>
-                    <th>Password</th>
+                    <th>비밀번호</th>
                     <td>
                         <code data-password-hidden>
                             ••••••••
@@ -33,34 +33,34 @@
                 </tr>
             {% endif %}
             <tr>
-                <th>Command</th>
+                <th>명령</th>
                 <td>
                     <code>{{ webappDir }}/bin/console import:eventfeed {{ current_contest.cid }}</code>
                 </td>
             </tr>
             <tr>
-                <th>Status</th>
+                <th>상태</th>
                 <td>
                     {% if not externalContestSource.lastPollTime %}
-                        Event feed reader never checked in.
+                        이벤트 피드 리더가 체크인한 적이 없습니다.
                     {% elseif externalContestSource.lastHTTPCode is not same as(200) %}
-                        Received {{ externalContestSource.lastHTTPCode }} HTTP code.
+                        {{ externalContestSource.lastHTTPCode }} HTTP 코드를 받았습니다.
                     {% else %}
-                        {{ status }}, last checked in {{ externalContestSource.lastPollTime | printtimediff }}s ago.
+                        {{ status }}, 마지막 체크인: {{ externalContestSource.lastPollTime | printtimediff }}초 전.
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <th>Last event ID</th>
+                <th>마지막 이벤트 ID</th>
                 <td>
                     {{ externalContestSource.lastEventId | default('-') }}
                 </td>
             </tr>
             {% if sourceService.validContestSource and sourceService.apiVersion %}
                 <tr>
-                    <th>External provider information</th>
+                    <th>외부 제공자 정보</th>
                     <td>
-                        Version:
+                        버전:
                         {% if sourceService.apiVersionUrl %}
                             <a href="{{ sourceService.apiVersionUrl }}" target="_blank">
                                 {{ sourceService.apiVersion }}
@@ -70,28 +70,28 @@
                         {% endif %}
                         <br/>
                         {% if sourceService.apiProviderName %}
-                            Provider name: {{ sourceService.apiProviderName }}<br/>
+                            제공자 이름: {{ sourceService.apiProviderName }}<br/>
                         {% endif %}
                         {% if sourceService.apiProviderVersion %}
-                            Provider version: {{ sourceService.apiProviderVersion }}<br/>
+                            제공자 버전: {{ sourceService.apiProviderVersion }}<br/>
                         {% endif %}
                         {% if sourceService.apiProviderBuildDate %}
-                            Provider build date: {{ sourceService.apiProviderBuildDate }}<br/>
+                            제공자 빌드 날짜: {{ sourceService.apiProviderBuildDate }}<br/>
                         {% endif %}
                     </td>
                 </tr>
             {% endif %}
             <tr>
-                <th>External contest information</th>
+                <th>외부 대회 정보</th>
                 <td>
-                    Valid: {{ sourceService.validContestSource | printYesNo }}<br/>
+                    유효성: {{ sourceService.validContestSource | printYesNo }}<br/>
                     {% if not sourceService.validContestSource %}
-                        Error: {{ sourceService.loadingError }}
+                        오류: {{ sourceService.loadingError }}
                     {% else %}
                         ID: {{ sourceService.contestId }}<br/>
-                        Name: {{ sourceService.contestName }}<br/>
-                        Start time: {{ sourceService.contestStartTime | printtime('Y-m-d H:i:s (T)') }}<br/>
-                        Duration: {{ sourceService.contestDuration }}
+                        이름: {{ sourceService.contestName }}<br/>
+                        시작 시간: {{ sourceService.contestStartTime | printtime('Y-m-d H:i:s (T)') }}<br/>
+                        기간: {{ sourceService.contestDuration }}
                     {% endif %}
                 </td>
             </tr>

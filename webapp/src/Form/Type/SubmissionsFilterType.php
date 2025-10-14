@@ -38,7 +38,7 @@ class SubmissionsFilterType extends AbstractType
             ->getResult();
         $builder->add("problem-id", EntityType::class, [
             "multiple" => true,
-            "label" => "Filter on problem(s)",
+            "label" => "문제 필터",
             "class" => Problem::class,
             "required" => false,
             "choice_label" => "name",
@@ -47,7 +47,7 @@ class SubmissionsFilterType extends AbstractType
         ]);
         $builder->add("language-id", EntityType::class, [
             "multiple" => true,
-            "label" => "Filter on language(s)",
+            "label" => "언어 필터",
             "class" => Language::class,
             "required" => false,
             "choice_label" => "name",
@@ -59,7 +59,7 @@ class SubmissionsFilterType extends AbstractType
         ]);
         $builder->add("category-id", EntityType::class, [
             "multiple" => true,
-            "label" => "Filter on category(s)",
+            "label" => "카테고리 필터",
             "class" => TeamCategory::class,
             "required" => false,
             "choice_label" => "name",
@@ -70,7 +70,7 @@ class SubmissionsFilterType extends AbstractType
         ]);
         $builder->add("affiliation-id", EntityType::class, [
             "multiple" => true,
-            "label" => "Filter on affiliation(s)",
+            "label" => "소속 필터",
             "class" => TeamAffiliation::class,
             "required" => false,
             "choice_label" => "name",
@@ -107,7 +107,7 @@ class SubmissionsFilterType extends AbstractType
         $teams = $teamsQueryBuilder->getQuery()->getResult();
         $builder->add("team-id", EntityType::class, [
             "multiple" => true,
-            "label" => "Filter on team(s)",
+            "label" => "팀 필터",
             "class" => Team::class,
             "required" => false,
             "choice_label" => "name",
@@ -120,7 +120,7 @@ class SubmissionsFilterType extends AbstractType
         $verdicts[] = "queued";
         $verdicts[] = "import-error";
         $builder->add("result", ChoiceType::class, [
-            "label" => "Filter on result(s)",
+            "label" => "결과 필터",
             "multiple" => true,
             "required" => false,
             "choices" => array_combine($verdicts, $verdicts),
@@ -128,7 +128,7 @@ class SubmissionsFilterType extends AbstractType
         ]);
 
         $builder->add("clear", ButtonType::class, [
-            "label" => "Clear all filters",
+            "label" => "모든 필터 초기화",
             "attr" => ["class" => "btn-secondary"],
         ]);
     }

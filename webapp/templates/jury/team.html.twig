@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Team {{ team.teamid }} - {{ parent() }}{% endblock %}
+{% block title %}팀 {{ team.teamid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <h1>Team {{ team.effectiveName }}</h1>
+    <h1>팀 {{ team.effectiveName }}</h1>
 
     <div class="row">
         <div class="col">
@@ -21,7 +21,7 @@
                 </tr>
                 {% if showExternalId(team) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ team.externalid }}</td>
                     </tr>
                 {% endif %}
@@ -36,7 +36,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Label</th>
+                    <th>라벨</th>
                     <td>
                         {% if team.label | length %}
                             {{ team.label }}
@@ -46,11 +46,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Name</th>
+                    <th>이름</th>
                     <td>{{ team.name }}</td>
                 </tr>
                 <tr>
-                    <th>Display name</th>
+                    <th>표시 이름</th>
                     <td>
                         {% if team.displayName %}
                             {{ team.displayName }}
@@ -60,7 +60,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>First login</th>
+                    <th>첫 로그인</th>
                     <td>
                         {% if team.users is not empty and team.users.first.firstLogin %}
                             {{ team.users.first.firstLogin | printtime('D d M Y H:i:s T') }}
@@ -81,25 +81,25 @@
                 </tr>
                 {% if team.penalty %}
                     <tr>
-                        <th>Penalty time</th>
+                        <th>페널티 시간</th>
                         <td>{{ team.penalty }}</td>
                     </tr>
                 {% endif %}
                 {% if team.location %}
                     <tr>
-                        <th>Location</th>
+                        <th>위치</th>
                         <td>{{ team.location }}</td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>User</th>
+                    <th>사용자</th>
                     <td>
                         {% for user in team.users %}
                             <a href="{{ path('jury_user', {'userId': user.userid}) }}">{{ user.username }}</a>
                         {% else %}
                             {%- if is_granted('ROLE_ADMIN') -%}
                                 <a href="{{ path('jury_user_add', {'team': team.teamid}) }}">
-                                    <i class="fas fa-user-plus"></i> add user
+                                    <i class="fas fa-user-plus"></i> 사용자 추가
                                 </a>
                             {% endif %}
                         {% endfor %}
@@ -111,7 +111,7 @@
         <div class="col">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Category</th>
+                    <th>카테고리</th>
                     <td>
                         {% if team.category %}
                             <a href="{{ path('jury_team_category', {'categoryId': team.category.categoryid}) }}">
@@ -124,7 +124,7 @@
                 </tr>
                 {% if showAffiliations and team.affiliation %}
                     <tr>
-                        <th>Affiliation</th>
+                        <th>소속</th>
                         <td>
                             {% set affiliationId = team.affiliation.affilid %}
                             {% if showExternalId(team.affiliation) %}
@@ -143,7 +143,7 @@
                 {% endif %}
                 {% if showFlags and team.affiliation and team.affiliation.country %}
                     <tr>
-                        <th>Country</th>
+                        <th>국가</th>
                         <td>
                             {{ team.affiliation.country | countryFlag(true) }}
                         </td>
@@ -151,7 +151,7 @@
                 {% endif %}
                 {% if team.contests|length > 0 %}
                 <tr>
-                    <th>Contests</th>
+                    <th>대회</th>
                     <td>
                         {% for ucontest in team.contests %}
                             <a href="{{ path('jury_contest', {'contestId': ucontest.cid}) }}">{{ ucontest.shortname }}</a>
@@ -161,7 +161,7 @@
                 {% endif %}
                 {% if team.internalcomments is not empty %}
                 <tr>
-                    <th>Internal comments (Jury only)</th>
+                    <th>내부 코멘트 (심사위원 전용)</th>
                     <td>
                         {{ team.internalcomments | nl2br }}
                     </td>
@@ -169,7 +169,7 @@
                 {% endif %}
                 {% if team.publicdescription is not empty %}
                     <tr>
-                        <th>Description (Public)</th>
+                        <th>설명 (공개)</th>
                         <td>{{ team.publicdescription | nl2br }}</td>
                     </tr>
                 {% endif %}
@@ -182,18 +182,18 @@
     {% set teamImage = teamId | assetPath('team') %}
     {% if teamImage %}
         <div class="col">
-        <img loading="lazy" class="teampicture" src="{{ asset(teamImage) }}" alt="Picture of team {{ team.name }}"
-             title="Picture of team {{ team.effectiveName }}">
+        <img loading="lazy" class="teampicture" src="{{ asset(teamImage) }}" alt="팀 {{ team.name }}의 사진"
+             title="팀 {{ team.effectiveName }}의 사진">
         </div>
     {% endif %}
     </div>
 
     <div class="button-row">
         {%- if is_granted('ROLE_ADMIN') -%}
-            {{ button(path('jury_team_edit', {'teamId': team.teamid}), 'Edit', 'primary', 'edit') }}
-            {{ button(path('jury_team_delete', {'teamId': team.teamid}), 'Delete', 'danger', 'trash-alt', true) }}
+            {{ button(path('jury_team_edit', {'teamId': team.teamid}), '수정', 'primary', 'edit') }}
+            {{ button(path('jury_team_delete', {'teamId': team.teamid}), '삭제', 'danger', 'trash-alt', true) }}
         {% endif %}
-        {{ button(path('jury_clarification_new', {'teamto': team.teamid}), 'Send message', 'secondary', 'envelope') }}
+        {{ button(path('jury_clarification_new', {'teamto': team.teamid}), '메시지 보내기', 'secondary', 'envelope') }}
         {% include 'jury/partials/rejudge_form.html.twig' with {table: 'team', id: team.teamid, buttonClass: 'btn-secondary'} %}
     </div>
 

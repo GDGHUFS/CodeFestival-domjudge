@@ -44,9 +44,9 @@ class UserType extends AbstractExternalIdEntityType
             'empty_data' => ''
         ]);
         $builder->add('name', TextType::class, [
-            'label' => 'Full name',
+            'label' => '이름',
             'required' => false,
-            'help' => 'Optional full name for the user.',
+            'help' => '사용자의 전체 이름 (선택)',
             'empty_data' => ''
         ]);
         $builder->add('email', EmailType::class, [
@@ -57,34 +57,36 @@ class UserType extends AbstractExternalIdEntityType
         ]);
         $builder->add('plainPassword', PasswordType::class, [
             'required' => false,
-            'label' => 'Password',
+            'label' => '비밀번호',
         ]);
         $builder->add('ipAddress', TextType::class, [
             'required' => false,
-            'label' => 'IP address',
+            'label' => 'IP 주소',
         ]);
         $builder->add('enabled', ChoiceType::class, [
             'expanded' => true,
+            'label' => '활성화 여부',
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '사용' => true,
+                '비사용' => false,
             ],
         ]);
         $builder->add('team', ChoiceType::class, [
             'choice_label' => 'effective_name',
             'required' => false,
-            'placeholder' => '-- no team --',
+            'label' => '팀',
+            'placeholder' => '-- 팀 없음 --',
             'choices' => $teams,
         ]);
         $builder->add('user_roles', EntityType::class, [
-            'label' => 'Roles',
+            'label' => '권한',
             'class' => Role::class,
             'choice_label' => 'description',
             'required' => false,
             'multiple' => true,
             'expanded' => true,
         ]);
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         // Remove ID field when doing an edit
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -96,11 +98,11 @@ class UserType extends AbstractExternalIdEntityType
                 $form->remove('username');
             }
 
-            $set = $user->getPassword() ? 'set' : 'not set';
+            $set = $user->getPassword() ? '설정됨' : '설정되지 않음';
             $form->add('plainPassword', PasswordType::class, [
                 'required' => false,
-                'label' => 'Password',
-                'help' => sprintf('Currently %s - fill to change. Any current login session of the user will be terminated.', $set),
+                'label' => '비밀번호',
+                'help' => sprintf('현재 비밀번호: %s - 변경하려면 입력하세요. 사용자의 기존 로그인 세션은 종료됩니다.', $set),
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'minlength' => UserController::MIN_PASSWORD_LENGTH,

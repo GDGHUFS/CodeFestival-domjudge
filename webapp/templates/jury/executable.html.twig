@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Executable {{ executable.execid }} - {{ parent() }}{% endblock %}
+{% block title %}실행 파일 {{ executable.execid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -12,13 +12,13 @@
 
 {% block content %}
 
-    <h1>Executable <code>{{ executable.execid }}</code></h1>
+    <h1>실행 파일 <code>{{ executable.execid }}</code></h1>
 
     <div class="mb-4">
         {%- if is_granted('ROLE_ADMIN') -%}
             <p>
-                {{ button(path('jury_executable_download', {'execId': executable.execid}), 'Download ZIP', 'secondary', 'file-download') }}
-                {{ button(path('jury_executable_delete', {'execId': executable.execid}), 'Delete', 'danger', 'trash-alt', true) }}
+                {{ button(path('jury_executable_download', {'execId': executable.execid}), 'ZIP 다운로드', 'secondary', 'file-download') }}
+                {{ button(path('jury_executable_delete', {'execId': executable.execid}), '삭제', 'danger', 'trash-alt', true) }}
             </p>
         {% endif %}
     </div>
@@ -27,22 +27,22 @@
         <div class="col-lg-4">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Description</th>
+                    <th>설명</th>
                     <td>{{ executable.description }}</td>
                 </tr>
                 <tr>
-                    <th>Type</th>
+                    <th>유형</th>
                     <td>{{ executable.type }}</td>
                 </tr>
                 <tr>
-                    <th>Used as {{ executable.type }} script</th>
+                    <th>{{ executable.type }} 스크립트로 사용됨</th>
                     <td>
                         {% set used = false %}
                         {% if executable.type == 'compare' and default_compare == executable.execid %}
-                            <em>default compare</em>
+                            <em>기본 비교 스크립트</em>
                             {% set used = true %}
                         {% elseif executable.type == 'run' and default_run == executable.execid %}
-                            <em>default run</em>
+                            <em>기본 실행 스크립트</em>
                             {% set used = true %}
                         {% endif %}
                         {% if executable.type == 'compare' %}
@@ -68,7 +68,7 @@
                             {% endfor %}
                         {% endif %}
                         {% if not used %}
-                            <span class="nodata">none</span>
+                            <span class="nodata">없음</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -76,11 +76,11 @@
         </div>
     </div>
 
-    <h1>Content</h1>
+    <h1>내용</h1>
 
     {% if skippedBinary is not empty %}
         <div class="alert alert-warning">
-            We exclude these files from editing since we could not detect their encoding (e.g. they are binary files):
+            인코딩을 감지할 수 없어 (예: 바이너리 파일이므로) 편집에서 제외된 파일은 다음과 같습니다:
             <ul>
                 {% for data in skippedBinary %}
                     <li><code>{{ data.filename }}</code></li>
@@ -92,7 +92,7 @@
     {{ form_start(form) }}
 
     {% if not filenames %}
-        <p class="nodata">No files in this executable.</p>
+        <p class="nodata">이 실행 파일에는 파일이 없습니다.</p>
     {% else %}
         <ul class="nav nav-tabs source-tab-nav" role="tablist">
             {%- for idx, filename in filenames %}
@@ -109,13 +109,13 @@
                     <div class="mb-1">
                         <a class="btn btn-secondary btn-sm"
                            href="{{ path('jury_executable_download_single', {execId: executable.execid, rank: ranks[idx]}) }}">
-                            <i class="fas fa-download"></i> Download file
+                            <i class="fas fa-download"></i> 파일 다운로드
                         </a>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="btn btn-secondary btn-sm"
                                data-ajax-modal
                                href="{{ path('jury_executable_delete_single', {execId: executable.execid, rankToDelete: ranks[idx]}) }}">
-                                <i class="fas fa-trash"></i> Delete file
+                                <i class="fas fa-trash"></i> 파일 삭제
                             </a>
                         {% endif %}
                     </div>
@@ -140,7 +140,7 @@
 
     {% if is_granted('ROLE_ADMIN') %}
         <hr>
-        <i>or</i>
+        <i>또는</i>
 
         <div class="row">
             <div class="col-lg-4">

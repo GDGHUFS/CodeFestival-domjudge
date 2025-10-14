@@ -2,7 +2,7 @@
 {% import _self as checkJudgings %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Judging verifier - {{ parent() }}{% endblock %}
+{% block title %}채점 검증기 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,21 +11,21 @@
 
 {% block content %}
 
-    <h1>Judging verifier</h1>
+    <h1>채점 검증기</h1>
 
     <p>
-        {{ numChecked }} submissions checked:
-        {{ unexpected | length }} unexpected results,
+        {{ numChecked }}개의 제출 확인됨:
+        {{ unexpected | length }}개의 예상치 못한 결과,
         {% if verifyMultiple %}
-            {{ multiple | length }} automatically verified (multiple outcomes),
+            {{ multiple | length }}개 자동 검증됨 (다중 결과),
         {% else %}
-            {{ multiple | length }} to check manually,
+            {{ multiple | length }}개 수동 확인 필요,
         {% endif %}
-        {{ verified | length }} automatically verified
+        {{ verified | length }}개 자동 검증됨
         <br>
-        {{ numUnchecked }} submissions not checked:
-        {{ earlier | length }} verified earlier,
-        {{ nomatch | length }} without magic string
+        {{ numUnchecked }}개의 제출 확인되지 않음:
+        {{ earlier | length }}개 이전에 검증됨,
+        {{ nomatch | length }}개 매직 문자열 없음
     </p>
 
     {% macro verifyResults(id, header, results, collapse) %}
@@ -33,9 +33,9 @@
             <h2><a class="collapse-link" href="javascript:collapse('#detail{{ id }}')">{{ header }}</a></h2>
             <table id="detail{{ id }}" class="{% if collapse | default(false) %}d-none{% endif %} data-table table table-hover table-striped table-sm submissions-table table-full-clickable-cell">
                 <tr>
-                    <th></th><th>problem</th><th>file(s)</th>
-                    <th>actual</th>
-                    <th>expected (one of)</th>
+                    <th></th><th>문제</th><th>파일</th>
+                    <th>실제 결과</th>
+                    <th>예상 결과 (중 하나)</th>
                 </tr>
                 {% for submitId,result in results %}
                     {% set link = path('jury_submission', {'submitId': submitId}) %}
@@ -80,23 +80,23 @@
         {% endif %}
     {% endmacro %}
 
-    {{ checkJudgings.verifyResults('unexpected', 'Unexpected results', unexpected) }}
+    {{ checkJudgings.verifyResults('unexpected', '예상치 못한 결과', unexpected) }}
     {% if verifyMultiple %}
-        {{ checkJudgings.verifyResults('multiple', 'Automatically verified (multiple outcomes)', multiple, true) }}
+        {{ checkJudgings.verifyResults('multiple', '자동 검증됨 (다중 결과)', multiple, true) }}
     {% else %}
-        {{ checkJudgings.verifyResults('multiple', 'Check manually', multiple) }}
+        {{ checkJudgings.verifyResults('multiple', '수동 확인 필요', multiple) }}
         {% if multiple is not empty %}
             <form action="{{ path('jury_judging_verifier') }}" method="post">
                 <input type="hidden" name="verify_multiple" value="1">
                 <p>
-                    Verify all multiple outcome submissions:
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Verify</button>
+                    모든 다중 결과 제출 검증:
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> 검증</button>
                 </p>
             </form>
         {% endif %}
     {% endif %}
-    {{ checkJudgings.verifyResults('verified', 'Automatically verified', verified, true) }}
-    {{ checkJudgings.verifyResults('earlier', 'Verified earlier', earlier, true) }}
-    {{ checkJudgings.verifyResults('nomatch', 'Without magic string', nomatch, true) }}
+    {{ checkJudgings.verifyResults('verified', '자동 검증됨', verified, true) }}
+    {{ checkJudgings.verifyResults('earlier', '이전에 검증됨', earlier, true) }}
+    {{ checkJudgings.verifyResults('nomatch', '매직 문자열 없음', nomatch, true) }}
 
 {% endblock %}

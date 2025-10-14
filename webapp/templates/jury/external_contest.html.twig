@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}External contest - {{ parent() }}{% endblock %}
+{% block title %}외부 대회 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -16,14 +16,14 @@
 
 {% block content %}
 
-    <h1>External contest</h1>
+    <h1>외부 대회</h1>
 
     <div data-configuration-info>
         {% include 'jury/partials/external_contest_info.html.twig' %}
     </div>
 
     <p>
-        {{ button(path('jury_external_contest_manage'), 'Edit', 'primary', 'edit') }}
+        {{ button(path('jury_external_contest_manage'), '수정', 'primary', 'edit') }}
     </p>
 
     <div data-warning-header>
@@ -34,7 +34,7 @@
         <div class="btn-group" role="group">
             <input type="checkbox" class="btn-check" id="filter-toggle" {% if hasFilters %}checked{% endif %} autocomplete="off">
             <label for="filter-toggle" class="btn btn-outline-secondary">
-                <i class="fas fa-filter"></i> Filter
+                <i class="fas fa-filter"></i> 필터
             </label>
         </div>
         <div class="card mt-3{% if not hasFilters %} d-none{% endif %}" id="filter-card">

@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}User {{ user.userid }} - {{ parent() }}{% endblock %}
+{% block title %}사용자 {{ user.userid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <h1>User {{ user.name }}</h1>
+    <h1>사용자 {{ user.name }}</h1>
 
     <div class="row">
         <div class="col-lg-4">
@@ -21,16 +21,16 @@
                 </tr>
                 {% if showExternalId(user) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ user.externalid }}</td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Login</th>
+                    <th>로그인 이름</th>
                     <td class="teamid">{{ user.username }}</td>
                 </tr>
                 <tr>
-                    <th>Email</th>
+                    <th>이메일</th>
                     <td>
                         {% if user.email %}
                             <a href="mailto:{{ user.email }}">{{ user.email }}</a>
@@ -40,17 +40,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Password</th>
+                    <th>비밀번호</th>
                     <td>
                         {% if user.password %}
-                            Set
+                            설정됨
                         {% else %}
-                            Not set
+                            설정되지 않음
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <th>IP address</th>
+                    <th>IP 주소</th>
                     <td>
                         {% if user.ipAddress %}
                             {{ user.ipAddress }}
@@ -60,23 +60,23 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Enabled</th>
+                    <th>활성화됨</th>
                     <td>
                         {{ user.enabled | printYesNo }}
                     </td>
                 </tr>
                 <tr>
-                    <th>Roles</th>
+                    <th>역할</th>
                     <td>
                         {% for role in user.userRoles %}
                             {{ role.description }}<br>
                         {% else %}
-                            No roles assigned
+                            할당된 역할 없음
                         {% endfor %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Team</th>
+                    <th>팀</th>
                     {% if user.team %}
                         <td class="teamid">
                             <a href="{{ path('jury_team', {'teamId': user.team.teamid}) }}">
@@ -93,7 +93,7 @@
         <div class="col-lg-4">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>First login</th>
+                    <th>첫 로그인</th>
                     <td>
                         {% if user.firstLogin %}
                             {{ user.firstLogin | printtime('D d M Y H:i:s T') }}
@@ -103,7 +103,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Last login</th>
+                    <th>마지막 로그인</th>
                     <td>
                         {% if user.lastLogin %}
                             {{ user.lastLogin | printtime('D d M Y H:i:s T') }}
@@ -113,7 +113,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Last API login</th>
+                    <th>마지막 API 로그인</th>
                     <td>
                         {% if user.lastApiLogin %}
                             {{ user.lastApiLogin | printtime('D d M Y H:i:s T') }}
@@ -123,7 +123,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Last IP</th>
+                    <th>마지막 IP</th>
                     <td>
                         {% if user.lastIpAddress %}
                             {{ user.lastIpAddress | printHost(true) }}
@@ -138,13 +138,13 @@
 
     <div class="button-row">
         {%- if is_granted('ROLE_ADMIN') -%}
-            {{ button(path('jury_user_edit', {'userId': user.userid}), 'Edit', 'primary', 'edit') }}
-            {{ button(path('jury_user_delete', {'userId': user.userid}), 'Delete', 'danger', 'trash-alt', true) }}
+            {{ button(path('jury_user_edit', {'userId': user.userid}), '수정', 'primary', 'edit') }}
+            {{ button(path('jury_user_delete', {'userId': user.userid}), '삭제', 'danger', 'trash-alt', true) }}
         {% endif %}
         {% include 'jury/partials/rejudge_form.html.twig' with {table: 'user', id: user.userid, buttonClass: 'btn-secondary'} %}
     </div>
 
-    <h2>Submissions for {{ user.name }}</h2>
+    <h2>{{ user.name }}의 제출물</h2>
 
     <div data-ajax-refresh-target>
         {%- include 'jury/partials/submission_list.html.twig' with {showTestcases: false} %}

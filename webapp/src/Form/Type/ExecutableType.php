@@ -19,8 +19,9 @@ class ExecutableType extends AbstractType
         $builder->add('execid', TextType::class, [
             'label' => 'ID',
         ]);
-        $builder->add('description');
+        $builder->add('description', TextType::class, ['label' => '설명']);
         $builder->add('type', ChoiceType::class, [
+            'label' => '유형',
             'choices' => [
                 'compare' => 'compare',
                 'compile' => 'compile',
@@ -28,7 +29,7 @@ class ExecutableType extends AbstractType
                 'debug' => 'debug',
             ]
         ]);
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         // Remove ID field when doing an edit.
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Contest problems {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
+{% block title %}대회 문제 {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
 
 {% block content %}
     {% include 'partials/problem_list.html.twig' with {

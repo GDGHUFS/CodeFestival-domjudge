@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Compiler and runner versions overview{% endblock %}
+{% block title %}컴파일러 및 실행기 버전 개요{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,15 +11,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Compiler and runner version overview</h1>
+    <h1>컴파일러 및 실행기 버전 개요</h1>
 
     {% for lang in data %}
         <div class="card mb-3">
             <div class="card-header">
-                Language <code>{{ lang.language.langid }}</code>
+                언어 <code>{{ lang.language.langid }}</code>
                 {% if is_granted('ROLE_ADMIN') %}
                 <span style="float: right">
-                    {{ button(path('jury_language_edit', {'langId': lang.language.langid}), 'Edit version command(s)', 'primary btn-sm', 'edit') }}
+                    {{ button(path('jury_language_edit', {'langId': lang.language.langid}), '버전 명령어(들) 수정', 'primary btn-sm', 'edit') }}
                 </span>
                 {% endif %}
             </div>
@@ -27,18 +27,18 @@
                 <div class="card-title">
                     <div class="row">
                         <div class="col-sm">
-                            <h6>Compiler version(s)</h6>
+                            <h6>컴파일러 버전(들)</h6>
                             {% if lang.compiler_outputs | length > 1 %}
-                                <div class="alert alert-danger" role="alert">Versions do not match.</div>
+                                <div class="alert alert-danger" role="alert">버전이 일치하지 않습니다.</div>
                             {% endif %}
                             {% for key, output in lang.compiler_outputs %}
                                 <div class="card">
                                     <div class="card-header">
                                         {% if key == lang.canonical_compiler_key %}
-                                            <span class="badge text-bg-success">Canonical version</span>
+                                            <span class="badge text-bg-success">표준 버전</span>
                                         {% else %}
-                                            <span class="badge text-bg-danger">Not canonical</span>
-                                            {{ button(path('jury_compiler_promote', {'versionId': output.versionid}), 'Mark as canonical', 'primary btn-sm', 'bookmark') }}
+                                            <span class="badge text-bg-danger">비표준</span>
+                                            {{ button(path('jury_compiler_promote', {'versionId': output.versionid}), '표준으로 지정', 'primary btn-sm', 'bookmark') }}
                                         {% endif %}
                                     </div>
                                     <ul class="list-group list-group-flush">
@@ -47,7 +47,7 @@
                                             <pre class="output_text">{{ output.version }}</pre>
                                         </li>
                                         <li class="list-group-item">
-                                            First reported by
+                                            처음 보고한 호스트:
                                             <ul>
                                                 {% for host in output.hostdata %}
                                                     <li>
@@ -61,18 +61,18 @@
                             {% endfor %}
                             {% if lang.runner_outputs | length > 0 %}
                                 <br/>
-                                <h6>Runner version(s)</h6>
+                                <h6>실행기 버전(들)</h6>
                                 {% if lang.runner_outputs | length > 1 %}
-                                    <div class="alert alert-danger" role="alert">Versions do not match.</div>
+                                    <div class="alert alert-danger" role="alert">버전이 일치하지 않습니다.</div>
                                 {% endif %}
                                 {% for key, output in lang.runner_outputs %}
                                     <div class="card">
                                         <div class="card-header">
                                             {% if key == lang.canonical_runner_key %}
-                                                <span class="badge text-bg-success">Canonical version</span>
+                                                <span class="badge text-bg-success">표준 버전</span>
                                             {% else %}
-                                                <span class="badge text-bg-danger">Not canonical</span>
-                                                {{ button(path('jury_runner_promote', {'versionId': output.versionid}), 'Mark as canonical', 'primary btn-sm', 'bookmark') }}
+                                                <span class="badge text-bg-danger">비표준</span>
+                                                {{ button(path('jury_runner_promote', {'versionId': output.versionid}), '표준으로 지정', 'primary btn-sm', 'bookmark') }}
                                             {% endif %}
                                         </div>
                                         <ul class="list-group list-group-flush">
@@ -81,7 +81,7 @@
                                                 <pre class="output_text">{{ output.version }}</pre>
                                             </li>
                                             <li class="list-group-item">
-                                                First reported by
+                                                처음 보고한 호스트:
                                                 <ul>
                                                     {% for host in output.hostdata %}
                                                         <li>

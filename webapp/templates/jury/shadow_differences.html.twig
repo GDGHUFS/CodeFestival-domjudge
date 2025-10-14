@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Shadow differences - {{ parent() }}{% endblock %}
+{% block title %}섀도우 차이점 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,18 +11,18 @@
 
 {% block content %}
 
-    <h1>Shadow differences</h1>
+    <h1>섀도우 차이점</h1>
 
     {%- if current_contests is empty %}
-        <div class="alert alert-danger">No active contest</div>
+        <div class="alert alert-danger">활성 콘테스트 없음</div>
     {%- else %}
         <div data-shadow-matrix>
             {% include 'jury/partials/shadow_matrix.html.twig' %}
         </div>
 
-        <h2 class="mt-4">Details</h2>
+        <h2 class="mt-4">세부 정보</h2>
 
-        Show submissions:
+        제출 보기:
         <div class="btn-group btn-group-sm mb-3" role="group">
             {%- for idx, type in viewTypes %}
                 <input type="radio" autocomplete="off" class="btn-check"
@@ -45,10 +45,10 @@
             <input type="hidden" name="verificationview" value="{{ verificationViewTypes[verificationView] }}"/>
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <label for="oldverdict">External verdict</label>
+                    <label for="oldverdict">외부 평결</label>
                     <select style="width: 100%" class="select2 form-control" name="external"
                             id="external">
-                        <option value="all" {% if external == 'all' %}selected{% endif %}>all</option>
+                        <option value="all" {% if external == 'all' %}selected{% endif %}>모두</option>
                         {%- for verdict, abbreviation in verdicts %}
                             <option value="{{ verdict }}"
                                     {% if external == verdict %}selected{% endif %}>
@@ -59,9 +59,9 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label for="newverdict">Local verdict</label>
+                    <label for="newverdict">로컬 평결</label>
                     <select style="width: 100%" class="select2 form-control" name="local" id="local">
-                        <option value="all" {% if local == 'all' %}selected{% endif %}>all</option>
+                        <option value="all" {% if local == 'all' %}selected{% endif %}>모두</option>
                         {%- for verdict, abbreviation in verdicts %}
                             <option value="{{ verdict }}" {% if local == verdict %}selected{% endif %}>
                                 {{ verdict }}
@@ -72,12 +72,12 @@
                 </div>
                 <div class="col-md-2">
                     <label>&nbsp;</label>
-                    <input class="btn btn-primary form-control" type="submit" value="Filter"/>
+                    <input class="btn btn-primary form-control" type="submit" value="필터"/>
                 </div>
                 <div class="col-md-2">
                     <label>&nbsp;</label>
                     <a href="{{ path('jury_shadow_differences', {view: viewTypes[view], verificationview: verificationViewTypes[verificationView]}) }}"
-                       class="btn btn-secondary form-control">Clear</a>
+                       class="btn btn-secondary form-control">지우기</a>
                 </div>
             </div>
         </form>

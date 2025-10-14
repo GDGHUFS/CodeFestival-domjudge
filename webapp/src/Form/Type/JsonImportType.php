@@ -13,16 +13,18 @@ class JsonImportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('type', ChoiceType::class, [
+            'label' => '가져올 데이터 종류',
+            'help' => '가져올 데이터 유형을 선택하세요.',
             'choices' => [
-                'groups' => 'groups',
-                'organizations' => 'organizations',
-                'teams' => 'teams',
-                'accounts' => 'accounts',
+                '그룹 (groups)' => 'groups',
+                '기관 (organizations)' => 'organizations',
+                '팀 (teams)' => 'teams',
+                '계정 (accounts)' => 'accounts',
             ],
         ]);
         $builder->add('file', FileType::class, [
             'required' => true,
         ]);
-        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload']);
+        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload', 'label' => '가져오기']);
     }
 }

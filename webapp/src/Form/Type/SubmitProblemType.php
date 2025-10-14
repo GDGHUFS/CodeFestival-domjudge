@@ -35,7 +35,7 @@ class SubmitProblemType extends AbstractType
         $contest            = $this->dj->getCurrentContest($user->getTeam()->getTeamid());
 
         $builder->add('code', FileType::class, [
-            'label' => 'Source file' . ($allowMultipleFiles ? 's' : ''),
+            'label' => '소스 파일' . ($allowMultipleFiles ? '들' : ''),
             'multiple' => $allowMultipleFiles,
         ]);
 
@@ -50,7 +50,8 @@ class SubmitProblemType extends AbstractType
             'choice_label' => fn(Problem $problem) => sprintf(
                 '%s - %s', $problem->getContestProblems()->first()->getShortName(), $problem->getName()
             ),
-            'placeholder' => 'Select a problem',
+            'label' => '문제',
+            'placeholder' => '문제를 선택하세요',
         ];
         $builder->add('problem', EntityType::class, $problemConfig);
 
@@ -60,13 +61,14 @@ class SubmitProblemType extends AbstractType
                 ->createQueryBuilder('l')
                 ->andWhere('l.allowSubmit = 1'),
             'choice_label' => 'name',
-            'placeholder' => 'Select a language',
+            'label' => '언어',
+            'placeholder' => '언어를 선택하세요',
         ]);
 
         $builder->add('entry_point', TextType::class, [
-            'label' => 'Entry point',
+            'label' => 'Entrypoint',
             'required' => false,
-            'help' => 'The entry point for your code.',
+            'help' => '코드의 Entrypoint를 지정합니다.',
             'row_attr' => ['data-entry-point' => ''],
             'constraints' => [
                 new Callback(function ($value, ExecutionContextInterface $context) {

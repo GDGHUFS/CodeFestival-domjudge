@@ -5,24 +5,23 @@
 <div class="mb-3">
     <div class="card">
         <div class="card-body">
-            <label class="rendered-preview-badge">rendered preview</label>
-            <div id="messagepreview">Start typing to see a preview of your message</div>
+            <label class="rendered-preview-badge">렌더링된 미리 보기</label>
+            <div id="messagepreview">메시지 미리보기를 보려면 입력을 시작하세요</div>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-sm">
         <div class="mb-3">
-            <button type="submit" name="submit" class="btn btn-primary"><i class="fas fa-envelope"></i> Send</button>
+            <button type="submit" name="submit" class="btn btn-primary"><i class="fas fa-envelope"></i> 보내기</button>
         </div>
     </div>
-
     <div class="col-sm text-end">
         {% if answers is defined and answers|length > 0 %}
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-fish"></i></span>
                 <select class="form-select form-control-sm" id="clar_answers">
-                    <option selected value="_default">Add canned answer...</option>
+                    <option selected value="_default">미리 작성된 답변 추가...</option>
                     {% for item in answers %}
                         <option>{{ item }}</option>
                     {% endfor %}

@@ -1,8 +1,8 @@
 {# Output a rejudge form #}
 
 {% apply spaceless %}
-    {% set buttonText = 'Rejudge all for ' ~ table ~ ' ' ~ id %}
-    {% set questionText = 'Rejudge all submissions for this ' ~ table ~ '?' %}
+    {% set buttonText = '모두 재심사: ' ~ table ~ ' ' ~ id %}
+    {% set questionText = '이 ' ~ table ~ '에 대한 모든 제출을 재심사하시겠습니까?' %}
     {% set buttonDisabled = false %}
     {% set isRestart = false %}
     {% if is_granted('ROLE_ADMIN') %}
@@ -15,8 +15,8 @@
     {% endif %}
 
     {% if table == 'submission' and submission is defined and judgings is defined %}
-        {% set buttonText = 'Rejudge this submission' %}
-        {% set questionText = 'Rejudge submission s' ~ id ~ '?' %}
+        {% set buttonText = '이 제출 재심사' %}
+        {% set questionText = '제출 s' ~ id ~ '을(를) 재심사하시겠습니까?' %}
         {% set includeAllButton = false %}
         {# Check if we have a valid result #}
         {% set validResult = false %}
@@ -28,11 +28,11 @@
 
         {% if is_granted('ROLE_ADMIN') %}
             {% if not validResult %}
-                {% set questionText = 'Restart judging of PENDING submission s' ~ id ~ ', are you sure?' %}
-                {% set buttonText = 'Restart judging' %}
+                {% set questionText = '보류 중인 제출 s' ~ id ~ '의 심사를 재시작하시겠습니까? 확실합니까?' %}
+                {% set buttonText = '심사 재시작' %}
                 {% set isRestart = true %}
             {% elseif validResult == 'correct' %}
-                {% set questionText = 'Rejudge CORRECT submission s' ~ id ~ ', are you sure?' %}
+                {% set questionText = '정답 제출 s' ~ id ~ '을(를) 재심사하시겠습니까? 확실합니까?' %}
             {% endif %}
         {% else %}
             {% if not validResult or validResult == 'correct' %}
@@ -43,7 +43,7 @@
 {% endapply %}
 
 <button type="button" class="btn {{ buttonClass }}" data-bs-toggle="modal" data-bs-target="#rejudge-modal">
-    <i class="fas fa-sync"></i> Rejudge
+    <i class="fas fa-sync"></i> 재심사
 </button>
 
 <!-- Modal -->
@@ -52,7 +52,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ buttonText }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
             </div>
             <form action="{{ path('jury_create_rejudge') }}" method="post">
                 <div class="modal-body">
@@ -61,8 +61,8 @@
                     {%- if includeAllButton %}
 
                         <div class="form-check">
-                            <label class="form-check-label" for="include_all">Include pending/correct
-                                submissions</label>
+                            <label class="form-check-label" for="include_all">보류/정답 제출
+                                포함</label>
                             <input type="checkbox" class="form-check-input" id="include_all" name="include_all">
                         </div>
                     {%- endif %}
@@ -73,29 +73,29 @@
                         <input type="hidden" name="reason" id="reason" value="">
                     {% else %}
                     <div class="form-check mb-3">
-                        <label class="form-check-label" for="auto_apply">Automatically apply judging(s) when ready</label>
+                        <label class="form-check-label" for="auto_apply">준비되면 자동으로 심사 적용</label>
                         <input type="checkbox" class="form-check-input" id="auto_apply" name="auto_apply">
                     </div>
                     <div id="rejudge-repeat" class="mb-3">
-                        <label for="repeat">Number of times to repeat this rejudging</label>
+                        <label for="repeat">이 재심사를 반복할 횟수</label>
                         <input type="number" class="form-control" name="repeat" id="repeat" value="1" min="1" max="999" step="1">
                     </div>
                     <div id="rejudge-reason" class="mb-3">
-                        <label for="reason">Reason</label>
+                        <label for="reason">사유</label>
                         <input type="text" class="form-control" name="reason" id="reason" maxlength="255">
                     </div>
                     <div id="rejudge-priority" class="mb-3">
-                        <label for="priority">Priority</label>
+                        <label for="priority">우선순위</label>
                         <select class="form-control" name="priority" id="priority">
-                            <option value="low">low</option>
-                            <option value="default" selected>default</option>
-                            <option value="high">high</option>
+                            <option value="low">낮음</option>
+                            <option value="default" selected>기본</option>
+                            <option value="high">높음</option>
                         </select>
                     </div>
                     {% endif %}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     <input type="submit" value="{{ buttonText }}" class="btn btn-primary">
                 </div>
             </form>

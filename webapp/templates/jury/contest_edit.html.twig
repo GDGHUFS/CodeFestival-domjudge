@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Edit contest {{ contest.cid }} - {{ parent() }}{% endblock %}
+{% block title %}대회 수정 {{ contest.cid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,13 +11,13 @@
 
 {% block content %}
 
-    <h1>Edit contest {{ contest.cid }}</h1>
+    <h1>대회 수정 {{ contest.cid }}</h1>
 
     <div class="row">
         <div class="col-lg-4">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Contest ID</th>
+                    <th>대회 ID</th>
                     <td>{{ contest.cid }}</td>
                 </tr>
             </table>

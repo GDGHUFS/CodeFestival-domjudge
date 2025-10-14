@@ -1,60 +1,60 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Import and export - {{ parent() }}{% endblock %}
+{% block title %}가져오기 및 내보내기 - {{ parent() }}{% endblock %}
 
 {% block content %}
 
-    <h1>Import and export</h1>
+    <h1>가져오기 및 내보내기</h1>
 
     <div class="importexport">
-    <h2 id="problemarchive">Problems</h2>
+    <h2 id="problemarchive">문제</h2>
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-                <h3>Import archive</h3>
+                <h3>아카이브 가져오기</h3>
                 {{ form(problem_form) }}
             </div>
         </div>
     </div>
 
-    <h2 id="contests">Contests</h2>
+    <h2 id="contests">대회</h2>
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-                <h3>Import JSON / YAML</h3>
+                <h3>JSON / YAML 가져오기</h3>
                 {{ form(contest_import_form) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="tile">
-                <h3>Export YAML</h3>
+                <h3>YAML 내보내기</h3>
                 {{ form(contest_export_form) }}
             </div>
         </div>
     </div>
 
-    <h2 id="problems">Problems</h2>
+    <h2 id="problems">문제 정의</h2>
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-                <h3>Import JSON / YAML</h3>
+                <h3>JSON / YAML 가져오기</h3>
                 {{ form(problems_import_form) }}
             </div>
         </div>
     </div>
 
 
-    <h2 id="teams">Teams &amp; groups</h2>
+    <h2 id="teams">팀 및 그룹</h2>
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-            <h3>Import tab-separated</h3>
+            <h3>탭으로 구분된(TSV) 파일 가져오기</h3>
                 {{ form(tsv_form) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="tile">
-                <h3>Export tab-separated</h3>
+                <h3>탭으로 구분된(TSV) 파일 내보내기</h3>
                 <ul>
                 {% for type in ['groups', 'teams'] %}
                     <li>
@@ -68,7 +68,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-            <h3>Import JSON / YAML</h3>
+            <h3>JSON / YAML 가져오기</h3>
                 {{ form(json_form) }}
             </div>
         </div>
@@ -76,7 +76,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-            <h3>Import teams from ICPC CMS</h3>
+            <h3>ICPC CMS에서 팀 가져오기</h3>
                 {{ form_start(icpccms_form) }}
                 {{ form_row(icpccms_form.contest_id) }}
                 {{ form_row(icpccms_form.access_token) }}
@@ -86,20 +86,20 @@
         </div>
     </div>
 
-    <h2 id="results">Results</h2>
+    <h2 id="results">결과</h2>
     <div class="row">
         <div class="col-md-6">
         </div>
         <div class="col-md-6">
             <div class="tile">
-                <h3>Export &lt;html&gt;</h3>
+                <h3>&lt;html&gt; 내보내기</h3>
                     <ul>
                         <li>
                             <code>wf_results.html</code>:
                             <ul>
                                 {% for sort_order, names in sort_orders %}
                                     <li>
-                                        <a href="{{ path('jury_html_export', {'type': 'wf_results', 'sort_order': sort_order}) }}">for sort order {{ sort_order }}</a>
+                                        <a href="{{ path('jury_html_export', {'type': 'wf_results', 'sort_order': sort_order}) }}">정렬 순서 {{ sort_order }}용</a>
                                         ({{ names | join(', ') }})
                                     </li>
                                 {% endfor %}
@@ -110,7 +110,7 @@
                             <ul>
                                 {% for sort_order, names in sort_orders %}
                                     <li>
-                                        <a href="{{ path('jury_html_export', {'type': 'full_results', 'sort_order': sort_order}) }}">for sort order {{ sort_order }}</a>
+                                        <a href="{{ path('jury_html_export', {'type': 'full_results', 'sort_order': sort_order}) }}">정렬 순서 {{ sort_order }}용</a>
                                         ({{ names | join(', ') }})
                                     </li>
                                 {% endfor %}
@@ -128,14 +128,14 @@
         </div>
         <div class="col-md-6">
             <div class="tile">
-                <h3>Export tab-separated</h3>
+                <h3>탭으로 구분된(TSV) 파일 내보내기</h3>
                     <ul>
                         <li>
                             <code>wf_results.tsv</code>:
                             <ul>
                             {% for sort_order, names in sort_orders %}
                                 <li>
-                                    <a href="{{ path('jury_tsv_export', {'type': 'wf_results', 'sort_order': sort_order}) }}">for sort order {{ sort_order }}</a>
+                                    <a href="{{ path('jury_tsv_export', {'type': 'wf_results', 'sort_order': sort_order}) }}">정렬 순서 {{ sort_order }}용</a>
                                     ({{ names | join(', ') }})
                                  </li>
                             {% endfor %}
@@ -146,7 +146,7 @@
                             <ul>
                                 {% for sort_order, names in sort_orders %}
                                     <li>
-                                        <a href="{{ path('jury_tsv_export', {'type': 'full_results', 'sort_order': sort_order}) }}">for sort order {{ sort_order }}</a>
+                                        <a href="{{ path('jury_tsv_export', {'type': 'full_results', 'sort_order': sort_order}) }}">정렬 순서 {{ sort_order }}용</a>
                                         ({{ names | join(', ') }})
                                     </li>
                                 {% endfor %}

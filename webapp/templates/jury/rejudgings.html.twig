@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Rejudgings - {{ parent() }}{% endblock %}
+{% block title %}재심사 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,16 +10,16 @@
 
 {% block content %}
 
-    <h1>Rejudgings</h1>
+    <h1>재심사</h1>
 
     {% if rejudgings is empty %}
-        <div class="alert alert-warning">No rejudgings defined</div>
+        <div class="alert alert-warning">정의된 재심사가 없습니다.</div>
     {% else %}
         {{ macros.table(rejudgings, table_fields, 0) }}
     {% endif %}
 
     <p>
-        {{ button(path('jury_rejudging_add'), 'Add new rejudging', 'primary', 'plus') }}
+        {{ button(path('jury_rejudging_add'), '새 재심사 추가', 'primary', 'plus') }}
     </p>
 
 {% endblock %}

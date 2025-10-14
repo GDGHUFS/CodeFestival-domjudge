@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Executables - {{ parent() }}{% endblock %}
+{% block title %}실행 파일 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,15 +10,15 @@
 
 {% block content %}
 
-    <h1>Used executables</h1>
+    <h1>사용 중인 실행 파일</h1>
     {{ macros.table(executables_used, table_fields, {'ordering': 'false'}) }}
 
-    <h1>Unused executables</h1>
+    <h1>사용되지 않는 실행 파일</h1>
     {{ macros.table(executables_unused, table_fields, {'ordering': 'false'}) }}
 
     {% if is_granted('ROLE_ADMIN') %}
         <p>
-            {{ button(path('jury_executable_add'), 'Add new executable', 'primary', 'plus') }}
+            {{ button(path('jury_executable_add'), '새 실행 파일 추가', 'primary', 'plus') }}
         </p>
     {% endif %}
 

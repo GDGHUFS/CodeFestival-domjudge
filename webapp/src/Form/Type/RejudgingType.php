@@ -31,24 +31,25 @@ class RejudgingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('reason', TextType::class);
+        $builder->add('reason', TextType::class, ['label' => '사유']);
         $builder->add('priority', ChoiceType::class,
             [
+                'label' => '우선 순위',
                 'choices' => [
-                    'low' => 'low',
-                    'default' => 'default',
-                    'high' => 'high',
+                    '낮음' => 'low',
+                    '기본' => 'default',
+                    '높음' => 'high',
                 ],
                 'data' => 'default',
             ]
         );
         $builder->add('repeat', IntegerType::class, [
-            'label' => 'Number of times to repeat this rejudging',
+            'label' => '재채점 반복 횟수',
             'data' => 1,
             'attr' => ['min' => 1, 'max' => 99]
         ]);
         $builder->add('contests', EntityType::class, [
-            'label' => 'Contest',
+            'label' => '대회 목록',
             'class' => Contest::class,
             'required' => false,
             'multiple' => true,
@@ -60,7 +61,7 @@ class RejudgingType extends AbstractType
         ]);
         $builder->add('problems', EntityType::class, [
             'multiple' => true,
-            'label' => 'Problem',
+            'label' => '문제',
             'class' => Problem::class,
             'required' => false,
             'choice_label' => 'name',
@@ -68,7 +69,7 @@ class RejudgingType extends AbstractType
         ]);
         $builder->add('languages', EntityType::class, [
             'multiple' => true,
-            'label' => 'Language',
+            'label' => '언어',
             'class' => Language::class,
             'required' => false,
             'choice_label' => 'name',
@@ -79,14 +80,14 @@ class RejudgingType extends AbstractType
         ]);
         $builder->add('teams', EntityType::class, [
             'multiple' => true,
-            'label' => 'Team',
+            'label' => '팀 목록',
             'class' => Team::class,
             'required' => false,
             'choice_label' => 'name',
             'choices' => [],
         ]);
         $builder->add('users', EntityType::class, [
-            'label' => 'User',
+            'label' => '사용자 목록',
             'class' => User::class,
             'required' => false,
             'multiple' => true,
@@ -109,7 +110,7 @@ class RejudgingType extends AbstractType
 
         $verdicts = array_keys($this->dj->getVerdicts());
         $builder->add('verdicts', ChoiceType::class, [
-            'label' => 'Verdict',
+            'label' => '판정',
             'multiple' => true,
             'required' => false,
             'choices' => array_combine($verdicts, $verdicts),
@@ -117,23 +118,23 @@ class RejudgingType extends AbstractType
         $relativeTimeConstraints = [
             new Regex([
                 'pattern' => '/^[+-][0-9]+:[0-9]{2}(:[0-9]{2}(\.[0-9]{0,6})?)?$/',
-                'message' => 'Invalid relative time format'
+                'message' => '잘못된 상대 시간 형식입니다.'
             ])
         ];
         $builder->add('after', TextType::class, [
-            'label' => 'after',
+            'label' => '이후',
             'required' => false,
             'constraints' => $relativeTimeConstraints,
-            'help' => 'in form ±[HHH]H:MM[:SS[.uuuuuu]], contest relative time',
+            'help' => '형식 ±[HHH]H:MM[:SS[.uuuuuu]], 대회의 상대 시간',
         ]);
         $builder->add('before', TextType::class, [
-            'label' => 'before',
+            'label' => '이전',
             'required' => false,
             'constraints' => $relativeTimeConstraints,
-            'help' => 'in form ±[HHH]H:MM[:SS[.uuuuuu]], contest relative time',
+            'help' => '형식 ±[HHH]H:MM[:SS[.uuuuuu]], 대회의 상대 시간',
         ]);
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         $formProblemModifier = function (FormInterface $form, $contests = []) {
             /** @var Contest[] $contests */
@@ -149,7 +150,7 @@ class RejudgingType extends AbstractType
 
             $form->add('problems', EntityType::class, [
                 'multiple' => true,
-                'label' => 'Problem',
+                'label' => '문제',
                 'class' => Problem::class,
                 'required' => false,
                 'choice_label' => 'name',
@@ -183,7 +184,7 @@ class RejudgingType extends AbstractType
 
             $form->add('teams', EntityType::class, [
                 'multiple' => true,
-                'label' => 'Team',
+                'label' => '팀 목록',
                 'class' => Team::class,
                 'required' => false,
                 'choice_label' => 'name',

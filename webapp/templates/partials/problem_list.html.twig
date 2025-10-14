@@ -3,7 +3,7 @@
 {% set contest_problemset_add_cid = contest_problemset_add_cid | default(false) %}
 
 <h1 class="mt-4 text-center">
-    {{ contest.name | default('Contest') }} problems
+    {{ contest.name | default('대회') }} 문제
     {% if contest and show_contest_problemset and contest.contestProblemsetType is not empty %}
         {% if contest_problemset_add_cid %}
             {% set contest_problemset_url = path(contest_problemset_path, {'cid': contest.cid}) %}
@@ -13,18 +13,18 @@
         <a class="btn btn-secondary" role="button"
            href="{{ contest_problemset_url }}">
             <i class="fas fa-file-{{ contest.contestProblemsetType }}"></i>
-            problemset
+            문제 세트
         </a>
     {% endif %}
 </h1>
 
 {% if problems is empty %}
-    <div class="alert alert-secondary">No problem texts available at this point.</div>
+    <div class="alert alert-secondary">현재 이용 가능한 문제 텍스트가 없습니다.</div>
 {% else %}
     <div class="container">
         {% if show_jury_warning is defined and show_jury_warning %}
             <div class="alert alert-warning">
-                This is a preview of how the page will look like for teams and the public after the contest has started.
+                이것은 대회가 시작된 후 팀 및 일반 대중에게 페이지가 어떻게 보일지에 대한 미리 보기입니다.
             </div>
         {% endif %}
 
@@ -45,8 +45,8 @@
                                         </h3>
                                         {% if showLimits %}
                                             <h4 class="card-subtitle mb-2 text-muted">
-                                                Limits: {{ problem.problem.timelimit }}
-                                                second
+                                                제한: {{ problem.problem.timelimit }}
+                                                초
                                                 {%- if problem.problem.timelimit > 1 %}s{% endif %}
                                                 {%- if timeFactorDiffers -%}
                                                     <sup>*</sup>
@@ -76,9 +76,9 @@
                                                                 {% set bucket = (count / maxBucketSize * 9) | round(0, 'ceil') %}
                                                             {% endif %}
                                                             {% if count == 1 %}
-                                                                {% set submissionText = 'submission' %}
+                                                                {% set submissionText = '제출' %}
                                                             {% else %}
-                                                                {% set submissionText = 'submissions' %}
+                                                                {% set submissionText = '제출' %}
                                                             {% endif %}
                                                             {% if not contest.freezeData.showFinal and contest.freezetime and stat.end.timestamp >= contest.freezetime %}
                                                                 {% set maxBucketSize = max(1, stats.maxBucketSizeCorrect, stats.maxBucketSizeIncorrect) %}
@@ -110,14 +110,14 @@
                                                 <a class="btn btn-secondary" role="button"
                                                    href="{{ path(problem_statement_path, {'probId': problem.probid}) }}">
                                                     <i class="fas fa-file-{{ problem.problem.problemstatementType }}"></i>
-                                                    statement
+                                                    문제
                                                 </a>
                                             {% endif %}
 
                                             {% if numsamples > 0 %}
                                                 <a class="btn btn-secondary" role="button"
                                                    href="{{ path(problem_sample_zip_path, {'probId': problem.probid}) }}">
-                                                    <i class="fas fa-file-archive"></i> samples
+                                                    <i class="fas fa-file-archive"></i> 샘플
                                                 </a>
                                             {% endif %}
 
@@ -125,13 +125,13 @@
                                                 {% if is_granted('ROLE_JURY') or (current_team_contest is not null and current_team_contest.freezeData.started) %}
                                                     <a class="justify-content-center" data-ajax-modal data-ajax-modal-after="initSubmitModal" href="{{ path('team_submit', {problem: problem.probid}) }}">
                                                         <span class="btn btn-success">
-                                                            <i class="fas fa-cloud-upload-alt"></i> Submit
+                                                            <i class="fas fa-cloud-upload-alt"></i> 제출
                                                         </span>
                                                     </a>
                                                 {% else %}
                                                     <a class="justify-content-center">
                                                         <span class="btn btn-success disabled" disabled>
-                                                            <i class="fas fa-cloud-upload-alt"></i> Submit
+                                                            <i class="fas fa-cloud-upload-alt"></i> 제출
                                                         </span>
                                                     </a>
                                                 {% endif %}
@@ -162,7 +162,7 @@
             <div class="row">
                 <div class="col-md-12 my-sm-3">
                     <div class=" alert alert-secondary" role="alert">
-                        * language time factors apply
+                        * 언어 시간 계수 적용됨
                     </div>
                 </div>
             </div>

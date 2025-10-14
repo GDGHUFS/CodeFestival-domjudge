@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Users - {{ parent() }}{% endblock %}
+{% block title %}사용자 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,14 +10,14 @@
 
 {% block content %}
 
-    <h1>Users</h1>
+    <h1>사용자</h1>
 
     {{ macros.table(users, table_fields) }}
 
     {% if is_granted('ROLE_ADMIN') %}
         <p>
-            {{ button(path('jury_user_add'), 'Add new user', 'primary', 'plus') }}
-            {{ button(path('jury_reset_login_status'), 'Reset login status of all team users', 'secondary', 'refresh') }}
+            {{ button(path('jury_user_add'), '새 사용자 추가', 'primary', 'plus') }}
+            {{ button(path('jury_reset_login_status'), '모든 팀 사용자의 로그인 상태 초기화', 'secondary', 'refresh') }}
         </p>
     {% endif %}
 {% endblock %}

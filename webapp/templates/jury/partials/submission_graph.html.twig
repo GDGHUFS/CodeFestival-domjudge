@@ -3,12 +3,12 @@
     {% if selectedJudging is not null %}
         <div class="card" style="display: inline-block" id="testcaseruntime">
             <div class="card-header">
-                <span id="graphs" style="font-weight: bold;">testcase CPU times
+                <span id="graphs" style="font-weight: bold;">테스트케이스 CPU 시간
                     <span style="font-weight: normal;">
                             {%- if selectedJudging.result != 'compiler-error' -%}
-                                | max:
-                                {{ selectedJudging.maxRuntime | number_format(3, '.', '') }}s
-                                | sum: {{ selectedJudging.sumRuntime | number_format(3, '.', '') }}s
+                                | 최대:
+                                {{ selectedJudging.maxRuntime | number_format(3, '.', '') }}초
+                                | 합계: {{ selectedJudging.sumRuntime | number_format(3, '.', '') }}초
                             {% endif %}
                     </span>
                 </span>
@@ -21,12 +21,12 @@
     {% if externalJudgement is not null and externalJudgement.result is not null %}
         <div class="card" style="display: inline-block" id="externalruntime">
             <div class="card-header">
-                <span id="graphs" style="font-weight: bold;">External Testcase CPU times
+                <span id="graphs" style="font-weight: bold;">외부 테스트케이스 CPU 시간
                     <span style="font-weight: normal;">
                             {%- if externalJudging.result != 'compiler-error' -%}
-                                | max:
-                                {{ externalJudging.maxRuntime | number_format(3, '.', '') }}s
-                                | sum: {{ externalJudging.sumRuntime | number_format(3, '.', '') }}s
+                                | 최대:
+                                {{ externalJudging.maxRuntime | number_format(3, '.', '') }}초
+                                | 합계: {{ externalJudging.sumRuntime | number_format(3, '.', '') }}초
                             {% endif %}
                     </span>
 	        </span>
@@ -40,7 +40,7 @@
         <div class="card" style="display: inline-block" id="maxruntime">
             <div class="card" style="display: inline-block" id="externalruntime">
                 <div class="card-header">
-                    <span id="graphs" style="font-weight: bold;">Max. CPU times</span>
+                    <span id="graphs" style="font-weight: bold;">최대 CPU 시간</span>
                 </div>
                 <div class="card-body">
                     <svg style="width:500px; height:250px;"></svg>
@@ -89,7 +89,7 @@
         }
         chart.yAxis
             .tickValues(tickValues)
-            .axisLabel('CPU time');
+            .axisLabel('CPU 시간');
         if (tickStep >= 1) {
             chart.yAxis.tickFormat(function(d) { return d3.format(',f')(d) + 's' });
         } else {
@@ -106,7 +106,7 @@
         {% if judgings|length > 1 %}
         var run_max_times = [
             {
-                key: "Max Runtime",
+                key: "최대 실행 시간",
                 values: [
                     {% for judging in judgings | filter(judging => judging.result and judging.result != 'aborted') %}
                     {
@@ -122,9 +122,9 @@
             var chart = create_chart(run_max_times, maxY);
             chart.tooltip.contentGenerator(function (obj) {
                 var format = d3.format(".3f");
-                return "<b>" + obj.data.label + "</b><br><b>max runtime:</b> " + format(obj.data.value) + "s";
+                return "<b>" + obj.data.label + "</b><br><b>최대 실행 시간:</b> " + format(obj.data.value) + "초";
             });
-            chart.xAxis.axisLabel("Judging");
+            chart.xAxis.axisLabel("심사");
             d3.select('#maxruntime svg')
                 .datum(run_max_times)
                 .call(chart);
@@ -156,7 +156,7 @@
         {% if selectedJudging is not null %}
         var testcase_times = [
             {
-                key: "Runtime",
+                key: "실행 시간",
                 values: [
                     {% for run in runs %}
                     {
@@ -173,9 +173,9 @@
             var chart = create_chart(testcase_times, maxY);
             chart.tooltip.contentGenerator(function (obj) {
                 var format = d3.format(".3f");
-                return "<b>Testcase " + obj.data.description + "</b><br><b>Runtime:</b> " + format(obj.data.value) + "s";
+                return "<b>테스트케이스 " + obj.data.description + "</b><br><b>실행 시간:</b> " + format(obj.data.value) + "초";
             });
-            chart.xAxis.axisLabel("testcase rank");
+            chart.xAxis.axisLabel("테스트케이스 순위");
             d3.select('#testcaseruntime svg')
                 .datum(testcase_times)
                 .call(chart);
@@ -199,7 +199,7 @@
         {% if externalJudgement is not null and externalJudgement.result is not null %}
         var external_times = [
             {
-                key: "Runtime",
+                key: "실행 시간",
                 values: [
                     {% for run in externalRuns %}
                     {
@@ -216,9 +216,9 @@
             var chart = create_chart(external_times, maxY);
             chart.tooltip.contentGenerator(function (obj) {
                 var format = d3.format(".3f");
-                return "<b>Testcase " + obj.data.description + "</b><br><b>Runtime:</b> " + format(obj.data.value) + "s";
+                return "<b>테스트케이스 " + obj.data.description + "</b><br><b>실행 시간:</b> " + format(obj.data.value) + "초";
             });
-            chart.xAxis.axisLabel("Testcase Rank");
+            chart.xAxis.axisLabel("테스트케이스 순위");
             d3.select('#externalruntime svg')
                 .datum(external_times)
                 .call(chart);

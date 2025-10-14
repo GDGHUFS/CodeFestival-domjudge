@@ -1,16 +1,16 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}{{ parent() }} - Jury Interface{% endblock %}
+{% block title %}{{ parent() }} - Jury 인터페이스{% endblock %}
 
 {% block extrahead %}
 {{ parent() }}
 {% endblock %}
 
 {% block content %}
-<h1>DOMjudge Jury interface</h1>
+<h1>DOMjudge Jury 인터페이스</h1>
 
 <a href="https://www.domjudge.org/">
-  <img src="{{ asset('images/DOMjudgelogo.svg') }}" id="djlogo" alt="DOMjudge logo" class="float-end d-none d-md-block" title="The DOMjudge logo: free as in beer!">
+  <img src="{{ asset('images/DOMjudgelogo.svg') }}" id="djlogo" alt="DOMjudge 로고" class="float-end d-none d-md-block" title="The DOMjudge logo: free as in beer!">
 </a>
 
 <div class="row equal mt-3">
@@ -18,22 +18,22 @@
         {% if is_granted('ROLE_JURY') %}
         <div class="card mb-3">
             <div class="card-header">
-                Before contest:
+                대회 전:
             </div>
             <div class="card-body">
                 <ul>
-                    <li><a href="{{ path('jury_contests') }}">Contests</a></li>
-                    <li><a href="{{ path('jury_executables') }}">Executables</a></li>
-                    <li><a href="{{ path('jury_judgehosts') }}">Judgehosts</a></li>
-                    <li><a href="{{ path('jury_languages') }}">Languages</a></li>
-                    <li><a href="{{ path('jury_problems') }}">Problems</a></li>
-                    <li><a href="{{ path('jury_problemset') }}">Team problemset page preview</a></li>
-                    <li><a href="{{ path('jury_users') }}">Users</a></li>
-                    <li><a href="{{ path('jury_teams') }}">Teams</a></li>
-                    <li><a href="{{ path('jury_team_categories') }}">Team Categories</a></li>
-                    <li><a href="{{ path('jury_team_affiliations') }}">Team Affiliations</a></li>
-                    <li><a href="{{ path('jury_judging_verifier') }}">Judging verifier</a></li>
-                    <li><a href="{{ path('jury_versions') }}">Compiler and runner versions</a></li>
+                    <li><a href="{{ path('jury_contests') }}">대회</a></li>
+                    <li><a href="{{ path('jury_executables') }}">실행 파일</a></li>
+                    <li><a href="{{ path('jury_judgehosts') }}">Judgehost</a></li>
+                    <li><a href="{{ path('jury_languages') }}">언어</a></li>
+                    <li><a href="{{ path('jury_problems') }}">문제</a></li>
+                    <li><a href="{{ path('jury_problemset') }}">팀 문제 세트 페이지 미리보기</a></li>
+                    <li><a href="{{ path('jury_users') }}">사용자</a></li>
+                    <li><a href="{{ path('jury_teams') }}">팀</a></li>
+                    <li><a href="{{ path('jury_team_categories') }}">팀 카테고리</a></li>
+                    <li><a href="{{ path('jury_team_affiliations') }}">팀 소속</a></li>
+                    <li><a href="{{ path('jury_judging_verifier') }}">채점 검증기</a></li>
+                    <li><a href="{{ path('jury_versions') }}">컴파일러 및 실행기 버전</a></li>
                 </ul>
             </div>
         </div>
@@ -41,33 +41,33 @@
 
         <div class="card mb-3">
             <div class="card-header">
-                During contest:
+                대회 중:
             </div>
             <div class="card-body">
                 <ul>
                     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_BALLOON') %}
-                        <li><a href="{{ path('jury_balloons') }}">Balloon Status</a></li>
+                        <li><a href="{{ path('jury_balloons') }}">풍선 상태</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_CLARIFICATION_RW') %}
-                        <li><a href="{{ path('jury_clarifications') }}">Clarifications</a></li>
+                        <li><a href="{{ path('jury_clarifications') }}">질의 응답</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_JURY') %}
-                        <li><a href="{{ path('jury_internal_errors') }}">Internal Errors</a></li>
+                        <li><a href="{{ path('jury_internal_errors') }}">내부 오류</a></li>
                     {% endif %}
                     {% if have_printing %}
-                        <li><a href="{{ path('jury_print') }}">Print</a></li>
+                        <li><a href="{{ path('jury_print') }}">인쇄</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_JURY') %}
-                        <li><a href="{{ path('jury_rejudgings') }}">Rejudgings</a></li>
-                        <li><a href="{{ path('jury_scoreboard') }}">Scoreboard</a></li>
-                        <li><a href="{{ path('analysis_index') }}">Statistics/Analysis</a></li>
-                        <li><a href="{{ path('jury_submissions') }}">Submissions</a></li>
+                        <li><a href="{{ path('jury_rejudgings') }}">재채점</a></li>
+                        <li><a href="{{ path('jury_scoreboard') }}">스코어보드</a></li>
+                        <li><a href="{{ path('analysis_index') }}">통계/분석</a></li>
+                        <li><a href="{{ path('jury_submissions') }}">제출물</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('jury_queue_tasks') }}">Queue tasks</a></li>
+                            <li><a href="{{ path('jury_queue_tasks') }}">큐 작업</a></li>
                         {% endif %}
                         {% if show_shadow_differences %}
-                            <li><a href="{{ path('jury_shadow_differences') }}">Shadow Differences</a></li>
-                            <li><a href="{{ path('jury_external_contest') }}">External Contest</a></li>
+                            <li><a href="{{ path('jury_shadow_differences') }}">그림자 차이</a></li>
+                            <li><a href="{{ path('jury_external_contest') }}">외부 대회</a></li>
                         {% endif %}
                     {% endif %}
                 </ul>
@@ -79,18 +79,18 @@
     {% if is_granted('ROLE_ADMIN') %}
     <div class="card mb-3">
       <div class="card-header">
-        Administrator:
+        관리자:
       </div>
       <div class="card-body">
         <ul>
-          <li><a href="{{ path('jury_config') }}">Configuration settings</a></li>
-          <li><a href="{{ path('jury_config_check') }}">Config checker</a></li>
-          <li><a href="{{ path('jury_import_export') }}">Import / export</a></li>
-          <li><a href="{{ path('jury_generate_passwords') }}">Manage team passwords</a></li>
-          <li><a href="{{ path('jury_refresh_cache') }}">Refresh scoreboard cache</a></li>
-          <li><a href="{{ path('jury_auditlog') }}">Audit log</a></li>
+          <li><a href="{{ path('jury_config') }}">설정 구성</a></li>
+          <li><a href="{{ path('jury_config_check') }}">구성 검사기</a></li>
+          <li><a href="{{ path('jury_import_export') }}">가져오기 / 내보내기</a></li>
+          <li><a href="{{ path('jury_generate_passwords') }}">팀 비밀번호 관리</a></li>
+          <li><a href="{{ path('jury_refresh_cache') }}">스코어보드 캐시 새로 고침</a></li>
+          <li><a href="{{ path('jury_auditlog') }}">감사 로그</a></li>
           {% if adminer_enabled %}
-            <li><a href="{{ path('jury_adminer', {username: '', db: 'domjudge'}) }}">Adminer Database Editor</a></li>
+            <li><a href="{{ path('jury_adminer', {username: '', db: 'domjudge'}) }}">Adminer 데이터베이스 편집기</a></li>
           {% endif %}
         </ul>
       </div>
@@ -99,14 +99,14 @@
 
     <div class="card mb-3">
       <div class="card-header">
-        Documentation:
+        문서:
       </div>
       <div class="card-body">
         <ul>
-        <li><a href="{{ asset('doc/manual/html/index.html') }}">DOMjudge manual</a></li>
-        <li><a href="{{ asset('doc/manual/domjudge-team-manual.pdf') }}">Team manual <i class="fas fa-file-pdf"></i></a></li>
-        <li><a href="{{ path('app.swagger_ui') }}">API documentation</a><br />
-            See also the <a href="{{ CCS_SPEC_API_URL }}">ICPC Contest API</a>.</li>
+        <li><a href="{{ asset('doc/manual/html/index.html') }}">DOMjudge 매뉴얼</a></li>
+        <li><a href="{{ asset('doc/manual/domjudge-team-manual.pdf') }}">팀 매뉴얼 <i class="fas fa-file-pdf"></i></a></li>
+        <li><a href="{{ path('app.swagger_ui') }}">API 문서</a><br />
+            <a href="{{ CCS_SPEC_API_URL }}">ICPC Contest API</a>도 참조하십시오.</li>
         </ul>
       </div>
     </div>

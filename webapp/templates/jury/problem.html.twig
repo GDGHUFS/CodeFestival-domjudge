@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Problem {{ problem.probid }} - {{ parent() }}{% endblock %}
+{% block title %}문제 {{ problem.probid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-    <h1>Problem {{ problem.name }}</h1>
+    <h1>문제 {{ problem.name }}</h1>
 
     <div class="row">
         <div class="col-lg-4">
@@ -22,44 +22,44 @@
                 </tr>
                 {% if showExternalId(problem) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ problem.externalid }}</td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Testcases</th>
+                    <th>테스트케이스</th>
                     <td>
                         {% if problem.testcases is empty %}
-                            <em>no testcases</em>
+                            <em>테스트케이스 없음</em>
                         {% else %}
                             {{ problem.testcases.count }}
                         {% endif %}
-                        <a href="{{ path('jury_problem_testcases', {'probId': problem.probid}) }}">details
+                        <a href="{{ path('jury_problem_testcases', {'probId': problem.probid}) }}">세부 정보
                             {%- if is_granted('ROLE_ADMIN') and not lockedProblem -%}
-                                / edit
+                                / 수정
                             {% endif %}
                         </a>
                     </td>
                 </tr>
                 <tr>
-                    <th>Timelimit</th>
-                    <td>{{ problem.timelimit }} sec</td>
+                    <th>시간 제한</th>
+                    <td>{{ problem.timelimit }} 초</td>
                 </tr>
                 <tr>
-                    <th>Memory limit</th>
+                    <th>메모리 제한</th>
                     <td>
                         {% if problem.memlimit == null %}
-                            {{ defaultMemoryLimit }} kB (default)
+                            {{ defaultMemoryLimit }} kB (기본값)
                         {% else %}
                             {{ problem.memlimit }} kB
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Output limit</th>
+                    <th>출력 제한</th>
                     <td>
                         {% if problem.outputlimit == null %}
-                            {{ defaultOutputLimit }} kB (default)
+                            {{ defaultOutputLimit }} kB (기본값)
                         {% else %}
                             {{ problem.outputlimit }} kB
                         {% endif %}
@@ -67,47 +67,47 @@
                 </tr>
                 {% if problem.problemstatementType is not empty %}
                     <tr>
-                        <th>Problem statement</th>
+                        <th>문제 설명</th>
                         <td>
                             <a href="{{ path('jury_problem_statement', {'probId': problem.probid}) }}">
-                                <i title="view problem statement"
+                                <i title="문제 설명 보기"
                                    class="fas fa-file-{{ problem.problemstatementType }}"></i>
                             </a>
                         </td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Run script</th>
+                    <th>실행 스크립트</th>
                     <td class="filename">
                         {% if problem.runExecutable is not empty %}
                             <a href="{{ path('jury_executable', {'execId': problem.runExecutable.execid}) }}">{{ problem.runExecutable.execid }}</a>
                         {% else %}
                             <a href="{{ path('jury_executable', {'execId': defaultRunExecutable}) }}">{{ defaultRunExecutable }}</a>
-                            (default)
+                            (기본값)
                         {% endif %}
                     </td>
                 </tr>
                 {% if problem.combinedRunCompare %}
                     <tr>
-                        <th>Compare script</th>
-                        <td>Run script combines run and compare script.</td>
+                        <th>비교 스크립트</th>
+                        <td>실행 스크립트가 실행 및 비교 스크립트를 통합합니다.</td>
                     </tr>
                 {% else %}
                     <tr>
-                        <th>Compare script</th>
+                        <th>비교 스크립트</th>
                         <td class="filename">
                             {% if problem.compareExecutable is not empty %}
                                 <a href="{{ path('jury_executable', {'execId': problem.compareExecutable.execid}) }}">{{ problem.compareExecutable.execid }}</a>
                             {% else %}
                                 <a href="{{ path('jury_executable', {'execId': defaultCompareExecutable}) }}">{{ defaultCompareExecutable }}</a>
-                                (default)
+                                (기본값)
                             {% endif %}
                         </td>
                     </tr>
                 {% endif %}
                 {% if problem.specialCompareArgs is not empty %}
                     <tr>
-                        <th>Compare script arguments</th>
+                        <th>비교 스크립트 인자</th>
                         <td class="filename">{{ problem.specialCompareArgs }}</td>
                     </tr>
                 {% endif %}
@@ -118,19 +118,19 @@
     <div class="button-row">
         {%- if is_granted('ROLE_ADMIN') -%}
             {%- if not lockedProblem -%}
-                {{ button(path('jury_problem_edit', {'probId': problem.probid}), 'Edit', 'primary', 'edit') }}
-                {{ button(path('jury_problem_delete', {'probId': problem.probid}), 'Delete', 'danger', 'trash-alt', true) }}
+                {{ button(path('jury_problem_edit', {'probId': problem.probid}), '수정', 'primary', 'edit') }}
+                {{ button(path('jury_problem_delete', {'probId': problem.probid}), '삭제', 'danger', 'trash-alt', true) }}
             {% endif %}
-            {{ button(path('jury_problem_request_remaining', {'probId': problem.probid}), 'Judge remaining testcases', 'secondary', 'gavel') }}
+            {{ button(path('jury_problem_request_remaining', {'probId': problem.probid}), '남은 테스트케이스 심사 요청', 'secondary', 'gavel') }}
         {% endif %}
-        {{ button(path('jury_export_problem', {'problemId': problem.probid}), 'Export', 'secondary', 'download') }}
+        {{ button(path('jury_export_problem', {'problemId': problem.probid}), '내보내기', 'secondary', 'download') }}
         {% include 'jury/partials/rejudge_form.html.twig' with {table: 'problem', id: problem.probid, buttonClass: 'btn-secondary'} %}
     </div>
 
-    <h3>Contests</h3>
+    <h3>대회 목록</h3>
 
     {% if problem.contestProblems is empty %}
-        <p class="nodata">No contests defined</p>
+        <p class="nodata">정의된 대회가 없습니다</p>
     {% else %}
         <div class="row">
             <div class="col-md-6">
@@ -139,12 +139,12 @@
                     <thead class="thead-light">
                     <tr>
                         <th>CID</th>
-                        <th>Contest<br/>shortname</th>
-                        <th>Contest<br/>name</th>
-                        <th>Problem<br/>shortname</th>
-                        <th>Allow<br/>submit</th>
-                        <th>Allow<br/>judge</th>
-                        <th>Colour</th>
+                        <th>대회<br/>약칭</th>
+                        <th>대회<br/>이름</th>
+                        <th>문제<br/>약칭</th>
+                        <th>제출<br/>허용</th>
+                        <th>심사<br/>허용</th>
+                        <th>색상</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -186,7 +186,7 @@
         </div>
     {% endif %}
 
-    <h3>Attachments</h3>
+    <h3>첨부 파일</h3>
 
     <div class="row">
         <div class="col-md-6">
@@ -194,7 +194,7 @@
             <table class="table table-sm table-striped table-hover">
                 <thead class="thead-light">
                 <tr>
-                    <th>Name</th>
+                    <th>이름</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -202,7 +202,7 @@
                 {% if problem.attachments is empty %}
                     <tr>
                         <td colspan="2">
-                            <p class="nodata">No attachments</p>
+                            <p class="nodata">첨부 파일 없음</p>
                         </td>
                     </tr>
                 {% else %}
@@ -243,7 +243,7 @@
         </div>
     </div>
 
-    <h3>Submissions</h3>
+    <h3>제출 목록</h3>
 
     <div data-ajax-refresh-target>
         {%- include 'jury/partials/submission_list.html.twig' with {showTestcases: false} %}

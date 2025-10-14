@@ -1,14 +1,14 @@
 {% if scoreboard is defined and scoreboard is not null %}
-    <h2 class="mt-2">Score</h2>
+    <h2 class="mt-2">점수</h2>
 
     {% include 'partials/scoreboard_table.html.twig' with {displayRank: true, jury: true} %}
 {% endif %}
 
 <h2 class="mt-2">
-    Submissions
+    제출물
     {% if restrictionText %}
     <small class="text-muted">
-        restricted to {{ restrictionText }} (<a href="{{ path('jury_team', {'teamId': team.teamid}) }}">show all</a>)
+        {{ restrictionText }}로 제한됨 (<a href="{{ path('jury_team', {'teamId': team.teamid}) }}">모두 보기</a>)
     </small>
     {% endif %}
 </h2>

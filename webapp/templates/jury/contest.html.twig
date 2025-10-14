@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Contest {{ contest.cid }} - {{ parent() }}{% endblock %}
+{% block title %}대회 {{ contest.cid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,26 +11,26 @@
 
 {% block content %}
 
-    <h1>Contest {{ contest.name }}</h1>
+    <h1>대회 {{ contest.name }}</h1>
 
     {% if contest.isActive %}
         <div class="alert alert-success">
-            This contest is currently active.
+            이 대회는 현재 활성화 상태입니다.
         </div>
     {% endif %}
     {% if not contest.enabled %}
         <div class="alert alert-danger">
-            This contest is disabled.
+            이 대회는 비활성화 상태입니다.
         </div>
     {% endif %}
     {% if contest.finalizetime is not empty %}
         <div class="alert alert-info">
-            This contest is final.
+            이 대회는 최종 확정되었습니다.
         </div>
     {% endif %}
     {%- if is_granted('ROLE_ADMIN') and contest.isLocked -%}
         <div class="alert alert-warning">
-            This contest is locked. Unlock it to edit contest data.
+            이 대회는 잠금 상태입니다. 대회 데이터를 수정하려면 잠금을 해제하십시오.
         </div>
     {% endif %}
 
@@ -44,13 +44,13 @@
                 </tr>
                 {% if showExternalId(contest) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ contest.externalid }}</td>
                         <td></td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Short name</th>
+                    <th>약어</th>
                     <td>{{ contest.shortname }}</td>
                     <td></td>
                 </tr>
@@ -74,7 +74,7 @@
                                 {% endif %}
                                 {% if type == 'finalize' %}
                                     {% if contest.finalizetime %}
-                                        {{ button(path('jury_contest_finalize', {'contestId': contest.cid}), 'Update finalization', 'secondary btn-sm timebutton') }}
+                                        {{ button(path('jury_contest_finalize', {'contestId': contest.cid}), '최종 확정 업데이트', 'secondary btn-sm timebutton') }}
                                     {% endif %}
                                 {% endif %}
                             </td>
@@ -84,7 +84,7 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <th>Allow submit</th>
+                    <th>제출 허용</th>
                     <td>
                         {% include 'jury/partials/contest_toggle.html.twig' with {type: 'submit', enabled: contest.allowSubmit} %}
                     </td>
@@ -92,10 +92,10 @@
                 </tr>
                 {% if contest.contestProblemsetType is not empty %}
                     <tr>
-                        <th>Problemset document</th>
+                        <th>문제 세트 문서</th>
                         <td>
                             <a href="{{ path('jury_contest_problemset', {'cid': contest.cid}) }}">
-                                <i title="view problemset document of the contest"
+                                <i title="대회 문제 세트 문서 보기"
                                    class="fas fa-file-{{ contest.contestProblemsetType }}"></i>
                             </a>
                         </td>
@@ -103,45 +103,45 @@
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Process balloons</th>
+                    <th>풍선 처리</th>
                     <td>
                         {% include 'jury/partials/contest_toggle.html.twig' with {type: 'balloons', enabled: contest.processBalloons} %}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Runtime as tiebreaker</th>
+                    <th>실행 시간으로 동점 처리</th>
                     <td>
                         {% include 'jury/partials/contest_toggle.html.twig' with {type: 'tiebreaker', enabled: contest.runtimeAsScoreTiebreaker} %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Process medals</th>
+                    <th>메달 처리</th>
                     <td>
                         {% include 'jury/partials/contest_toggle.html.twig' with {type: 'medals', enabled: contest.medalsEnabled} %}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Medals</th>
+                    <th>메달</th>
                     <td>
                         {% if contest.medalsEnabled %}
                             <div class="card">
                                 <h6 class="card-header" id="categories">
                                     <a class="collapsed d-block text-dark pt-0 pb-0" data-bs-toggle="collapse" href="#collapsecategories" aria-expanded="true" aria-controls="collapsecategories" id="collapseheader">
-                                        {{ (contest.goldMedals > 0) + (contest.silverMedals > 0) + (contest.bronzeMedals > 0) }} different types of medals (Show/Hide details)
+                                        {{ (contest.goldMedals > 0) + (contest.silverMedals > 0) + (contest.bronzeMedals > 0) }} 종류의 메달 (세부 정보 보기/숨기기)
                                         <i class="fa fa-chevron-down float-end"></i>
                                     </a>
                                 </h6>
                                 <div id="collapsecategories" class="collapse collapsed" aria-labelledby="categories">
                                     <div class="card-body pb-1">
-                                        <a>{{ contest.goldMedals }} Gold Medal(s)</a>
+                                        <a>{{ contest.goldMedals }} 금메달</a>
                                         <br>
-                                        <a>{{ contest.silverMedals }} Silver Medal(s)</a>
+                                        <a>{{ contest.silverMedals }} 은메달</a>
                                         <br>
-                                        <a>{{ contest.bronzeMedals }} Bronze Medal(s)</a>
+                                        <a>{{ contest.bronzeMedals }} 동메달</a>
                                         <br>
-                                        For all teams from the following categories:
+                                        다음 카테고리의 모든 팀에게 수여:
                                         <ul>
                                             {% for category in contest.medalCategories %}
                                                 <li>
@@ -155,28 +155,28 @@
                                 </div>
                             </div>
                         {% else %}
-                            <em>none</em>
+                            <em>없음</em>
                         {% endif %}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Publicly visible</th>
+                    <th>대중 공개</th>
                     <td>
                         {% include 'jury/partials/contest_toggle.html.twig' with {type: 'public', enabled: contest.public} %}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Open to all teams</th>
+                    <th>모든 팀에게 개방</th>
                     <td>{{ contest.openToAllTeams | printYesNo }}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Teams</th>
+                    <th>팀</th>
                     <td>
                         {% if contest.openToAllTeams %}
-                            <em>all teams</em>
+                            <em>모든 팀</em>
                         {% else %}
                             {% for team in contest.teams %}
                                 <a href="{{ path('jury_team', {'teamId': team.teamid}) }}">
@@ -185,7 +185,7 @@
                                 <br>
                             {% endfor %}
                             {% for category in contest.teamCategories %}
-                                All teams from
+                                다음 카테고리의 모든 팀:
                                 <a href="{{ path('jury_team_category', {'categoryId': category.categoryid}) }}">
                                     {{ category.name }}
                                 </a>
@@ -196,32 +196,32 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Public static scoreboard ZIP</th>
+                    <th>공개 정적 스코어보드 ZIP</th>
                     <td>
                         <a class="btn btn-sm btn-secondary" href="{{ path('jury_scoreboard_data_zip', {contestId: contest.cid, type: 'public'}) }}">
-                            <i class="fas fa-download"></i> Download
+                            <i class="fas fa-download"></i> 다운로드
                         </a>
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Jury (unfrozen) static scoreboard ZIP</th>
+                    <th>심사위원 (미동결) 정적 스코어보드 ZIP</th>
                     <td>
                         <a class="btn btn-sm btn-secondary" href="{{ path('jury_scoreboard_data_zip', {contestId: contest.cid, type: 'unfrozen'}) }}">
-                            <i class="fas fa-download"></i> Download
+                            <i class="fas fa-download"></i> 다운로드
                         </a>
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th>Sample data ZIP</th>
+                    <th>샘플 데이터 ZIP</th>
                     <td>
                         <a class="btn btn-sm btn-secondary" href="{{ path('jury_contest_samples_data_zip', {contestId: contest.cid}) }}">
-                            <i class="fas fa-download"></i> Download
+                            <i class="fas fa-download"></i> 다운로드
                         </a>
                         <br/>
                         <small class="text-muted">
-                            Contains samples, attachments and statement for all problems.
+                            모든 문제에 대한 샘플, 첨부 파일 및 설명이 포함되어 있습니다.
                         </small>
                     </td>
                     <td></td>
@@ -236,13 +236,13 @@
                 {% endif %}
                 {% if banner %}
                     <tr>
-                        <th>Banner</th>
+                        <th>배너</th>
                         <td><img style="max-width: 300px;" src="{{ asset(banner) }}" title="{{ contest.name }}" /></td>
                         <td></td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Warning message</th>
+                    <th>경고 메시지</th>
                     <td>{{ contest.warningMessage }}</td>
                     <td></td>
                 </tr>
@@ -251,13 +251,13 @@
     </div>
 
     {% if contest.finalizetime %}
-        <h2>Finalized</h2>
+        <h2>최종 확정됨</h2>
 
         <div class="row">
             <div class="col-lg-4">
                 <table class="table table-sm table-striped">
                     <tr>
-                        <th>Finalized at</th>
+                        <th>최종 확정 시간</th>
                         <td>{{ contest.finalizetime | printtime('Y-m-d H:i:s (T)') }}</td>
                     </tr>
                     <tr>
@@ -265,7 +265,7 @@
                         <td>{{ contest.b }}</td>
                     </tr>
                     <tr>
-                        <th>Comment</th>
+                        <th>코멘트</th>
                         <td>{{ contest.finalizecomment | nl2br }}</td>
                     </tr>
                 </table>
@@ -274,9 +274,9 @@
     {% endif %}
 
     {% if allowRemovedIntervals %}
-        <h2>Removed intervals</h2>
+        <h2>제외된 시간 간격</h2>
         {% if not is_granted('ROLE_ADMIN') and contest.removedIntervals is empty %}
-            <p class="nodata">None.</p>
+            <p class="nodata">없음.</p>
         {% else %}
             {% if removedIntervalForm is defined %}
                 {{ form_start(removedIntervalForm) }}
@@ -287,10 +287,10 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>From</th>
+                            <th>시작</th>
                             <th></th>
-                            <th>To</th>
-                            <th>Duration</th>
+                            <th>종료</th>
+                            <th>기간</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -330,8 +330,8 @@
                 </div>
             </div>
             {% if removedIntervalForm is defined %}
-                <small class="text-muted">Use the format <b><code>YYYY-MM-DD HH:MM:SS[.uuuuuu] timezone</code></b> for
-                    start/end times.
+                <small class="text-muted">시작/종료 시간은 <b><code>YYYY-MM-DD HH:MM:SS[.uuuuuu] timezone</code></b>
+                    형식으로 사용하십시오.
                 </small>
                 {{ form_end(removedIntervalForm) }}
             {% endif %}
@@ -340,7 +340,7 @@
         <script>
             $(function () {
                 $('.remove-interval-button').on('click', function () {
-                    if (confirm('Really delete interval?')) {
+                    if (confirm('정말로 간격을 삭제하시겠습니까?')) {
                         var $form = $('<form method="post" />');
                         $form.attr('action', $(this).data('submit-url'));
                         // Some browsers require the form to be present in the DOM,
@@ -355,10 +355,10 @@
 
     {% endif %}
 
-    <h2 class="mt-2">Problems</h2>
+    <h2 class="mt-2">문제</h2>
 
     {% if problems is empty %}
-        <p class="nodata">No problems added yet</p>
+        <p class="nodata">아직 추가된 문제가 없습니다</p>
     {% else %}
         <div class="row">
             <div class="col-lg-6">
@@ -366,13 +366,13 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Shortname</th>
-                        <th>Points</th>
-                        <th>Allow<br>submit</th>
-                        <th>Allow<br>judge</th>
-                        <th>Color</th>
-                        <th>Lazy eval</th>
+                        <th>이름</th>
+                        <th>약어</th>
+                        <th>점수</th>
+                        <th>제출<br>허용</th>
+                        <th>심사<br>허용</th>
+                        <th>색상</th>
+                        <th>지연 평가</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -408,14 +408,14 @@
                             </td>
                             <td>
                                 {% if problem.problem.problemstatementType %}
-                                    <a title="view problem statement" href="{{ path('jury_problem_statement', {'probId': problem.probid}) }}">
+                                    <a title="문제 설명 보기" href="{{ path('jury_problem_statement', {'probId': problem.probid}) }}">
                                         <i class="fas fa-file-{{ problem.problem.problemstatementType }}"></i>
                                     </a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if is_granted('ROLE_ADMIN') and not contest.isLocked %}
-                                    <a title="Unlink problem from contest" href="{{ path('jury_contest_problem_delete', {'contestId': contest.cid, 'probId': problem.probid}) }}"
+                                    <a title="대회에서 문제 연결 해제" href="{{ path('jury_contest_problem_delete', {'contestId': contest.cid, 'probId': problem.probid}) }}"
                                        data-ajax-modal>
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
@@ -423,7 +423,7 @@
                             </td>
                             <td>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <a title="Judge remaining testcases" href="{{ path('jury_contest_problem_request_remaining', {'contestId': contest.cid, 'probId': problem.probid}) }}">
+                                    <a title="남은 테스트 케이스 심사" href="{{ path('jury_contest_problem_request_remaining', {'contestId': contest.cid, 'probId': problem.probid}) }}">
                                         <i class="fas fa-gavel"></i>
                                     </a>
                                 {% endif %}
@@ -439,15 +439,15 @@
     <div class="button-row">
         {%- if is_granted('ROLE_ADMIN') -%}
             {% if contest.isLocked %}
-                {{ button(path('jury_contest_unlock', {'contestId': contest.cid}), 'Unlock', 'danger', 'unlock') }}
+                {{ button(path('jury_contest_unlock', {'contestId': contest.cid}), '잠금 해제', 'danger', 'unlock') }}
             {% else %}
-                {{ button(path('jury_contest_edit', {'contestId': contest.cid}), 'Edit', 'primary', 'edit') }}
-                {{ button(path('jury_contest_delete', {'contestId': contest.cid}), 'Delete', 'danger', 'trash-alt', true) }}
-                {{ button(path('jury_contest_lock', {'contestId': contest.cid}), 'Lock', 'secondary', 'lock') }}
+                {{ button(path('jury_contest_edit', {'contestId': contest.cid}), '수정', 'primary', 'edit') }}
+                {{ button(path('jury_contest_delete', {'contestId': contest.cid}), '삭제', 'danger', 'trash-alt', true) }}
+                {{ button(path('jury_contest_lock', {'contestId': contest.cid}), '잠금', 'secondary', 'lock') }}
             {% endif %}
-            {{ button(path('jury_contest_request_remaining', {'contestId': contest.cid}), 'Judge remaining testcases', 'secondary', 'gavel') }}
+            {{ button(path('jury_contest_request_remaining', {'contestId': contest.cid}), '남은 테스트 케이스 심사', 'secondary', 'gavel') }}
         {% endif %}
-        {{ button(path('jury_contest_prefetch', {'contestId': contest.cid}), 'Heat up judgehosts with contest data', 'secondary', 'download') }}
+        {{ button(path('jury_contest_prefetch', {'contestId': contest.cid}), '대회 데이터로 Judgehosts 예열', 'secondary', 'download') }}
         {% include 'jury/partials/rejudge_form.html.twig' with {table: 'contest', id: contest.cid, buttonClass: 'btn-secondary'} %}
     </div>
 

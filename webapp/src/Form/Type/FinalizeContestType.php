@@ -15,13 +15,13 @@ class FinalizeContestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('b', IntegerType::class, [
-            'label' => 'Additional Bronze Medals'
+            'label' => '추가 동메달 수',
         ]);
         $builder->add('finalizecomment', TextareaType::class, [
-            'label' => 'Comment',
+            'label' => '비고 (코멘트)',
             'required' => false,
         ]);
-        $builder->add('finalize', SubmitType::class);
+        $builder->add('finalize', SubmitType::class, ['label' => '마무리']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

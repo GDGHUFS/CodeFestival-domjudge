@@ -2,19 +2,19 @@
 
     <table class="table table-sm table-striped file-diff-table">
         <tr>
-            <th class="diff-add">Files added</th>
+            <th class="diff-add">추가된 파일</th>
             <td class="filename">{{ oldFileStats.added | join(', ') }}</td>
         </tr>
         <tr>
-            <th class="diff-del">Files removed</th>
+            <th class="diff-del">제거된 파일</th>
             <td class="filename">{{ oldFileStats.removed | join(', ') }}</td>
         </tr>
         <tr>
-            <th class="diff-changed">Files changed</th>
+            <th class="diff-changed">변경됨 파일</th>
             <td class="filename">{{ oldFileStats.changed | join(', ') }}</td>
         </tr>
         <tr>
-            <th>Files unchanged</th>
+            <th>변경되지 않은 파일</th>
             <td class="filename">{{ oldFileStats.unchanged | join(', ') }}</td>
         </tr>
     </table>

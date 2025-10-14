@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Clarifications - {{ parent() }}{% endblock %}
+{% block title %}질의응답(설명) 요청 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -15,42 +15,54 @@
 
 {% block content %}
 
-    <h1>Clarifications</h1>
+    <h1>질의응답(설명) 요청</h1>
 
     {%- if current_contests is empty %}
 
-        <div class="alert alert-danger">No active contests</div>
+        <div class="alert alert-danger">활성화된 대회가 없습니다.</div>
     {%- else %}
 
         <div class="float-end">
             <a href="{{ path('jury_html_export', {'type': 'clarifications'}) }}" target="_blank" class="btn btn-secondary btn-sm">
-                <i class="fas fa-print"></i> Print clarifications
+                <i class="fas fa-print"></i> 질의응답(설명) 요청 인쇄
             </a>
             <a href="{{ path('jury_clarification_new') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-envelope"></i> Send clarification
+                <i class="fas fa-envelope"></i> 질의응답(설명) 요청 보내기
             </a>
         </div>
 
         <div class="btn-group btn-group-sm mb-3" role="group">
-            <span class="input-group-text listtoggles">Filter:</span>
+            <span class="input-group-text listtoggles">필터:</span>
             {% for type in ['all', 'new', 'handled', 'general'] %}
                 <input type="radio" name="filter" autocomplete="off" class="btn-check" value="{{type}}" id="filter{{type}}"
                        {% if type == 'all' and currentFilter == null %}checked{% endif %}
                        {% if type != 'all' and currentFilter == type %}checked{% endif %}
                 >
-                <label class="btn btn-secondary" for="filter{{type}}">{{ type|capitalize }}</label>
+                <label class="btn btn-secondary" for="filter{{type}}">
+                    {% if type == 'all' %}
+                        전체
+                    {% elseif type == 'new' %}
+                        새 요청
+                    {% elseif type == 'handled' %}
+                        처리됨
+                    {% elseif type == 'general' %}
+                        일반
+                    {% else %}
+                        {{ type|capitalize }}
+                    {% endif %}
+                </label>
             {% endfor %}
         </div>
 
         {% if queues | length > 0 %}
             <div class="btn-group btn-group-sm mb-3" role="group">
-                <span class="input-group-text listtoggles">Queue:</span>
+                <span class="input-group-text listtoggles">대기열:</span>
                 <input type="radio" name="queue" autocomplete="off" id="queueall" class="btn-check" value="all"
                        {% if currentQueue == "all" %}checked{% endif %}>
-                <label class="btn btn-secondary" for="queueall">All</label>
+                <label class="btn btn-secondary" for="queueall">전체</label>
                 <input type="radio" name="queue" autocomplete="off" id="queueunassigned" class="btn-check" value="unassigned"
                        {% if currentQueue == "unassigned" %}checked{% endif %}>
-                <label class="btn btn-secondary" for="queueunassigned">Unassigned</label>
+                <label class="btn btn-secondary" for="queueunassigned">할당되지 않음</label>
                 {%- for queue, name in queues %}
                     <input type="radio" name="queue" autocomplete="off" class="btn-check" id="queue{{ queue }}" value="{{ queue }}"
                            {% if currentQueue == queue %}checked{% endif %}>
@@ -60,27 +72,27 @@
         {% endif %}
 
         {% if currentFilter is null or currentFilter == 'new' %}
-            <h3 id="newrequests">New requests</h3>
+            <h3 id="newrequests">새 요청</h3>
             {%- if newClarifications | length == 0 %}
-                <p class="nodata">No new clarification requests.</p>
+                <p class="nodata">새 질의응답(설명) 요청이 없습니다.</p>
             {%- else %}
                 {%- include 'jury/partials/clarification_list.html.twig' with {clarifications: newClarifications, direction: 'from'} %}
             {%- endif %}
         {% endif %}
 
         {% if currentFilter is null or currentFilter == 'handled' %}
-            <h3 id="oldrequests" class="mt-4">Handled requests</h3>
+            <h3 id="oldrequests" class="mt-4">처리된 요청</h3>
             {%- if oldClarifications | length == 0 %}
-                <p class="nodata">No old clarification requests.</p>
+                <p class="nodata">이전 질의응답(설명) 요청이 없습니다.</p>
             {%- else %}
                 {%- include 'jury/partials/clarification_list.html.twig' with {clarifications: oldClarifications, direction: 'from'} %}
             {%- endif %}
         {% endif %}
 
         {% if currentFilter is null or currentFilter == 'general' %}
-            <h3 id="clarifications" class="mt-4">General clarifications</h3>
+            <h3 id="clarifications" class="mt-4">일반 설명</h3>
             {%- if generalClarifications | length == 0 %}
-                <p class="nodata">No general clarifications.</p>
+                <p class="nodata">일반 설명이 없습니다.</p>
             {%- else %}
                 {%- include 'jury/partials/clarification_list.html.twig' with {clarifications: generalClarifications, direction: 'to'} %}
             {%- endif %}

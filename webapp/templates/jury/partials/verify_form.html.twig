@@ -3,26 +3,26 @@
 
     {# Display verification data: verified, by whom, and comment #}
     <p>
-        {{ label }}: <strong>{% if judging.verified %}yes{% else %}no{% endif %}</strong>
+        {{ label }}: <strong>{% if judging.verified %}예{% else %}아니오{% endif %}</strong>
         {%- if judging.verified and judging.juryMember is not empty -%}
-            , by {{ judging.juryMember }}
+            , {{ judging.juryMember }} 님에 의해
             {%- if judging.verifyComment is not empty %}
-                with comment "{{ judging.verifyComment }}"
+                코멘트 "{{ judging.verifyComment }}" 포함
             {%- endif -%}
         {%- endif -%}
         {% if show_form %}
-            <input type="submit" value="{% if judging.verified %}un{% endif %}mark verified"
+            <input type="submit" value="{% if judging.verified %}확인 해제{% else %}확인 표시{% endif %}"
                    class="btn btn-outline-secondary btn-sm"/>
 
             {% if not judging.verified %}
-                with comment
+                코멘트:
                 <input type="text" name="comment" size="25" class="form-control" id="comment"
                        style="display: inline; width: auto;"/>
             {% endif %}
 
             {% if show_icat and icat_url and submission.contestProblem %}
                 <button class="btn btn-outline-secondary btn-sm" id="post-to-icat">
-                    <i class="fas fa-external-link-alt"></i> post to iCAT
+                    <i class="fas fa-external-link-alt"></i> iCAT에 게시
                 </button>
             {% endif %}
         {% endif %}

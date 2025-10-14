@@ -20,17 +20,17 @@ class JudgehostType extends AbstractType
             //'attr' => ['readonly' => true],
         ]);
         $builder->add('enabled', ChoiceType::class, [
-            'label' => 'Enabled',
+            'label' => '활성화 여부',
             'choices' => [
-                'yes' => true,
-                'no' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('hidden', ChoiceType::class, [
-            'label' => 'Hidden',
+            'label' => '숨김 여부',
             'choices' => [
-                'yes' => true,
-                'no' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('contest', EntityType::class, [

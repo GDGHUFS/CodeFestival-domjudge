@@ -13,8 +13,9 @@ class ContestImportType extends AbstractType
     {
         $builder->add('file', FileType::class, [
             'required' => true,
-            'help' => 'Importing a contest may overwrite some settings (e.g. penalty time, clarification categories, clarification answers, etc.). This action can not be undone.',
+            'label' => '파일',
+            'help' => '대회를 가져오면 일부 설정(예: 페널티 시간, 질의 분류, 질의 응답 등)이 덮어쓰여질 수 있습니다. 이 작업은 되돌릴 수 없습니다.',
         ]);
-        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload']);
+        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload', 'label' => '가져오기']);
     }
 }

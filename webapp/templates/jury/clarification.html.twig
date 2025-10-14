@@ -3,7 +3,7 @@
 {% set origclar = list|first %}
 {% set claimed = not origclar.answered and origclar.from_jurymember is defined %}
 
-{% block title %}Clarification {{ origclar.clarid }} - {{ parent() }}{% endblock %}
+{% block title %}질의응답(설명) 요청 {{ origclar.clarid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -13,8 +13,8 @@
     <div class="container clarificationform">
         {% if claimed %}
             <div class="alert alert-info" role="alert">
-                <i class="fas fa-user-lock"></i> Claimed by <strong>{{ origclar.from_jurymember }}</strong>
-                {% if origclar.jurymember_is_me %}(it's you!){% endif %}
+                <i class="fas fa-user-lock"></i> <strong>{{ origclar.from_jurymember }}</strong>님이 담당함
+                {% if origclar.jurymember_is_me %}(담당자가 본인입니다!){% endif %}
             </div>
         {% endif %}
 
@@ -23,9 +23,9 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm">
-                            Clarification {{ clar.clarid }}
+                            질의응답(설명) 요청 {{ clar.clarid }}
                             {% if showExternalId %}
-                                (external ID: {{ clar.externalid }})
+                                (외부 ID: {{ clar.externalid }})
                             {% endif %}
                         </div>
                         <div class="col-sm text-muted text-end">{{ clar.time | printtimeHover(clar.contest) }}</div>
@@ -35,11 +35,11 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-sm">
-                                From:
+                                보낸 사람:
                                 {% if clar.from_team is defined %}
                                     <a href="{{ path('jury_team', {teamId: clar.from_team.teamid}) }}">{{ clar.from_teamname }} {{ clar.from_team | entityIdBadge('t') }}</a>
                                 {% else %}
-                                    Jury
+                                    심사위원
                                     {% if clar.from_jurymember is defined %}
                                         ({{ clar.from_jurymember }})
                                     {% endif %}
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="col-sm">
-                                <label for="subselect">Subject:</label>
+                                <label for="subselect">제목:</label>
                                 <span class="clarification-subject">
                                     {% if clar.subjectlink is defined %}
                                         <a href="{{ clar.subjectlink }}">{{ clar.subject }}</a>
@@ -55,7 +55,7 @@
                                         {{ clar.subject }}
                                     {% endif %}
                                     <button class="btn btn-sm btn-link clarification-subject-change-button">
-                                        <i class="far fa-edit" title="Change subject"></i>
+                                        <i class="far fa-edit" title="제목 변경"></i>
                                     </button>
                                 </span>
                                 <span class="clarification-subject-form" data-current-selected-subject="{{ clar.categoryid }}" data-clarification-id="{{clar.clarid}}">
@@ -69,38 +69,38 @@
                                                 </optgroup>
                                             {% endfor %}
                                         </select>
-                                        <button type="button" class="btn-close clarification-subject-cancel-button ms-2 w-auto" aria-label="Cancel"></button>
+                                        <button type="button" class="btn-close clarification-subject-cancel-button ms-2 w-auto" aria-label="취소"></button>
                                     </form>
                                 </span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-sm">To:
+                            <div class="col-sm">받는 사람:
                                 {% if clar.to_team is defined %}
                                     <a href="{{ path('jury_team', {teamId: clar.to_team.teamid}) }}">{{ clar.to_teamname }} {{ clar.to_team | entityIdBadge('t') }}</a>
                                 {% elseif clar.from_team is defined %}
-                                    Jury
+                                    심사위원
                                 {% else %}
                                     <strong>All</strong>
                                 {% endif %}
                             </div>
 
                             <div class="col-sm">
-                                <label for="qselect">Queue:</label>
+                                <label for="qselect">대기열:</label>
                                 <span class="clarification-queue">
                                     {{ clar.queue }}
-                                    <button class="btn btn-sm btn-link clarification-queue-change-button"><i class="far fa-edit" title="Change queue"></i></button>
+                                    <button class="btn btn-sm btn-link clarification-queue-change-button"><i class="far fa-edit" title="대기열 변경"></i></button>
                                 </span>
                                 <span class="clarification-queue-form" data-current-selected-queue="{{ clar.queueid }}" data-clarification-id="{{clar.clarid}}">
                                     <form action="{{ path('jury_clarification_change_queue', {'clarId': clar.clarid }) }}" class="d-flex" method="post">
                                         <select name="queue" class="queue form-select w-auto form-select-sm" id="qselect">
-                                            <option value="unassigned">Unassigned issues</option>
+                                            <option value="unassigned">할당되지 않은 문제</option>
                                             {% for qid,queue in queues %}
                                                 <option value="{{qid}}"{% if clar.queueid == qid %} selected{% endif %}>{{queue}}</option>
                                             {% endfor %}
                                             </select>
-                                        <button type="button" class="btn-close clarification-queue-cancel-button ms-2 w-auto" aria-label="Cancel"></button>
+                                        <button type="button" class="btn-close clarification-queue-cancel-button ms-2 w-auto" aria-label="취소"></button>
                                     </form>
                                 </span>
                             </div>
@@ -121,7 +121,7 @@
             <div class="row">
                 <div class="col-sm">
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapsereplyform" aria-expanded="false" aria-controls="collapsereplyform">
-                        <i class="fa fa-reply"></i> reply
+                        <i class="fa fa-reply"></i> 답장
                     </button>
                 </div>
 
@@ -129,13 +129,13 @@
                     <form action="{{ path('jury_clarification_claim', {'clarId': origclar.clarid}) }}" method="post">
                         {% if claimed %}
                             {% if origclar.jurymember_is_me %}
-                                <button class="btn btn-sm btn-outline-success" name="claimed" value="0" type="submit"><i class="fas fa-lock-open"></i> unclaim</button>
+                                <button class="btn btn-sm btn-outline-success" name="claimed" value="0" type="submit"><i class="fas fa-lock-open"></i> 담당 해제</button>
                             {% else %}
-                                <button class="btn btn-sm btn-outline-success" name="claimed" value="1" type="submit"><i class="fas fa-user-secret"></i> steal</button>
+                                <button class="btn btn-sm btn-outline-success" name="claimed" value="1" type="submit"><i class="fas fa-user-secret"></i> 담당 가져오기</button>
                             {% endif %}
                         {% else %}
                             <button class="btn btn-sm btn-success" name="claimed" value="1" type="submit" {% if origclar.answered %}disabled{% endif %}>
-                                <i class="fas fa-lock"></i> claim
+                                <i class="fas fa-lock"></i> 담당 지정
                             </button>
                         {% endif %}
                     </form>
@@ -145,11 +145,11 @@
                     <form action="{{ path('jury_clarification_set_answered', {'clarId': origclar.clarid}) }}" method="post">
                         {% if origclar.answered %}
                             <button class="btn btn-sm btn-outline-warning" name="answered" value="0" type="submit">
-                                <i class="fas fa-times"></i> set unanswered
+                                <i class="fas fa-times"></i> 미답변으로 설정
                             </button>
                         {% else %}
                             <button class="btn btn-sm btn-warning" name="answered" value="1" type="submit">
-                                <i class="fas fa-check"></i> set answered
+                                <i class="fas fa-check"></i> 답변 완료로 설정
                             </button>
                         {% endif %}
                     </form>
@@ -161,7 +161,7 @@
 
     <div class="mt-4 collapse {% if not form.vars.valid %}show{% endif%} container clarificationform" id="collapsereplyform">
         <div class="card">
-            <div class="card-header">Send clarification</div>
+            <div class="card-header">질의응답(설명) 요청 보내기</div>
             <div class="card-body">
                 {%- include 'jury/partials/clarification_form.html.twig' %}
             </div>
@@ -188,7 +188,7 @@
                 var $form = $select.closest('.clarification-' + field + '-form');
                 var clarId = $form.data('clarification-id');
                 var value = $select.find(':selected').text();
-                if (confirm('Are you sure you want to change the ' + field + ' of clarification ' + clarId + ' to "' + value + '"?')) {
+                if (confirm('질의응답(설명) 요청 ' + clarId + '의 ' + (field === 'subject' ? '제목' : '대기열') + '을(를) "' + value + '"(으)로 변경하시겠습니까?')) {
                     $form.find('form').submit();
                 } else {
                     $select.val($form.data('current-selected-' + field));

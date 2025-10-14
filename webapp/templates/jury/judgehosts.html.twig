@@ -22,26 +22,26 @@
             <form action="{{ path('jury_judgehost_enable_all') }}" method="post" class="d-inline">
                 <button type="submit" name="cmd-enable" class="btn btn-success">
                     <i class="fas fa-play"></i>
-                    Start all judgehosts
+                    모든 Judgehosts 시작
                 </button>
             </form>
             <form action="{{ path('jury_judgehost_disable_all') }}" method="post" class="d-inline">
                 <button type="submit" name="cmd-disable" class="btn btn-warning">
                     <i class="fas fa-pause"></i>
-                    Stop all judgehosts
+                    모든 Judgehosts 중지
                 </button>
             </form>
             {% if not all_checked_in_recently %}
                 <form action="{{ path('jury_judgehost_autohide') }}" method="post" class="d-inline">
                     <button type="submit" name="cmd-autohide" class="btn btn-warning">
                         <i class="fas fa-trash"></i>
-                        Auto-hide judgehosts
+                        Judgehosts 자동 숨기기
                     </button>
                 </form>
             {% endif %}
             <div class="d-inline">
-                {{ button(path('jury_judgehost_edit', {'include_hidden': false}), 'Edit visible judgehosts', 'secondary', 'edit') }}
-                {{ button(path('jury_judgehost_edit'), 'Edit all judgehosts', 'secondary', 'edit') }}
+                {{ button(path('jury_judgehost_edit', {'include_hidden': false}), '보이는 Judgehosts 편집', 'secondary', 'edit') }}
+                {{ button(path('jury_judgehost_edit'), '모든 Judgehosts 편집', 'secondary', 'edit') }}
             </div>
         </div>
 

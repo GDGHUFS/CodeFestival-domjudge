@@ -17,7 +17,8 @@ class ContestExportType extends AbstractType
             'choice_label' => fn(Contest $contest) => sprintf(
                 'c%d: %s - %s', $contest->getCid(), $contest->getShortname(), $contest->getName()
             ),
+            'label' => '대회',
         ]);
-        $builder->add('export', SubmitType::class, ['icon' => 'fa-download']);
+        $builder->add('export', SubmitType::class, ['icon' => 'fa-download', 'label' => '내보내기']);
     }
 }

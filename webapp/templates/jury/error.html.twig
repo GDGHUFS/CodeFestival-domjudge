@@ -1,12 +1,12 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Error{% endblock %}
+{% block title %}오류{% endblock %}
 
 {% block content %}
 <div class="alert alert-danger">
-  <h1>Error</h1>
+  <h1>오류</h1>
   <p>
-    {{ error|default('Unknown error') }}
+    {{ error|default('알 수 없는 오류') }}
   </p>
 </div>
 {% endblock %}

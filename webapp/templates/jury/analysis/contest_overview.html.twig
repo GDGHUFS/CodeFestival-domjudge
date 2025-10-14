@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Analysis - Contest {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
+{% block title %}분석 - 대회 {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
 {{ parent() }}
@@ -33,19 +33,19 @@ table tr a {
     <div class="col-md-3 mt-3">
       <div class="card">
         <div class="card-header">
-          Contest Stats
+          대회 통계
         </div>
         <div class="card-body">
-          <abbr data-bs-toggle="popover" data-placement="bottom" data-bs-title="Misery Index" data-bs-content="
-            This is a measure of how 'bored' contestants are. It is the average number of
-            people-minutes spent fruitlessly trying to solve problems at the end of the contest.
+          <abbr data-bs-toggle="popover" data-placement="bottom" data-bs-title="미저리 지수" data-bs-content="
+            이는 참가자들이 얼마나 '지루해하는지'에 대한 척도입니다. 대회 종료 시점까지 문제를 해결하려고
+            시도하면서 헛되이 보낸 평균적인 인원-시간(people-minutes)입니다.
             <br>
-            Calculated as:<br>
-            average across all teams of [3 people x (number of minutes elapsed - minute last problem solved by team t)]
-          ">Misery index</abbr>: {{misc.misery_index|number_format(0)}} minutes<br>
-          # Submissions: {{ misc.total_submissions }}<br>
-          # Accepted Submissions: {{ misc.total_accepted }} <span class="text-muted">(~{{ (misc.total_submissions>0 ? (misc.total_accepted/misc.total_submissions)*100:0)|number_format(0) }}%)</span><br>
-          # of Teams: {{ misc.num_teams }}<br>
+            계산:<br>
+            [3명 x (경과된 시간(분) - 팀 t가 마지막으로 문제를 해결한 시간(분))]의 전체 팀 평균
+          ">미저리 지수</abbr>: {{misc.misery_index|number_format(0)}} 분<br>
+          # 제출 횟수: {{ misc.total_submissions }}<br>
+          # 정답 제출 횟수: {{ misc.total_accepted }} <span class="text-muted">(~{{ (misc.total_submissions>0 ? (misc.total_accepted/misc.total_submissions)*100:0)|number_format(0) }}%)</span><br>
+          # 팀 수: {{ misc.num_teams }}<br>
 
 <!--
           # of Teams solving n problems<br>
@@ -72,7 +72,7 @@ table tr a {
     <div class="col-md-4 mt-3" id="graph_languages">
       <div class="card">
         <div class="card-header">
-          Language Stats
+          언어 통계
         </div>
         <div class="card-body">
           <svg style="height: 300px"></svg>
@@ -82,7 +82,7 @@ table tr a {
     <div class="col-md-5 mt-3" id="graph_problems">
       <div class="card">
         <div class="card-header">
-          Problems Attempted/Solved
+          시도/해결된 문제
         </div>
         <div class="card-body">
           <svg style="height: 300px"></svg>
@@ -92,7 +92,7 @@ table tr a {
     <div class="col-md-12 mt-3" id="graph_submissions">
       <div class="card">
         <div class="card-header">
-          Submissions Over Time
+          시간 경과에 따른 제출
         </div>
         <div class="card-body">
         <svg style="height: 400px"></svg>
@@ -104,19 +104,19 @@ table tr a {
     <div class="col-md-6 mt-3 mb-3">
       <div class="card">
         <div class="card-header">
-          Problems
+          문제 목록
         </div>
         <div class="card-body tablecard">
           <table class="table table-sm table-striped table-hover table-full-clickable-cell">
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">name</th>
-                <th scope="col">time<br>limit</th>
-                <th scope="col">memory<br>limit</th>
-                <th scope="col">test<br>cases</th>
-                <th scope="col"># <br>attempts/solutions</th>
-                <th scope="col"># teams<br>attempted/solved</th>
+                <th scope="col">이름</th>
+                <th scope="col">시간<br>제한</th>
+                <th scope="col">메모리<br>제한</th>
+                <th scope="col">테스트<br>케이스</th>
+                <th scope="col"># <br>시도/정답</th>
+                <th scope="col"># 팀<br>시도/해결</th>
               </tr>
             </thead>
             <tbody>
@@ -141,18 +141,18 @@ table tr a {
     <div class="col-md-6 mt-3 mb-3">
       <div class="card">
         <div class="card-header">
-          Teams
+          팀 목록
         </div>
         <div class="card-body tablecard">
           <table class="table table-sm table-striped table-hover table-full-clickable-cell">
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">affiliation</th>
-                <th scope="col" style="max-width: 200px">name</th>
-                <th scope="col">#<br>submitted/correct</th>
-                <th scope="col"># problems<br>attempted/solved</th>
-                <th scope="col">Misery<br>Index</th>
+                <th scope="col">소속</th>
+                <th scope="col" style="max-width: 200px">이름</th>
+                <th scope="col">#<br>제출/정답</th>
+                <th scope="col"># 문제<br>시도/해결</th>
+                <th scope="col">미저리<br>지수</th>
               </tr>
             </thead>
             <tbody>
@@ -178,18 +178,18 @@ table tr a {
       <div class="col-md-6 mt-3 mb-3">
           <div class="card">
               <div class="card-header">
-                  Delayed Judgings (by more than {{ delayed_judgings.delay }}s)
+                  지연된 심사 ({{ delayed_judgings.delay }}초 이상)
               </div>
               <div class="card-body tablecard">
                   {% if delayed_judgings.data|length > 0 %}
                       <table class="table table-sm table-striped table-hover table-full-clickable-cell">
                           <thead>
                           <tr>
-                              <th scope="col">submit ID</th>
-                              <th scope="col">judging ID</th>
-                              <th scope="col">submit time</th>
-                              <th scope="col">num judgings</th>
-                              <th scope="col">time to<br/>first judging</th>
+                              <th scope="col">제출 ID</th>
+                              <th scope="col">심사 ID</th>
+                              <th scope="col">제출 시간</th>
+                              <th scope="col">심사 횟수</th>
+                              <th scope="col">첫 심사까지<br/>걸린 시간</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -207,10 +207,10 @@ table tr a {
                           </tbody>
                       </table>
                       {% if delayed_judgings.overflow > 0 %}
-                          <div class="alert alert-warning">There are {{ delayed_judgings.overflow }} more delayed judgings which are not shown.</div>
+                          <div class="alert alert-warning">표시되지 않은 지연된 심사가 {{ delayed_judgings.overflow }}개 더 있습니다.</div>
                       {% endif %}
                   {% else %}
-                      <div class="alert alert-warning">There are no judgings delayed so far.</div>
+                      <div class="alert alert-warning">현재까지 지연된 심사는 없습니다.</div>
                   {% endif %}
               </div>
           </div>
@@ -238,7 +238,7 @@ set colors = {
 // mutlibar, one for attempts, one for solutions
 var language_stats = [
   {
-    key: "Attempted",
+    key: "시도",
     color: 'red',
     values: [
       {% for lang,count in misc.language_stats.total_submissions %}
@@ -250,7 +250,7 @@ var language_stats = [
     ]
   },
   {
-    key: "Accepted",
+    key: "정답",
     color: 'green',
     values: [
       {% for lang,count in misc.language_stats.total_solutions %}
@@ -275,8 +275,8 @@ nv.addGraph(function() {
       ;
   chart.yAxis
     .tickFormat(d3.format('.0f'))
-    .axisLabel('# of Submissions');
-  chart.xAxis.axisLabel("Language");
+    .axisLabel('# 제출');
+  chart.xAxis.axisLabel("언어");
   d3.select('#graph_languages svg')
       .datum(language_stats)
       .call(chart);
@@ -291,7 +291,7 @@ nv.addGraph(function() {
 // one bar for #teams attempted(red), second bar for solved(green)
 var problem_stats = [
   {
-    key: "Attempted",
+    key: "시도",
     color: 'red',
     values: [
       {% for prob in problems %}
@@ -303,7 +303,7 @@ var problem_stats = [
     ]
   },
   {
-    key: "Accepted",
+    key: "정답",
     color: 'green',
     values: [
       {% for prob in problems %}
@@ -328,8 +328,8 @@ nv.addGraph(function() {
       ;
   chart.yAxis
     .tickFormat(d3.format('.0f'))
-    .axisLabel('# of Teams');
-  chart.xAxis.axisLabel("Problem");
+    .axisLabel('# 팀');
+  chart.xAxis.axisLabel("문제");
   d3.select('#graph_problems svg')
       .datum(problem_stats)
       .call(chart);
@@ -379,11 +379,11 @@ nv.addGraph(function() {
       .forceY([0, {{ submissions|length *1.10 }}])
       ;
   chart.xAxis     //Chart x-axis settings
-      .axisLabel('Contest Time(minutes)')
+      .axisLabel('대회 시간(분)')
       .tickFormat(d3.format('d'));
 
   chart.yAxis     //Chart y-axis settings
-      .axisLabel('Total Submissions')
+      .axisLabel('총 제출 횟수')
       .tickFormat(d3.format('d'));
 
   d3.select('#graph_submissions svg')

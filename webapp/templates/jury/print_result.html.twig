@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}{{ parent() }} - Print{% endblock %}
+{% block title %}{{ parent() }} - 인쇄{% endblock %}
 
 {% block extrahead %}
 {{ parent() }}
@@ -9,16 +9,16 @@
 {% block content %}
 
 <div class="container">
-<h1 class="text-center">Print source</h1>
+<h1 class="text-center">소스 인쇄</h1>
 
 <pre class="output_text m-3">
 {{ output }}
 </pre>
 
 {% if success %}
-<div class="alert alert-success">File has been printed</div>
+<div class="alert alert-success">파일이 인쇄되었습니다</div>
 {% else %}
-<div class="alert alert-danger">Error while printing. Contact staff.</div>
+<div class="alert alert-danger">인쇄 중 오류가 발생했습니다. 운영진에게 문의하세요.</div>
 {% endif %}
 
 </div>

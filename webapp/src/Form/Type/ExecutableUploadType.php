@@ -13,6 +13,7 @@ class ExecutableUploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('type', ChoiceType::class, [
+            'label' => '유형',
             'choices' => [
                 'compare' => 'compare',
                 'compile' => 'compile',
@@ -22,11 +23,11 @@ class ExecutableUploadType extends AbstractType
         $builder->add('archives', FileType::class, [
             'required' => true,
             'multiple' => true,
-            'label' => 'Archive(s)',
+            'label' => '압축 파일(들)',
             'attr' => [
                 'accept' => 'application/zip',
             ],
         ]);
-        $builder->add('upload', SubmitType::class);
+        $builder->add('upload', SubmitType::class, ['label' => '업로드']);
     }
 }

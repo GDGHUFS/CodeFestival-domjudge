@@ -1,10 +1,10 @@
 <div class="mt-2">
     <table class="rejudgetable">
         <tr>
-            <th title="external vs. local verdicts">e\l</th>
+            <th title="외부 심사 vs 로컬 심사 결과">e\l</th>
             {% for verdict, abbreviation in verdicts %}
                 {% if used[verdict] is defined %}
-                    <th title="{{ verdict }} (local)">{{ abbreviation }}</th>
+                    <th title="{{ verdict }} (로컬)">{{ abbreviation }}</th>
                 {% endif %}
             {% endfor %}
         </tr>
@@ -12,7 +12,7 @@
         {% for externalVerdict, localVerdicts in verdictTable %}
             {% if used[externalVerdict] is defined %}
                 <tr>
-                    <th title="{{ externalVerdict }} (external)">{{ verdicts[externalVerdict] }}</th>
+                    <th title="{{ externalVerdict }} (외부)">{{ verdicts[externalVerdict] }}</th>
                     {% for localVerdict, submitIds in localVerdicts %}
                         {% if used[localVerdict] is defined %}
                             {% set numSubmissions = submitIds | length %}

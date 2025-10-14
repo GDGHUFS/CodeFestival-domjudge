@@ -19,19 +19,20 @@ class TeamCategoryType extends AbstractExternalIdEntityType
         $builder->add('icpcid', TextType::class, [
             'label'       => 'ICPC ID',
             'required'    => false,
-            'help'        => 'Optional ID of the category in the ICPC CMS.',
+            'help'        => '카테고리의 ICPC CMS ID(선택 사항).',
             'constraints' => [
                 new Regex(
                     [
                         'pattern' => '/^[a-zA-Z0-9_-]+$/i',
-                        'message' => 'Only letters, numbers, dashes and underscores are allowed.',
+                        'message' => '영문, 숫자, 대시(-), 밑줄(_)만 허용됩니다.',
                     ]
                 )
             ]
         ]);
         $builder->add('name', null, ['empty_data' => '']);
-        $builder->add('sortorder', IntegerType::class);
+        $builder->add('sortorder', IntegerType::class, ['label' => '정렬 순서']);
         $builder->add('color', TextType::class, [
+            'label' => '색',
             'required' => false,
             'attr' => [
                 'data-color-picker' => '',
@@ -41,20 +42,21 @@ class TeamCategoryType extends AbstractExternalIdEntityType
         ]);
         $builder->add('visible', ChoiceType::class, [
             'expanded' => true,
+            'label' => '보이기',
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('allow_self_registration', ChoiceType::class, [
-            'label' => 'Allow self-registration',
+            'label' => '사용자 등록 허용 (Allow self-registration)',
             'expanded' => true,
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
     }
 
 

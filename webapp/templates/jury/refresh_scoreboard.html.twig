@@ -1,11 +1,11 @@
 <div class="alert alert-warning">
-    <strong>Warning:</strong> Refresh scoreboard cache
+    <strong>경고:</strong> 스코어보드 캐시 새로고침
     <hr>
     <p>{{ message }}</p>
     <form action="{{ path('jury_refresh_cache') }}" method="POST">
         {% if current_contest is not empty %}
             <input type="hidden" name="cid" value="{{ current_contest.cid }}"/>
         {% endif %}
-        <input type="submit" name="refresh" value="Recalculate caches now" class="btn btn-primary"/>
+        <input type="submit" name="refresh" value="지금 캐시 다시 계산" class="btn btn-primary"/>
     </form>
 </div>

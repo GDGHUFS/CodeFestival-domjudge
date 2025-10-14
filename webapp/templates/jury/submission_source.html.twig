@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Source s{{ submission.submitid }} - {{ parent() }}{% endblock %}
+{% block title %}소스 s{{ submission.submitid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,14 +10,15 @@
 {% block content %}
 
     <h1>
-        Source code for submission
+        제출
         <a href="{{ path('jury_submission', {submitId: submission.submitid}) }}">s{{ submission.submitid }}</a>
+        의 소스 코드
         {%- if submission.originalSubmission %}
-            (resubmit of
+            (다음의 재제출:
             <a href="{{ path('jury_submission', {submitId: submission.originalSubmission.submitid}) }}">s{{ submission.originalSubmission.submitid }}</a>)
         {%- endif %}
         {% if submission.resubmissions is not empty %}
-            (resubmitted as
+            (다음으로 재제출됨:
             {%- for resubmission in submission.resubmissions %}
                 <a href="{{ path('jury_submission', {submitId: resubmission.originalSubmission.submitid}) }}">s{{ resubmission.submitid }}</a>
                 {%- if not loop.last -%},{%- endif -%}
@@ -29,17 +30,17 @@
 
     {%- if submission.entryPoint %}
 
-        <p><b>Entry point</b>: {{ submission.entryPoint }}</p>
+        <p><b>진입점</b>: {{ submission.entryPoint }}</p>
     {%- endif %}
 
     {%- if oldSubmission is not null %}
 
-        <p><a href="#diff">Go to diff to previous submission</a></p>
+        <p><a href="#diff">이전 제출과의 차이점 보기</a></p>
     {%- endif %}
 
     {%- if submission.originalSubmission %}
 
-        <p><a href="#origdiff">Go to diff to original submission</a></p>
+        <p><a href="#origdiff">원본 제출과의 차이점 보기</a></p>
     {%- endif %}
 
     <ul class="nav nav-tabs source-tab-nav">
@@ -60,11 +61,11 @@
                 <div class="mb-1">
                     <a class="btn btn-secondary btn-sm"
                        href="{{ path('jury_submission_source', {submission: submission.submitid, fetch: file.rank}) }}">
-                        <i class="fas fa-download"></i> Download
+                        <i class="fas fa-download"></i> 다운로드
                     </a>
                     <a class="btn btn-secondary btn-sm"
                        href="{{ path('jury_submission_edit_source', {submission: submission.submitid, rank: file.rank}) }}">
-                        <i class="fas fa-pencil-alt"></i> Edit
+                        <i class="fas fa-pencil-alt"></i> 편집
                     </a>
                 </div>
 
@@ -77,10 +78,10 @@
     {%- if oldSubmission is not null %}
 
         <h2 id="diff" class="mt-3">
-            Diff to submission
+            제출
             <a href="{{ path('jury_submission', {submitId: oldSubmission.submitid}) }}">
                 s{{ oldSubmission.submitid }}
-            </a>
+            </a>와의 차이점
         </h2>
 
         {%- include 'jury/partials/submission_diff.html.twig' with {oldSubmission: oldSubmission, oldFiles: oldFiles, oldFileStats: oldFileStats} %}
@@ -89,10 +90,10 @@
     {%- if originalSubmission is not null %}
 
         <h2 id="origdiff" class="mt-3">
-            Diff to original submission
+            원본 제출
             <a href="{{ path('jury_submission', {submitId: originalSubmission.submitid}) }}">
                 s{{ originalSubmission.submitid }}
-            </a>
+            </a>와의 차이점
         </h2>
 
         {%- include 'jury/partials/submission_diff.html.twig' with {oldSubmission: originalSubmission, oldFiles: originalFiles, oldFileStats: originalFileStats} %}

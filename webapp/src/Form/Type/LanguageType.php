@@ -21,43 +21,49 @@ class LanguageType extends AbstractExternalIdEntityType
     {
         $this->addExternalIdField($builder, Language::class);
         $builder->add('langid', TextType::class, [
-            'label' => 'Language ID',
+            'label' => '언어 ID',
         ]);
         $builder->add('name', TextType::class, [
+            'label' => '언어 이름',
             'empty_data' => ''
         ]);
         $builder->add('requireEntryPoint', ChoiceType::class, [
+            'label' => 'EntryPoint 필요 여부',
             'expanded' => true,
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('entryPointDescription', TextType::class, [
+            'label' => 'EntryPoint 설명',
             'required' => false,
         ]);
         $builder->add('allowSubmit', ChoiceType::class, [
+            'label' => '제출 허용 여부',
             'expanded' => true,
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('allowJudge', ChoiceType::class, [
+            'label' => '채점 허용 여부',
             'expanded' => true,
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('timeFactor', TextType::class, [
+            'label' => '시간 배율 (Time factor)',
             'input_group_after' => '&times;',
         ]);
         $builder->add('compileExecutable', EntityType::class, [
-            'label' => 'Compile script',
+            'label' => '컴파일 스크립트',
             'class' => Executable::class,
             'required' => false,
-            'placeholder' => '-- no executable --',
+            'placeholder' => '-- 실행 파일 없음 --',
             'choice_label' => 'execid',
             'query_builder' => fn(EntityRepository $er) => $er
                 ->createQueryBuilder('e')
@@ -66,6 +72,7 @@ class LanguageType extends AbstractExternalIdEntityType
                 ->orderBy('e.execid'),
         ]);
         $builder->add('extensions', CollectionType::class, [
+            'label' => '허용 확장자 목록',
             'error_bubbling' => false,
             'entry_type' => TextType::class,
             'entry_options' => ['label' => false],
@@ -73,22 +80,22 @@ class LanguageType extends AbstractExternalIdEntityType
             'allow_delete' => true,
         ]);
         $builder->add('filterCompilerFiles', ChoiceType::class, [
-            'label' => 'Filter files passed to compiler by extension list',
+            'label' => '확장자 목록으로 컴파일러 입력 파일 필터링 (Filter files passed to compiler by extension list)',
             'expanded' => true,
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('compilerVersionCommand', TextType::class, [
-            'label' => 'Compiler version command',
+            'label' => '컴파일러 버전 확인 명령어',
             'required' => false,
         ]);
         $builder->add('runnerVersionCommand', TextType::class, [
-            'label' => 'Runner version command',
+            'label' => '실행기 버전 확인 명령어',
             'required' => false,
         ]);
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         // Remove ID field when doing an edit.
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

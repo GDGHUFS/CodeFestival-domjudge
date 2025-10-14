@@ -2,21 +2,21 @@
 {# @var \App\Entity\Balloon balloonfoo #}
 
 {% if balloons is empty %}
-    <div class="alert alert-warning">No balloons</div>
+    <div class="alert alert-warning">처리할 풍선이 없습니다.</div>
 {% else %}
     <table class="data-table table table-hover table-striped table-sm balloons-table" style="width:auto">
         <thead class="thead-light">
         <tr>
             <th scope="col">&nbsp;</th>
             <th scope="col">ID</th>
-            <th scope="col">time</th>
-            <th scope="col">solved</th>
-            <th scope="col">team</th>
-            <th scope="col">affiliation</th>
-            <th scope="col">location</th>
-            <th scope="col">category</th>
-            <th scope="col">total</th>
-            <th scope="col">awards</th>
+            <th scope="col">시간</th>
+            <th scope="col">해결 문제</th>
+            <th scope="col">팀</th>
+            <th scope="col">소속</th>
+            <th scope="col">위치</th>
+            <th scope="col">카테고리</th>
+            <th scope="col">총 문제 수</th>
+            <th scope="col">수상</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -51,7 +51,7 @@
                 <td>
                     {%- if not balloon.data.done -%}
                     {%- set link = path('jury_balloons_setdone', {balloonId: balloon.data.balloonid}) %}
-                    <a href="{{ link }}" title="mark balloon as done">
+                    <a href="{{ link }}" title="풍선 전달 완료 표시">
                     <i class="fas fa-running"></i>
                     </a>
                 </td>

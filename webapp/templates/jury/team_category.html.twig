@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Category {{ teamCategory.categoryid }} - {{ parent() }}{% endblock %}
+{% block title %}카테고리 {{ teamCategory.categoryid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <h1>Category {{ teamCategory.name }}</h1>
+    <h1>카테고리 {{ teamCategory.name }}</h1>
 
     <div class="row">
         <div class="col-lg-4">
@@ -21,7 +21,7 @@
                 </tr>
                 {% if showExternalId(teamCategory) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ teamCategory.externalid }}</td>
                     </tr>
                 {% endif %}
@@ -36,21 +36,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Sortorder</th>
+                    <th>정렬 순서</th>
                     <td>{{ teamCategory.sortorder }}</td>
                 </tr>
                 {% if teamCategory.color %}
                     <tr>
-                        <th>Color</th>
+                        <th>색상</th>
                         <td style="background-color: {{ teamCategory.color }};">{{ teamCategory.color }}</td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Visible</th>
+                    <th>표시 여부</th>
                     <td>{{ teamCategory.visible | printYesNo }}</td>
                 </tr>
                 <tr>
-                    <th>Allow self-registration</th>
+                    <th>자가 등록 허용</th>
                     <td>{{ teamCategory.allowSelfRegistration | printYesNo }}</td>
                 </tr>
             </table>
@@ -59,15 +59,15 @@
 
     {%- if is_granted('ROLE_ADMIN') -%}
         <p>
-            {{ button(path('jury_team_category_edit', {'categoryId': teamCategory.categoryid}), 'Edit', 'primary', 'edit') }}
-            {{ button(path('jury_team_category_delete', {'categoryId': teamCategory.categoryid}), 'Delete', 'danger', 'trash-alt', true) }}
-            {{ button(path('jury_team_category_request_remaining', {'categoryId': teamCategory.categoryid}), 'Judge remaining testcases', 'secondary', 'gavel') }}
+            {{ button(path('jury_team_category_edit', {'categoryId': teamCategory.categoryid}), '수정', 'primary', 'edit') }}
+            {{ button(path('jury_team_category_delete', {'categoryId': teamCategory.categoryid}), '삭제', 'danger', 'trash-alt', true) }}
+            {{ button(path('jury_team_category_request_remaining', {'categoryId': teamCategory.categoryid}), '남은 테스트케이스 채점 요청', 'secondary', 'gavel') }}
         </p>
     {% endif %}
 
-    <h3>Teams</h3>
+    <h3>팀 목록</h3>
     {% if teamCategory.teams is empty %}
-        <p class="nodata">no teams</p>
+        <p class="nodata">팀 없음</p>
     {% else %}
         <div class="row">
             <div class="col-lg-4">
@@ -75,7 +75,7 @@
                     <thead>
                     <tr>
                         <th style="text-align: right;">ID</th>
-                        <th>Teamname</th>
+                        <th>팀 이름</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        <h3>Submissions</h3>
+        <h3>제출물</h3>
 
         <div data-ajax-refresh-target>
             {%- include 'jury/partials/submission_list.html.twig' with {showTestcases: false} %}

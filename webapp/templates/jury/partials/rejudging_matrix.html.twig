@@ -1,11 +1,11 @@
 <div class="mt-2">
-    <h2>Overview of changes</h2>
+    <h2>변경 사항 개요</h2>
     <table class="rejudgetable">
         <tr>
-            <th title="old vs. new verdicts">-\+</th>
+            <th title="이전 vs 새 심사 결과">-\+</th>
             {% for verdict, abbreviation in verdicts %}
                 {% if used[verdict] is defined %}
-                    <th title="{{ verdict }} (new)">{{ abbreviation }}</th>
+                    <th title="{{ verdict }} (새 결과)">{{ abbreviation }}</th>
                 {% endif %}
             {% endfor %}
         </tr>
@@ -13,7 +13,7 @@
         {% for originalVerdict, changedVerdicts in verdictTable %}
             {% if used[originalVerdict] is defined %}
                 <tr>
-                    <th title="{{ originalVerdict }} (old)">{{ verdicts[originalVerdict] }}</th>
+                    <th title="{{ originalVerdict }} (이전 결과)">{{ verdicts[originalVerdict] }}</th>
                     {% for newVerdict, submitIds in changedVerdicts %}
                         {% if used[newVerdict] is defined %}
                             {% set numSubmissions = submitIds | length %}

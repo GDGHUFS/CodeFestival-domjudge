@@ -16,30 +16,30 @@
 {% endif %}
 
 {% if submissions is empty %}
-    <div class="alert alert-warning">No submissions</div>
+    <div class="alert alert-warning">제출물이 없습니다</div>
 {% else %}
     <div>
-        <span class="badge text-bg-info">{{ submissionCounts.total }} submitted</span>
-        <span class="badge text-bg-success">{{ submissionCounts.correct }} correct</span>
+        <span class="badge text-bg-info">{{ submissionCounts.total }} 제출됨</span>
+        <span class="badge text-bg-success">{{ submissionCounts.correct }} 정답</span>
 
         {% if submissionCounts.unverified is defined and submissionCounts.unverified > 0 %}
-            <span class="badge text-bg-warning">{{ submissionCounts.unverified }} unverified</span>
+            <span class="badge text-bg-warning">{{ submissionCounts.unverified }} 미확인</span>
         {% endif %}
 
         {% if submissionCounts.shadowUnverified is defined and submissionCounts.shadowUnverified > 0 %}
-            <span class="badge text-bg-warning">{{ submissionCounts.shadowUnverified }} shadow differences unverified</span>
+            <span class="badge text-bg-warning">{{ submissionCounts.shadowUnverified }} 섀도우 차이 미확인</span>
         {% endif %}
 
         {% if submissionCounts.ignored > 0 %}
-            <span class="badge text-bg-dark">{{ submissionCounts.ignored }} ignored</span>
+            <span class="badge text-bg-dark">{{ submissionCounts.ignored }} 무시됨</span>
         {% endif %}
 
         {% if submissionCounts.judging > 0 %}
-            <span class="badge text-bg-primary">{{ submissionCounts.judging }} judging</span>
+            <span class="badge text-bg-primary">{{ submissionCounts.judging }} 심사 중</span>
         {% endif %}
 
         {% if submissionCounts.queued > 0 %}
-            <span class="badge text-bg-danger">{{ submissionCounts.queued }} queued (from {{submissionCounts.perteam}} teams)</span>
+            <span class="badge text-bg-danger">{{ submissionCounts.queued }} 대기열 ({{submissionCounts.perteam}}개 팀에서)</span>
         {% endif %}
     </div>
 
@@ -53,30 +53,30 @@
             {% endif %}
             {%- if showContest %}
 
-                <th scope="col">contest</th>
+                <th scope="col">대회</th>
             {%- endif %}
 
-            <th scope="col">time</th>
-            <th scope="col" colspan="2">team</th>
-            <th scope="col">problem</th>
-            <th scope="col">lang</th>
+            <th scope="col">시간</th>
+            <th scope="col" colspan="2">팀</th>
+            <th scope="col">문제</th>
+            <th scope="col">언어</th>
             {%- if rejudging is defined %}
-                <th scope="col">old result</th>
+                <th scope="col">이전 결과</th>
             {%- endif %}
             {% if showExternalResult and showExternalTestcases %}
-                <th scope="col" colspan="2">{%-if rejudging is defined %}new {% endif %}result</th>
+                <th scope="col" colspan="2">{%-if rejudging is defined %}새 {% endif %}결과</th>
             {% else %}
-                <th scope="col">{%- if rejudging is defined %}new {% endif %}result</th>
+                <th scope="col">{%- if rejudging is defined %}새 {% endif %}결과</th>
             {% endif %}
             {% if showExternalResult and not showExternalTestcases %}
-                <th scope="col">external result</th>
+                <th scope="col">외부 결과</th>
             {% endif %}
             {% if not showExternalResult or not showExternalTestcases %}
-                <th scope="col" class="table-button-head-left">verified</th>
+                <th scope="col" class="table-button-head-left">확인됨</th>
                 <th scope="col" class="table-button-head-right">by</th>
             {% endif %}
             {%- if showTestcases is defined and showTestcases %}
-                <th scope="col" class="not-sortable not-searchable table-button-head-right-right">test results</th>
+                <th scope="col" class="not-sortable not-searchable table-button-head-right-right">테스트 결과</th>
             {%- endif %}
 
         </tr>
@@ -100,7 +100,7 @@
                 {% if showExternalResult and showExternalTestcases %}
                     <td class="{{ tdExtraClass }}">
                         <a href="{{ link }}">
-                            Local
+                            로컬
                         </a>
                     </td>
                 {% endif %}
@@ -140,7 +140,7 @@
                 {% if showExternalResult and showExternalTestcases %}
                     <td class="{{ tdExtraClass }}">
                         <a href="{{ link }}">
-                            Local
+                            로컬
                         </a>
                     </td>
                 {% endif %}
@@ -168,7 +168,7 @@
                             {% if submission.externalid is null %}
                                 {{- 'n / a' | printValidJuryResult -}}
                             {% elseif externalJudgement is null or externalJudgement.result is empty %}
-                                {{- 'pending' | printValidJuryResult -}}
+                                {{- '대기 중' | printValidJuryResult -}}
                             {% else %}
                                 {{- externalJudgement.result | printValidJuryResult -}}
                             {% endif %}
@@ -183,13 +183,13 @@
                     {%- else %}
                         {%- set juryMember = submission.judgings.first.juryMember %}
                         {%- if submission.judgings.first.verified %}
-                            {%- set verified = 'yes' %}
+                            {%- set verified = '예' %}
                         {%- else %}
-                            {%- set verified = 'no' %}
+                            {%- set verified = '아니오' %}
                             {%- if submission.judgings.first.juryMember is empty %}
                                 {%- set claim = true %}
                             {%- else %}
-                                {%- set verified = 'claimed' %}
+                                {%- set verified = '요청됨' %}
                             {%- endif %}
                         {%- endif %}
                     {%- endif %}
@@ -208,9 +208,9 @@
                             {%- endif %}
                             {%- if claim -%}
                                 <a class="btn btn-outline-secondary btn-sm"
-                                   href="{{ claimLink }}">claim</a>
+                                   href="{{ claimLink }}">요청</a>
                             {%- elseif (not submission.judgings.first or not submission.judgings.first.verified) and juryMember == app.user.username -%}
-                                <a class="btn btn-info btn-sm" href="{{ claimLink }}">unclaim</a>
+                                <a class="btn btn-info btn-sm" href="{{ claimLink }}">요청 해제</a>
                             {%- else -%}
                                 <a href="{{ link }}">{{ juryMember }}</a>
                             {%- endif -%}
@@ -238,7 +238,7 @@
                     {% endif %}
                     <td rowspan="2">
                         <a {% if externalSubmissionUrl is not null %}href="{{ externalSubmissionUrl }}"{% endif %}>
-                            External
+                            외부
                         </a>
                     </td>
                     <td rowspan="2">
@@ -248,13 +248,13 @@
                     </td>
                     <td>
                         <a {% if externalSubmissionUrl is not null %}href="{{ externalSubmissionUrl }}"{% endif %}>
-                            External
+                            외부
                         </a>
                     </td>
                     <td>
                         <a {% if externalSubmissionUrl is not null %}href="{{ externalSubmissionUrl }}"{% endif %}>
                             {% if externalJudgement is null or externalJudgement.result is empty %}
-                                {{- 'pending' | printValidJuryResult -}}
+                                {{- '대기 중' | printValidJuryResult -}}
                             {% else %}
                                 {{- externalJudgement.result | printValidJuryResult -}}
                             {% endif %}
@@ -268,7 +268,7 @@
                     <td colspan="3" class="inline-verify-form">
                         {% if externalJudgement is not null and (not submission.judgings.first or submission.judgings.first.result != externalJudgement.result) %}
                             {% include 'jury/partials/verify_form.html.twig' with {
-                                label: 'Shadow difference verified',
+                                label: '섀도우 차이 확인됨',
                                 judging: externalJudgement,
                                 form_action: path('jury_shadow_difference_verify', {extjudgementid: externalJudgement.extjudgementid}),
                                 show_form: true,

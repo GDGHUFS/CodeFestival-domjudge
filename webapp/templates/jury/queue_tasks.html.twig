@@ -1,7 +1,7 @@
 {% extends 'jury/base.html.twig' %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Queue tasks - {{ parent() }}{% endblock %}
+{% block title %}대기열 작업 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <h1>Queue tasks</h1>
+    <h1>대기열 작업</h1>
 
     {{ macros.table(queueTasksTable, tableFields, numActions, {'ordering': 'false'}) }}
 

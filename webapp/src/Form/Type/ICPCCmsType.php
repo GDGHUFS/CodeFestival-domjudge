@@ -12,14 +12,15 @@ class ICPCCmsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('contest_id', TextType::class, [
-            'label' => 'Contest ID',
-            'help' => 'Create a "Web Services Token" with appropriate rights in the "Export" section for your contest at <a
-                            href="https://icpc.global/login" target="_blank">https://icpc.global/login</a>.
-                    You can find the Contest ID (e.g. <code>Southwestern-Europe-2014</code>) in the URL.',
+            'label' => '대회 ID',
+            'help' => '"Web Services Token"을 생성하려면, ICPC 웹사이트의 <a
+                            href="https://icpc.global/login" target="_blank">https://icpc.global/login</a> 에서
+                        해당 대회의 "Export" 섹션으로 이동해 적절한 권한을 가진 토큰을 만들어주세요.
+                        대회 ID(예: <code>Southwestern-Europe-2014</code>)는 대회 페이지의 URL에서 확인할 수 있습니다.',
             'help_html' => true,
         ]);
-        $builder->add('access_token', TextType::class);
-        $builder->add('fetch_teams', SubmitType::class, ['label' => 'Import', 'icon' => 'fa-upload']);
+        $builder->add('access_token', TextType::class, ['label' => '접근 토큰']);
+        $builder->add('fetch_teams', SubmitType::class, ['label' => '팀 불러오기', 'icon' => 'fa-upload']);
         // $builder->add('upload_standings', SubmitType::class);
     }
 }

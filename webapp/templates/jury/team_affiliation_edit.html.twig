@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Edit affiliation {{ teamAffiliation.affilid }} - {{ parent() }}{% endblock %}
+{% block title %}소속 {{ teamAffiliation.affilid }} 수정 - {{ parent() }}{% endblock %}
 
 {% import "jury/jury_macros.twig" as macros %}
 {% block extrahead %}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <h1>Edit affiliation {{ teamAffiliation.affilid }}</h1>
+    <h1>소속 {{ teamAffiliation.affilid }} 수정</h1>
 
     {% include 'jury/partials/team_affiliation_form.html.twig' %}
 

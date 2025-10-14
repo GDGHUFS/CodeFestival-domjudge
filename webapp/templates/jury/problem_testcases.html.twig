@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Testcases for p{{ problem.probid }} - {{ parent() }}{% endblock %}
+{% block title %}문제 p{{ problem.probid }}의 테스트케이스 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,16 +10,16 @@
 
 {% block content %}
 
-    <h1>Testcases for p{{ problem.probid }} - {{ problem.name }}</h1>
+    <h1>문제 p{{ problem.probid }} - {{ problem.name }}의 테스트케이스</h1>
 
     <div class="mb-2">
-        <a href="{{ path('jury_problem', {'probId': problem.probid}) }}">Back to problem p{{ problem.probid }}</a>
+        <a href="{{ path('jury_problem', {'probId': problem.probid}) }}">문제 p{{ problem.probid }}로 돌아가기</a>
     </div>
 
     <form method="post" enctype="multipart/form-data">
 
     {% if testcases is empty %}
-        <p class="nodata">No testcase(s) yet.</p>
+        <p class="nodata">아직 테스트케이스가 없습니다.</p>
     {% else %}
         <table class="table table-sm table-striped table-hover testcases">
             <thead>
@@ -28,14 +28,14 @@
                     <th></th>
                 {% endif %}
                 <th class="testrank">#</th>
-                <th class="testsample">sample</th>
-                <th>download</th>
-                <th>size</th>
+                <th class="testsample">예제</th>
+                <th>다운로드</th>
+                <th>크기</th>
                 <th>md5</th>
                 {% if allowEdit %}
-                    <th>upload new</th>
+                    <th>새로 업로드</th>
                 {% endif %}
-                <th>description / image</th>
+                <th>설명 / 이미지</th>
             </tr>
             </thead>
             <tbody>
@@ -44,8 +44,8 @@
                     {% if allowEdit %}
                         <td rowspan="2">
                             <a href="{{  path('jury_testcase_delete', {'testcaseId': testcase.testcaseid}) }}"
-                               title="delete testcase {{ testcase.testcaseid }}"
-                               onclick="confirm('Proceed with the deletion of testcase {{ testcase.testcaseid }}?');">
+                               title="테스트케이스 {{ testcase.testcaseid }} 삭제"
+                               onclick="confirm('테스트케이스 {{ testcase.testcaseid }}를 삭제하시겠습니까?');">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
@@ -53,13 +53,13 @@
                     <td rowspan="2" class="testrank">
                         {% if allowEdit %}
                             <a href="{{ path('jury_problem_testcase_move', {'probId': problem.probid, 'rank': testcase.rank, 'direction': 'up'}) }}"
-                               title="Move testcase up"><i class="fas fa-arrow-up"></i></a><br>
+                               title="테스트케이스 위로 이동"><i class="fas fa-arrow-up"></i></a><br>
                         {% endif %}
                         {{ testcase.rank }}
                         {% if allowEdit %}
                             <br>
                             <a href="{{ path('jury_problem_testcase_move', {'probId': problem.probid, 'rank': testcase.rank, 'direction': 'down'}) }}"
-                               title="Move testcase down"><i class="fas fa-arrow-down"></i></a>
+                               title="테스트케이스 아래로 이동"><i class="fas fa-arrow-down"></i></a>
                         {% endif %}
                     </td>
                     <td rowspan="2" class="testsample">
@@ -79,7 +79,7 @@
                     </td>
                     {% if allowEdit %}
                         <td><div class="input-group">
-                            <label class="form-control text-truncate" for="update_input_{{testcase.rank}}" id="update_input_label_{{testcase.rank}}">new input file</label>
+                            <label class="form-control text-truncate" for="update_input_{{testcase.rank}}" id="update_input_label_{{testcase.rank}}">새 입력 파일</label>
                             <input type="file" class="d-none custom-file-input" name="update_input[{{ testcase.rank }}]" id="update_input_{{testcase.rank}}">
                         </div></td>
                     {% endif %}
@@ -87,7 +87,7 @@
                         <span class="testcase-description">{{ testcase.description(true) | descriptionExpand }}</span>
                         {% if allowEdit %}
                             <textarea class="d-none form-control testcase-description-field" name="description[{{ testcase.rank }}]">{{ testcase.description(true) }}</textarea>
-                            <button type="button" class="float-end testcase-edit-description btn btn-secondary btn-sm">Edit</button>
+                            <button type="button" class="float-end testcase-edit-description btn btn-secondary btn-sm">수정</button>
                         {% endif %}
                     </td>
                 </tr>
@@ -105,7 +105,7 @@
                     </td>
                     {% if allowEdit %}
                         <td><div class="input-group">
-                            <label class="form-control text-truncate" for="update_output_{{testcase.rank}}" id="update_output_label_{{testcase.rank}}">new output file</label>
+                            <label class="form-control text-truncate" for="update_output_{{testcase.rank}}" id="update_output_label_{{testcase.rank}}">새 출력 파일</label>
                             <input type="file" class="d-none custom-file-input" name="update_output[{{ testcase.rank }}]" id="update_output_{{testcase.rank}}">
                         </div></td>
                     {% endif %}
@@ -117,18 +117,18 @@
                             {% if allowEdit %}
                             &nbsp;
                             <div class="input-group">
-                                <label class="form-control text-truncate" for="update_image_{{testcase.rank}}" id="update_imapge_label_{{testcase.rank}}">replace image</label>
+                                <label class="form-control text-truncate" for="update_image_{{testcase.rank}}" id="update_imapge_label_{{testcase.rank}}">이미지 교체</label>
                                 <input type="file" class="d-none custom-file-input" name="update_image[{{ testcase.rank }}]" id="update_image_{{testcase.rank}}" accept="image/*">
                             </div>
                             {% endif %}
                         {% else %}
                             {% if allowEdit %}
                             <div class="input-group">
-                                <label class="form-control text-truncate" for="update_image_{{testcase.rank}}" id="update_imapge_label_{{testcase.rank}}">add an image</label>
+                                <label class="form-control text-truncate" for="update_image_{{testcase.rank}}" id="update_imapge_label_{{testcase.rank}}">이미지 추가</label>
                                 <input type="file" class="d-none custom-file-input" name="update_image[{{ testcase.rank }}]" id="update_image_{{testcase.rank}}" accept="image/*">
                             </div>
                             {% else %}
-                            <span class="nodata">No image</span>
+                            <span class="nodata">이미지 없음</span>
                             {% endif %}
                         {% endif %}
                     </td>
@@ -139,17 +139,17 @@
     {% endif %}
 
     {% if allowEdit %}
-        <h2>Create new testcase</h2>
+        <h2>새 테스트케이스 생성</h2>
 
         <div class="row mb-2">
-            <label class="col-sm-2 col-form-label" for="add_input">Input testdata</label>
+            <label class="col-sm-2 col-form-label" for="add_input">입력 테스트 데이터</label>
             <div class="col-sm-4">
                 <input type="file" class="form-control" name="add_input" id="add_input">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-sm-2 col-form-label" for="add_output">Output testdata</label>
+            <label class="col-sm-2 col-form-label" for="add_output">출력 테스트 데이터</label>
             <div class="col-sm-4">
                 <input type="file" class="form-control" name="add_output" id="add_output">
             </div>
@@ -160,26 +160,26 @@
             <div class="col-sm-4">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="add_sample" name="add_sample">
-                    <label class="form-check-label" for="add_sample">Sample testcase</label>
+                    <label class="form-check-label" for="add_sample">예제 테스트케이스</label>
                 </div>
             </div>
         </div>
 
         <div class="row mb-2">
-            <label for="add_desc" class="col-sm-2 col-form-label">Description</label>
+            <label for="add_desc" class="col-sm-2 col-form-label">설명</label>
             <div class="col-sm-4">
                 <textarea name="add_desc" id="add_desc" rows="5" class="form-control"></textarea>
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-sm-2 col-form-label" for="add_image">Image</label>
+            <label class="col-sm-2 col-form-label" for="add_image">이미지</label>
             <div class="col-sm-4">
                 <input type="file" class="form-control" accept="image/*" name="add_image" id="add_image">
             </div>
         </div>
 
-        <input type="submit" class="btn btn-primary mt-3" value="Submit all changes">
+        <input type="submit" class="btn btn-primary mt-3" value="모든 변경 사항 제출">
     {% endif %}
 
     </form>
@@ -194,12 +194,12 @@
                 if ($description.hasClass('d-none')) {
                     $description.removeClass('d-none');
                     $descriptionInput.addClass('d-none');
-                    $button.text('Edit');
+                    $button.text('수정');
                     $descriptionInput.val($description.text());
                 } else {
                     $description.addClass('d-none');
                     $descriptionInput.removeClass('d-none');
-                    $button.text('Cancel');
+                    $button.text('취소');
                 }
             });
             $('.custom-file-input').change(function(e) {

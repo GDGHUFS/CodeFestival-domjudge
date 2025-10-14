@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Edit source of s{{ submission.submitid }} - {{ parent() }}{% endblock %}
+{% block title %}s{{ submission.submitid }} 소스 편집 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,9 +10,9 @@
 {% block content %}
 
     <h1>
-        Edit submission
+        제출
         <a href="{{ path('jury_submission', {submitId: submission.submitid}) }}">s{{ submission.submitid }}</a>
-        source files
+        소스 파일 편집
     </h1>
 
     {{ form_start(form) }}

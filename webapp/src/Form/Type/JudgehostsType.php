@@ -19,7 +19,7 @@ class JudgehostsType extends AbstractType
             'label' => false,
         ]);
         $builder->add('save', SubmitType::class, [
-            'label' => 'Save judgehosts',
+            'label' => 'Judgehosts 저장',
         ]);
     }
 }

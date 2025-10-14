@@ -28,18 +28,18 @@ class PrintType extends AbstractType
 
         $builder
             ->add('code', FileType::class, [
-                'label' => 'Source file:',
+                'label' => '소스 파일:',
                 'attr' => [
                     'onchange' => 'detectLanguage(this.value)',
                 ],
             ])
             ->add('langid', ChoiceType::class, [
-                'label' => 'Language:',
+                'label' => '언어:',
                 'required' => false,
                 'choices' => $languageChoices,
             ])
             ->add('print', SubmitType::class, [
-                'label' => 'Print code',
+                'label' => '코드 출력',
             ]);
     }
 }

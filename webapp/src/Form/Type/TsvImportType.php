@@ -13,15 +13,17 @@ class TsvImportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('type', ChoiceType::class, [
+            'label' => '유형',
             'choices' => [
-                'groups' => 'groups',
-                'teams' => 'teams',
-                'accounts' => 'accounts',
+                '그룹' => 'groups',
+                '팀' => 'teams',
+                '계정' => 'accounts',
             ],
         ]);
         $builder->add('file', FileType::class, [
+            'label' => 'TSV 파일',
             'required' => true,
         ]);
-        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload']);
+        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload', 'label' => '가져오기']);
     }
 }

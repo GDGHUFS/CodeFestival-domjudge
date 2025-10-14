@@ -21,8 +21,9 @@ class ProblemsImportType extends AbstractType
             ),
         ]);
         $builder->add('file', FileType::class, [
+            'label' => '문제 파일',
             'required' => true,
         ]);
-        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload']);
+        $builder->add('import', SubmitType::class, ['icon' => 'fa-upload', 'label' => '가져오기']);
     }
 }

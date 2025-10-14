@@ -23,37 +23,41 @@ class ProblemType extends AbstractExternalIdEntityType
     {
         $this->addExternalIdField($builder, Problem::class);
         $builder->add('name', TextType::class, [
+            'label' => '문제 이름',
             'empty_data' => ''
         ]);
         $builder->add('timelimit', NumberType::class, [
+            'label' => '시간 제한',
             'input_group_after' => 'sec',
         ]);
         $builder->add('memlimit', IntegerType::class, [
             'required' => false,
-            'help' => 'leave empty for default',
+            'label' => '메모리 제한',
+            'help' => '비워두면 서버 기본값 사용',
             'input_group_after' => 'kB',
         ]);
         $builder->add('outputlimit', IntegerType::class, [
             'required' => false,
-            'help' => 'leave empty for default',
+            'label' => '출력 제한',
+            'help' => '비워두면 서버 기본값 사용',
             'input_group_after' => 'kB',
         ]);
         $builder->add('problemstatementFile', FileType::class, [
-            'label' => 'Problem statement',
+            'label' => '문제 설명 파일',
             'required' => false,
             'attr' => [
                 'accept' => 'text/html,text/plain,application/pdf',
             ],
         ]);
         $builder->add('clearProblemstatement', CheckboxType::class, [
-            'label' => 'Delete problem statement',
+            'label' => '문제 설명 파일 삭제',
             'required' => false,
         ]);
         $builder->add('runExecutable', EntityType::class, [
-            'label' => 'Run script',
+            'label' => '실행 스크립트',
             'class' => Executable::class,
             'required' => false,
-            'placeholder' => '-- default run script --',
+            'placeholder' => '-- 기본 실행 스크립트 --',
             'choice_label' => 'description',
             'query_builder' => fn(EntityRepository $er) => $er
                 ->createQueryBuilder('e')
@@ -62,10 +66,10 @@ class ProblemType extends AbstractExternalIdEntityType
                 ->orderBy('e.execid'),
         ]);
         $builder->add('compareExecutable', EntityType::class, [
-            'label' => 'Compare script',
+            'label' => '비교 스크립트',
             'class' => Executable::class,
             'required' => false,
-            'placeholder' => '-- default compare script --',
+            'placeholder' => '-- 기본 비교 스크립트 --',
             'choice_label' => 'description',
             'query_builder' => fn(EntityRepository $er) => $er
                 ->createQueryBuilder('e')
@@ -74,14 +78,14 @@ class ProblemType extends AbstractExternalIdEntityType
                 ->orderBy('e.execid'),
         ]);
         $builder->add('specialCompareArgs', TextType::class, [
-            'label' => 'Compare script arguments',
+            'label' => '비교 스크립트 인자',
             'required' => false,
         ]);
         $builder->add('combinedRunCompare', CheckboxType::class, [
-            'label' => 'Use run script as compare script.',
+            'label' => '실행 스크립트를 비교 스크립트로 사용 (Use run script as compare script.)',
             'required' => false,
         ]);
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         // Remove clearProblemstatement field when we do not have a problem text.
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

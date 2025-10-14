@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Rejudging r{{ rejudging.rejudgingid }} - {{ parent() }}{% endblock %}
+{% block title %}재심사 r{{ rejudging.rejudgingid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,16 +11,16 @@
 
 {% block content %}
 
-    <h1>Rejudging r{{ rejudging.rejudgingid }} {% if not rejudging.valid %}(canceled){% endif %}</h1>
+    <h1>재심사 r{{ rejudging.rejudgingid }} {% if not rejudging.valid %}(취소됨){% endif %}</h1>
 
     <div class="row">
         <div class="col-lg-4">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Reason</th>
+                    <th>이유</th>
                     <td>
                         {% if rejudging.reason is empty %}
-                            <span class="nodata">none</span>
+                            <span class="nodata">없음</span>
                         {% else %}
                             {{ rejudging.reason }}
                         {% endif %}
@@ -28,7 +28,7 @@
                 </tr>
                 {% if rejudging.startUser %}
                     <tr>
-                        <th>Issued by</th>
+                        <th>발급자</th>
                         <td>
                             <a href="{{ path('jury_user', {'userId': rejudging.startUser.userid}) }}">
                                 {{ rejudging.startUser.name }}
@@ -38,12 +38,12 @@
                 {% endif %}
                 {% if rejudging.endtime %}
                     <tr>
-                        <th>{% if rejudging.valid %}Accepted{% else %}Canceled{% endif %} by</th>
+                        <th>{% if rejudging.valid %}승인{% else %}취소{% endif %}한 사람</th>
                         <td>
                             {% if rejudging.autoapply %}
-                                automatically applied
+                                자동으로 적용됨
                             {% elseif rejudging.repeat %}
-                                part of a repeated judging
+                                반복된 심사의 일부
                             {% else %}
                                 <a href="{{ path('jury_user', {'userId': rejudging.finishUser.userid}) }}">
                                     {{ rejudging.finishUser.name }}
@@ -53,7 +53,7 @@
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Start time</th>
+                    <th>시작 시간</th>
                     <td>
                         {% if rejudging.starttime %}
                             <span title="{{ rejudging.starttime | printtime('Y-m-d H:i:s (T)') }}">
@@ -65,7 +65,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Apply time</th>
+                    <th>적용 시간</th>
                     <td>
                         {% if rejudging.endtime %}
                             <span title="{{ rejudging.endtime | printtime('Y-m-d H:i:s (T)') }}">
@@ -77,12 +77,12 @@
                     </td>
                 </tr>
                 <tr {% if todo <= 0 %}class="d-none"{% endif %}>
-                    <th>Queued</th>
-                    <td><span data-todo>{{ todo }}</span> unfinished judgings</td>
+                    <th>대기 중</th>
+                    <td><span data-todo>{{ todo }}</span> 미완료 심사</td>
                 </tr>
                 {% if repetitions %}
                     <tr>
-                        <th>Repetitions</th>
+                        <th>반복</th>
                         <td>
                             {% for rep in repetitions %}
                                 <a href="{{ path('jury_rejudging', {rejudgingId: rep}) }}">
@@ -102,12 +102,12 @@
 
     {% if rejudging.autoapply and not rejudging.endtime %}
          <br/>
-         <div class="alert alert-warning">Judgings in this rejudging will be applied automatically.</div>
+         <div class="alert alert-warning">이 재심사 내의 심사들은 자동으로 적용될 것입니다.</div>
     {% endif %}
 
     {% if disabledLangs %}
         <div class="alert alert-danger">
-            The following languages are currently not allowed to be judged:
+            다음 언어들은 현재 심사가 허용되지 않습니다:
             <ul>
                 {% for id, name in disabledLangs %}
                     <li>{{ name }}</li>
@@ -117,7 +117,7 @@
     {% endif %}
     {% if disabledProbs %}
         <div class="alert alert-danger">
-            The following problems are currently not allowed to be judged:
+            다음 문제들은 현재 심사가 허용되지 않습니다:
             <ul>
                 {% for id, name in disabledProbs %}
                     <li>{{ name }}</li>
@@ -131,49 +131,49 @@
     </div>
 
     {% if stats %}
-        <h2>Statistics over repeated rejudgings</h2>
-        <h4>Runtime spread</h4>
+        <h2>반복된 재심사 통계</h2>
+        <h4>실행 시간 편차</h4>
             <table class="table table-sm table-striped">
-                <tr><th>submission/testcase</th><th>spread</th><th>#judgings</th><th>result</th></tr>
+                <tr><th>제출/테스트케이스</th><th>편차</th><th>#심사</th><th>결과</th></tr>
 		{% for spread in stats.runtime_spread %}
 		    <tr>
                         <td>s{{ spread.submitid }}/tc{{ spread.rank }}</td>
-                        <td>{{ spread.spread | number_format(3) }}s</td>
+                        <td>{{ spread.spread | number_format(3) }}초</td>
                         <td>{{ spread.count }}</td>
                         <td>{{ spread.verdict | printResult }}</td>
 		    </tr>
 		{% endfor %}
 	    </table>
         {% if stats.judging_runs_differ %}
-            <h4>Judging Run Differences</h4>
+            <h4>심사 실행 차이</h4>
             <ul>
                 {% for diff in stats.judging_runs_differ %}
                     <li>s{{ diff }}</li>
                 {% endfor %}
             </ul>
             {% if stats.judging_runs_differ_overflow > 0 %}
-                <em>Left out {{ stats.judging_runs_differ_overflow }} submissions with different judging results.</em>
+                <em>결과가 다른 {{ stats.judging_runs_differ_overflow }}개의 제출이 생략되었습니다.</em>
             {% endif %}
         {% endif %}
         {% if stats.judgehost_stats | length > 1 %}
-            <h4>Judgehost stats</h4>
+            <h4>Judgehost 통계</h4>
             <table class="table table-sm table-striped">
-                <tr><th>Judgehost</th><th>#judgings</th><th>avg. runtime</th><th>std.dev.</th><th>avg. duration</th></tr>
+                <tr><th>Judgehost</th><th>#심사</th><th>평균 실행 시간</th><th>표준 편차</th><th>평균 소요 시간</th></tr>
                 {% for judgehost in stats.judgehost_stats %}
                     <tr>
                         <td>{{ judgehost.judgehost | printHost }}</td>
                         <td>{{ judgehost.njudged }}</td>
-                        <td>{{ judgehost.avgrun | number_format(3) }}s</td>
+                        <td>{{ judgehost.avgrun | number_format(3) }}초</td>
                         <td>{{ judgehost.stddev | number_format(3) }}</td>
-                        <td>{{ judgehost.avgduration | number_format(3) }}s</td>
+                        <td>{{ judgehost.avgduration | number_format(3) }}초</td>
                     </tr>
                 {% endfor %}
             </table>
         {% endif %}
         {% if stats.judgings %}
-            <h4>Judging verdicts</h4>
+            <h4>심사 판정</h4>
             <table class="table table-sm table-striped">
-                <tr><th>jID</th><th>rID</th><th>Judgehost</th><th>duration (incl. compile)</th><th>verdict</th></tr>
+                <tr><th>jID</th><th>rID</th><th>Judgehost</th><th>소요 시간 (컴파일 포함)</th><th>판정</th></tr>
                 {% for judging in stats.judgings %}
                     <tr>
                         <td>j{{ judging.judgingid }}</td>
@@ -187,11 +187,11 @@
         {% endif %}
     {% endif %}
 
-    <h2 class="mt-4">Details</h2>
+    <h2 class="mt-4">세부 정보</h2>
 
     <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group btn-group-sm mb-3" role="group">
-            <span class="input-group-text listtoggles">Show:</span>
+            <span class="input-group-text listtoggles">표시:</span>
             {%- for idx, type in viewTypes %}
                 <input type="radio" autocomplete="off" class="btn-check"
                     name="viewtype" id="viewtype{{ idx }}" value="{{ type }}"
@@ -203,7 +203,7 @@
             <div class="btn-group btn-group-sm" role="group">
                 <input type="checkbox" class="btn-check" id="statistics-toggle" {% if showStatistics %}checked{% endif %} autocomplete="off">
                 <label for="statistics-toggle" class="btn btn-outline-secondary">
-                    <i class="fas fa-list-ol"></i> Statistics
+                    <i class="fas fa-list-ol"></i> 통계
                 </label>
             </div>
         {% endif %}
@@ -213,9 +213,9 @@
         <input type="hidden" name="view" value="{{ viewTypes[view] }}"/>
         <div class="row mb-3">
             <div class="col-md-4">
-                <label for="oldverdict">Old verdict</label>
+                <label for="oldverdict">이전 판정</label>
                 <select style="width: 100%" class="select2 form-control" name="oldverdict" id="oldverdict">
-                    <option value="all" {% if oldverdict == 'all' %}selected{% endif %}>all</option>
+                    <option value="all" {% if oldverdict == 'all' %}selected{% endif %}>모두</option>
                     {%- for verdict, abbreviation in verdicts %}
                         <option value="{{ verdict }}" {% if oldverdict == verdict %}selected{% endif %}>
                             {{ verdict }}
@@ -225,9 +225,9 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="newverdict">New verdict</label>
+                <label for="newverdict">새 판정</label>
                 <select style="width: 100%" class="select2 form-control" name="newverdict" id="newverdict">
-                    <option value="all" {% if newverdict == 'all' %}selected{% endif %}>all</option>
+                    <option value="all" {% if newverdict == 'all' %}selected{% endif %}>모두</option>
                     {%- for verdict, abbreviation in verdicts %}
                         <option value="{{ verdict }}" {% if newverdict == verdict %}selected{% endif %}>
                             {{ verdict }}
@@ -238,12 +238,12 @@
             </div>
             <div class="col-md-2">
                 <label>&nbsp;</label>
-                <input class="btn btn-primary form-control" type="submit" value="Filter"/>
+                <input class="btn btn-primary form-control" type="submit" value="필터"/>
             </div>
             <div class="col-md-2">
                 <label>&nbsp;</label>
                 <a href="{{ path('jury_rejudging', {rejudgingId: rejudging.rejudgingid, view: viewTypes[view]}) }}"
-                   class="btn btn-secondary form-control">Clear</a>
+                   class="btn btn-secondary form-control">지우기</a>
             </div>
         </div>
     </form>

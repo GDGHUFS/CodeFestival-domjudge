@@ -19,6 +19,7 @@ class ConfigurationSpecification
         public readonly string $description,
         public readonly string $category,
         public readonly mixed $defaultValue,
+        public readonly ?string $displayName = null, // CodeFes: 설정 디스플레이 이름 추가
         public readonly ?string $regex = null,
         public readonly ?string $keyPlaceholder = null,
         public readonly ?string $valuePlaceholder = null,
@@ -47,6 +48,7 @@ class ConfigurationSpecification
             $array['description'],
             $array['category'],
             $array['default_value'],
+            $array['displayName'] ?? null, // CodeFes: 설정 디스플레이 이름 추가
             $array['regex'] ?? null,
             $array['key_placeholder'] ?? null,
             $array['value_placeholder'] ?? null,

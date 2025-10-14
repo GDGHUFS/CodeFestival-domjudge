@@ -12,17 +12,19 @@ class GeneratePasswordsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choices = [
-            'All teams' => 'team',
-            'Teams without password' => 'team_nopass',
-            'Jury members' => 'judge',
-            'Administrators' => 'admin',
+            '모든 팀' => 'team',
+            '비밀번호가 없는 팀' => 'team_nopass',
+            '심사위원' => 'judge',
+            '관리자' => 'admin',
         ];
         $builder->add('group', ChoiceType::class, [
-            'label' => 'Generate a new password for:',
+            'label' => '새 비밀번호를 생성할 대상:',
             'expanded' => true,
             'multiple' => true,
             'choices' => $choices]);
-        $builder->add('generate', SubmitType::class,
-            [ 'attr' => ['class' => 'btn-warning']]);
+        $builder->add('generate', SubmitType::class, [
+            'label' => '비밀번호 생성',
+            'attr'  => ['class' => 'btn-warning'],
+        ]);
     }
 }

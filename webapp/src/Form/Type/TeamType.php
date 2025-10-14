@@ -39,55 +39,57 @@ class TeamType extends AbstractExternalIdEntityType
     {
         $this->addExternalIdField($builder, Team::class);
         $builder->add('name', TextType::class, [
-            'label' => 'Team name',
+            'label' => '팀 이름',
             'empty_data' => ''
         ]);
         $builder->add('icpcid', TextType::class, [
             'label'       => 'ICPC ID',
             'required'    => false,
-            'help'        => 'Optional ID of the team in the ICPC CMS.',
+            'help'        => '팀의 ICPC CMS ID(선택 사항).',
             'constraints' => [
                 new Regex(
                     [
                         'pattern' => '/^[a-zA-Z0-9_-]+$/i',
-                        'message' => 'Only letters, numbers, dashes and underscores are allowed.',
+                        'message' => '영문, 숫자, 대시(-), 밑줄(_)만 허용됩니다.',
                     ]
                 )
             ]
         ]);
         $builder->add('label', TextType::class, [
-            'label'       => 'Label',
+            'label'       => '라벨',
             'required'    => false,
-            'help'        => 'Optional label, for example the seat number.',
+            'help'        => '선택 사항, 예: 좌석 번호.',
         ]);
         $builder->add('displayName', TextType::class, [
-            'label'    => 'Display name',
+            'label'    => '표시 이름',
             'required' => false,
-            'help'     => 'If provided, will display this instead of the team name in certain places, like the scoreboard.',
+            'help'     => '제공하면 점수판과 같은 특정 위치에서 팀 이름 대신 표시됩니다.',
         ]);
         $builder->add('category', EntityType::class, [
+            'label' => '팀 카테고리',
             'class' => TeamCategory::class,
         ]);
         $builder->add('publicdescription', TextareaType::class, [
-            'label' => 'Public description',
+            'label' => '공개 설명',
             'required' => false,
         ]);
         $builder->add('affiliation', EntityType::class, [
             'class'         => TeamAffiliation::class,
             'required'      => false,
             'choice_label'  => 'name',
-            'placeholder'   => '-- no affiliation --',
+            'label'         => '소속',
+            'placeholder'   => '-- 소속 없음 --',
             'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('a')->orderBy('a.name'),
         ]);
         $builder->add('penalty', IntegerType::class, [
-            'label' => 'Penalty time',
+            'label' => '페널티 시간',
         ]);
         $builder->add('location', TextType::class, [
-            'label'    => 'Location',
+            'label'    => '위치',
             'required' => false,
         ]);
         $builder->add('internalcomments', TextareaType::class, [
-            'label' => 'Internal comments (jury viewable only)',
+            'label' => '내부 코멘트 (심사위원 전용)',
             'required' => false,
             'attr'     => [
                 'rows' => 10,
@@ -106,40 +108,41 @@ class TeamType extends AbstractExternalIdEntityType
         ]);
         $builder->add('enabled', ChoiceType::class, [
             'expanded' => true,
+            'label' => '활성화 여부',
             'choices'  => [
-                'Yes' => true,
-                'No'  => false,
+                '예' => true,
+                '아니오'  => false,
             ],
         ]);
         $builder->add('photoFile', FileType::class, [
-            'label'    => 'Photo',
+            'label'    => '사진',
             'required' => false,
         ]);
         $builder->add('clearPhoto', CheckboxType::class, [
-            'label'    => 'Delete photo',
+            'label'    => '사진 삭제',
             'required' => false,
         ]);
         $builder->add('addUserForTeam', ChoiceType::class, [
-            'label'   => 'Add user to this team',
+            'label'   => '팀에 사용자 추가',
             'choices' => [
-                "Don't add user"    => Team::DONT_ADD_USER,
-                'Create new user'   => Team::CREATE_NEW_USER,
-                'Add existing user' => Team::ADD_EXISTING_USER,
+                "사용자 추가 안함"    => Team::DONT_ADD_USER,
+                '새 사용자 생성'   => Team::CREATE_NEW_USER,
+                '기존 사용자 추가' => Team::ADD_EXISTING_USER,
             ],
         ]);
         $builder->add('existingUser', EntityType::class, [
             'class'        => User::class,
-            'label'        => "User",
+            'label'        => "사용자",
             'required'     => true,
             'choice_label' => 'name',
         ]);
         $builder->add('newUsername', TextType::class, [
-            'label'    => 'Username',
+            'label'    => '사용자 이름',
             'required' => true,
             'empty_data' => ''
         ]);
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         // Remove ID field when doing an edit.
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

@@ -1,6 +1,6 @@
 {% extends "jury/base.html.twig" %}
 
-{% block title %}Analysis - Problem {{ problem.probid }} {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
+{% block title %}분석 - 문제 {{ problem.probid }} {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
 {{ parent() }}
@@ -25,26 +25,26 @@
 {% endblock %}
 
 {% block content %}
-      <h1>Problem {{ problem.probid }}: <span style="font-size: 60%;">{{ contest_problem | problemBadge }}</span> {{ problem.name }}</h1>
+      <h1>문제 {{ problem.probid }}: <span style="font-size: 60%;">{{ contest_problem | problemBadge }}</span> {{ problem.name }}</h1>
         {% include 'jury/partials/analysis_filter.html.twig' %}
      </div>
     <div class="col-lg-3 col-sm-6 mt-3">
       <div class="card">
         <div class="card-header">
-          Misc Statistics
+          기타 통계
         </div>
         <div class="card-body">
           <dl class="row">
-            <dt class="col-sm-6"># Submissions</dt>
+            <dt class="col-sm-6"># 제출</dt>
             <dd class="col-sm-6">{{ submissions|length }}</dd>
 
-            <dt class="col-sm-6"># Correct</dt>
+            <dt class="col-sm-6"># 정답</dt>
             <dd class="col-sm-6">{{ results['correct']|default(0) }} <span class="text-muted">({{ misc.correct_percentage|number_format(2) }}%)</span></dd>
 
-            <dt class="col-sm-6"># Teams Attempted</dt>
+            <dt class="col-sm-6"># 시도한 팀 수</dt>
             <dd class="col-sm-6">{{ misc.num_teams_attempted }}</dd>
 
-            <dt class="col-sm-6"># Teams Correct</dt>
+            <dt class="col-sm-6"># 정답 팀 수</dt>
             <dd class="col-sm-6">{{misc.num_teams_correct}} <span class="text-muted">({{  misc.teams_correct_percentage|number_format(2) }}%)</dd>
           </dl>
         </div>
@@ -53,7 +53,7 @@
     <div class="col-lg-4 col-sm-6 mt-3" id="judging_results">
       <div class="card">
         <div class="card-header">
-          Judging Results
+          심사 결과
         </div>
         <div class="card-body">
           <svg style="height: 275px"></svg>
@@ -63,7 +63,7 @@
     <div class="col-lg-5 col-sm-12 mt-3" id="submission_times">
       <div class="card">
         <div class="card-header">
-          Submissions over Time
+          시간 경과에 따른 제출
         </div>
         <div class="card-body">
             <svg style="height: 275px"></svg>
@@ -75,7 +75,7 @@
     <div class="col-12" id="maxruntime">
       <div class="card">
         <div class="card-header">
-          Max Runtimes
+          최대 실행 시간
         </div>
         <div class="card-body">
           <svg style="height: 600px"></svg>
@@ -101,7 +101,7 @@ set colors = {
 $(function(){
     var run_max_times = [
       {
-        key: "Max Runtimes",
+        key: "최대 실행 시간",
         values: [
           {% for j in judgings %}
             {
@@ -132,8 +132,8 @@ $(function(){
 
       chart.yAxis
         .tickFormat(d3.format('.3f'))
-        .axisLabel('Runtime(in s)');
-      chart.xAxis.axisLabel("Judgings");
+        .axisLabel('실행 시간(초)');
+      chart.xAxis.axisLabel("심사 목록");
       d3.select('#maxruntime svg')
           .datum(run_max_times)
           .call(chart);
@@ -145,11 +145,11 @@ $(function(){
       chart.tooltip.contentGenerator(function (obj) {
         var format = d3.format(".3f");
         return '<div style="background: LightCyan;">'
-	  + '<b>Team:</b> ' + obj.data.team + '<br/>'
-          + '<b>Submitted:</b> ' + obj.data.submittime + '<br/>'
-          + '<b>First file:</b> <tt>' + obj.data.firstfile + '</tt><br/>'
-          + '<b>max. Runtime:</b> ' + format(obj.data.value) + 's</b><br/>'
-          + '<small>click to view judging</small>'
+	  + '<b>팀:</b> ' + obj.data.team + '<br/>'
+          + '<b>제출 시각:</b> ' + obj.data.submittime + '<br/>'
+          + '<b>첫 번째 파일:</b> <tt>' + obj.data.firstfile + '</tt><br/>'
+          + '<b>최대 실행 시간:</b> ' + format(obj.data.value) + 's</b><br/>'
+          + '<small>클릭하여 심사 보기</small>'
           + '</div>';
       });
 
@@ -182,7 +182,7 @@ $(function(){
     // Results by type
     var judging_results = [
       {
-        key: "Judging Results",
+        key: "심사 결과",
         values: [
           {% for result,count in results %}
             {
@@ -205,8 +205,8 @@ $(function(){
           ;
       chart.yAxis
         .tickFormat(d3.format('.0f'))
-        .axisLabel('Number of submissions');
-      chart.xAxis.axisLabel("Judgement");
+        .axisLabel('제출 횟수');
+      chart.xAxis.axisLabel("심사 결과");
       d3.select('#judging_results svg')
           .datum(judging_results)
           .call(chart);
@@ -256,11 +256,11 @@ $(function(){
           .forceY([0, {{ submissions|length *1.10 }}])
           ;
       chart.xAxis     //Chart x-axis settings
-          .axisLabel('Contest Time(minutes)')
+          .axisLabel('대회 시간(분)')
           .tickFormat(d3.format('d'));
 
       chart.yAxis     //Chart y-axis settings
-          .axisLabel('Total Submissions')
+          .axisLabel('총 제출 횟수')
           .tickFormat(d3.format('d'));
 
       d3.select('#submission_times svg')

@@ -29,8 +29,8 @@ class JuryClarificationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $recipientOptions = [
-            '(select...)' => static::RECIPIENT_MUST_SELECT,
-            'ALL' => '',
+            '(선택...)' => static::RECIPIENT_MUST_SELECT,
+            '전체 팀' => '',
         ];
 
         $limitToTeam = $options['limit_to_team'] ?? null;
@@ -88,19 +88,21 @@ class JuryClarificationType extends AbstractType
         }
 
         $builder->add('recipient', ChoiceType::class, [
-            'label' => 'Send to',
+            'label' => '수신 대상',
             'choices' => $recipientOptions,
             'constraints' => [
-                new NotEqualTo('domjudge-must-select', message: 'You must select somewhere to send the clarification to.'),
+                new NotEqualTo('domjudge-must-select', message: '질의응답(설명) 요청을 보낼 대상을 선택해야 합니다.'),
             ],
         ]);
 
         $builder->add('subject', ChoiceType::class, [
+            'label' => '주제',
             'choices' => $subjectOptions,
             'group_by' => $subjectGroupBy,
         ]);
 
         $builder->add('message', TextareaType::class, [
+            'label' => '메시지',
             'attr' => [
                 'rows' => 5,
                 'cols' => 85,

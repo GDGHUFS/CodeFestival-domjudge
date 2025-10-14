@@ -41,12 +41,12 @@ class TeamAffiliationType extends AbstractExternalIdEntityType
         $builder->add('icpcid', TextType::class, [
             'label'       => 'ICPC ID',
             'required'    => false,
-            'help'        => 'Optional ID of the organization in the ICPC CMS.',
+            'help'        => '조직의 ICPC CMS ID(선택 사항).',
             'constraints' => [
                 new Regex(
                     [
                         'pattern' => '/^[a-zA-Z0-9_-]+$/i',
-                        'message' => 'Only letters, numbers, dashes and underscores are allowed.',
+                        'message' => '영문, 숫자, 대시(-), 밑줄(_)만 허용됩니다.',
                     ]
                 )
             ]
@@ -57,25 +57,25 @@ class TeamAffiliationType extends AbstractExternalIdEntityType
             $builder->add('country', ChoiceType::class, [
                 'required' => false,
                 'choices'  => $countries,
-                'placeholder' => 'No country',
+                'placeholder' => '국가 없음',
             ]);
         }
         $builder->add('internalcomments', TextareaType::class, [
-            'label' => 'Internal comments (jury viewable only)',
+            'label' => '내부 코멘트 (심사위원 전용)',
             'required' => false,
             'attr' => [
                 'rows' => 6,
             ],
         ]);
         $builder->add('logoFile', FileType::class, [
-            'label' => 'Logo',
+            'label' => '로고',
             'required' => false,
         ]);
         $builder->add('clearLogo', CheckboxType::class, [
-            'label' => 'Delete logo',
+            'label' => '로고 삭제',
             'required' => false,
         ]);
-        $builder->add('save', SubmitType::class);
+        $builder->add('save', SubmitType::class, ['label' => '저장']);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var TeamAffiliation|null $affiliation */

@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Affiliation {{ teamAffiliation.affilid }} - {{ parent() }}{% endblock %}
+{% block title %}소속 {{ teamAffiliation.affilid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <h1>Affiliation {{ teamAffiliation.name }}</h1>
+    <h1>소속 {{ teamAffiliation.name }}</h1>
 
     <div class="row">
         <div class="col-lg-4">
@@ -21,7 +21,7 @@
                 </tr>
                 {% if showExternalId(teamAffiliation) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ teamAffiliation.externalid }}</td>
                     </tr>
                 {% endif %}
@@ -36,11 +36,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Shortname</th>
+                    <th>약칭</th>
                     <td>{{ teamAffiliation.shortname }}</td>
                 </tr>
                 <tr>
-                    <th>Logo</th>
+                    <th>로고</th>
                     <td class="affiliation-logo">
                         {% set affiliationId = teamAffiliation.affilid %}
                         {% if showExternalId(teamAffiliation) %}
@@ -51,13 +51,13 @@
                             <img src="{{ asset(affiliationLogo) }}" alt="{{ teamAffiliation.shortname }}"
                                  title="{{ teamAffiliation.shortname }}" class="affiliation-logo"/>
                         {% else %}
-                            Not available
+                            사용 불가
                         {% endif %}
                     </td>
                 </tr>
                 {% if showFlags and teamAffiliation and teamAffiliation.country %}
                     <tr>
-                        <th>Country</th>
+                        <th>국가</th>
                         <td>
                             {{ teamAffiliation.country | countryFlag(true) }}
                         </td>
@@ -65,7 +65,7 @@
                 {% endif %}
                 {% if teamAffiliation.internalcomments is not empty %}
                     <tr>
-                        <th>Comments</th>
+                        <th>코멘트</th>
                         <td>{{ teamAffiliation.internalcomments }}</td>
                     </tr>
                 {% endif %}
@@ -75,14 +75,14 @@
 
     {%- if is_granted('ROLE_ADMIN') -%}
         <p>
-            {{ button(path('jury_team_affiliation_edit', {'affilId': teamAffiliation.affilid}), 'Edit', 'primary', 'edit') }}
-            {{ button(path('jury_team_affiliation_delete', {'affilId': teamAffiliation.affilid}), 'Delete', 'danger', 'trash-alt', true) }}
+            {{ button(path('jury_team_affiliation_edit', {'affilId': teamAffiliation.affilid}), '수정', 'primary', 'edit') }}
+            {{ button(path('jury_team_affiliation_delete', {'affilId': teamAffiliation.affilid}), '삭제', 'danger', 'trash-alt', true) }}
         </p>
     {% endif %}
 
-    <h3>Teams</h3>
+    <h3>팀 목록</h3>
     {% if teamAffiliation.teams is empty %}
-        <p class="nodata">no teams</p>
+        <p class="nodata">팀 없음</p>
     {% else %}
         <div class="row">
             <div class="col-lg-4">
@@ -90,7 +90,7 @@
                     <thead>
                     <tr>
                         <th style="text-align: right;">ID</th>
-                        <th>Teamname</th>
+                        <th>팀 이름</th>
                     </tr>
                     </thead>
                     <tbody>

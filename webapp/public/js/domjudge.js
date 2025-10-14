@@ -142,16 +142,16 @@ function updateClock()
     var fmt = "";
     if ( timeleftelt.innerHTML=='start delayed' || timeleft.innerHTML == 'no contest' ) { // FIXME
         var left = 0;
-        var what = timeleftelt.innerHTML;
+        var what = timeleftelt.innerHTML=='start delayed' ? '시작 지연' : '대회 없음';
     } else if (curtime >= starttime && curtime < endtime ) {
         var left = endtime - curtime;
         var what = "";
     } else if (curtime >= activatetime && curtime < starttime ) {
         var left = starttime - curtime;
-        var what = "time to start: ";
+        var what = "시작까지 남은 시간: ";
     } else {
         var left = 0;
-        var what = "contest over";
+        var what = "대회 종료";
     }
 
     if ( left ) {

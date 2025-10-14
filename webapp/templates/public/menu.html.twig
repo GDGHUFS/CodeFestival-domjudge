@@ -12,30 +12,30 @@
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
                 <a class="nav-link{% if current_route in ['public_index', 'public_team'] %} active{% endif %}"
-                    href="{{ path('public_index') }}"><i class="fas fa-list-ol"></i> Scoreboard</a>
+                    href="{{ path('public_index') }}"><i class="fas fa-list-ol"></i> 점수판</a>
             </li>
             <li class="nav-item">
                 {% if is_granted('ROLE_JURY') or (current_public_contest is not null and current_public_contest.freezeData.started) %}
                     <a class="nav-link{% if current_route == 'public_problems' %} active{% endif %}"
                         href="{{ path('public_problems') }}">
-                        <i class="fas fa-book-open"></i> Problemset
+                        <i class="fas fa-book-open"></i> 문제 세트
                     </a>
                 {% else %}
-                    <a class="nav-link disabled"><i class="fas fa-book-open"></i> Problemset</a>
+                    <a class="nav-link disabled"><i class="fas fa-book-open"></i> 문제 세트</a>
                 {% endif %}
             </li>
 
             {% if is_granted('ROLE_TEAM') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('team_index') }}">
-                        <i class="fas fa-arrow-right"></i> Team
+                        <i class="fas fa-arrow-right"></i> 팀
                     </a>
                 </li>
             {% endif %}
 
             {% if is_granted('ROLE_JURY') or is_granted('ROLE_BALLOON') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('jury_index') }}"><i class="fas fa-arrow-right"></i> Jury</a>
+                    <a class="nav-link" href="{{ path('jury_index') }}"><i class="fas fa-arrow-right"></i> 심사위원</a>
                 </li>
             {% endif %}
         </ul>

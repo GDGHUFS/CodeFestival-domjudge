@@ -1,26 +1,26 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Edit problem {{ problem.probid }} - {{ parent() }}{% endblock %}
+{% block title %}문제 {{ problem.probid }} 편집 - {{ parent() }}{% endblock %}
 
 {% block content %}
 
-    <h1>Edit problem {{ problem.probid }}</h1>
+    <h1>문제 {{ problem.probid }} 편집</h1>
 
     <div class="row">
         <div class="col-lg-4">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Problem ID</th>
+                    <th>문제 ID</th>
                     <td>{{ problem.probid }}</td>
                 </tr>
                 <tr>
-                    <th>Testcases</th>
+                    <th>테스트케이스</th>
                     <td>
                         {% if problem.testcases is empty %}
-                            <em>no testcases</em>
+                            <em>테스트케이스 없음</em>
                         {% else %}
-                            <a href="{{ path('jury_problem_testcases', {'probId': problem.probid}) }}">details / edit</a>
+                            <a href="{{ path('jury_problem_testcases', {'probId': problem.probid}) }}">세부 정보 / 편집</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -32,7 +32,7 @@
 
     {% if is_granted('ROLE_ADMIN') %}
         <hr>
-        <i>or</i>
+        <i>또는</i>
 
         <div class="row">
             <div class="col-lg-4">

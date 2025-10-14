@@ -3,23 +3,27 @@
     description: Options related to how scoring is handled.
     items:
         -   name: verification_required
+            displayName: 수동 심사 확인 필수
             type: bool
             default_value: false
             public: false
-            description: Is manual verification of judgings by jury required before publication?
+            description: 발표 전에 심사위원의 수동 심사 확인이 필요한가요?
         -   name: compile_penalty
+            displayName: 컴파일 오류 페널티
             type: bool
             default_value: false
             public: true
-            description: Should submissions with compiler-error incur penalty time (and be shown on the scoreboard)?
+            description: 컴파일 오류가 발생한 제출물에 페널티 시간을 부과하고 (그리고 점수판에 표시해야 하나요)?
         -   name: penalty_time
+            displayName: 페널티 시간
             type: int
             default_value: 20
             public: true
-            description: Penalty time in minutes per wrong submission (if eventually solved).
+            description: 오답 제출당 페널티 시간(분 단위, 최종적으로 해결된 경우).
             regex: /^\d+$/
-            error_message: A non-negative number is required.
+            error_message: 음수가 아닌 숫자가 필요합니다.
         -   name: results_prio
+            displayName: 결과 우선순위
             type: array_keyval
             default_value:
                 memory-limit: 99
@@ -30,95 +34,108 @@
                 no-output: 99
                 correct: 1
             public: false
-            description: Priorities of results for determining final result with multiple testcases. Higher priority is used first as final result. With equal priority, the first (ordered by rank) incorrect result determines the final result.
+            description: 여러 테스트 케이스로 최종 결과를 결정하기 위한 결과 우선순위입니다. 더 높은 우선순위가 최종 결과로 먼저 사용됩니다. 우선순위가 같을 경우, 첫 번째(순위 순서대로) 오답 결과가 최종 결과를 결정합니다.
         -   name: results_remap
+            displayName: 결과 재매핑
             type: array_keyval
             default_value: []
             public: false
-            description: Remap testcase result, e.g. to disable a specific result type such as `no-output`.
+            description: "테스트 케이스 결과를 재매핑합니다(예: `no-output`과 같은 특정 결과 유형을 비활성화)."
         -   name: score_in_seconds
+            displayName: 점수 초 단위 표시
             type: bool
             default_value: false
             public: true
-            description: Is the scoreboard resolution measured in seconds instead of minutes?
+            description: 점수판 해상도가 분 대신 초 단위로 측정되나요?
 -   category: Judging
     description: Options related to how judging is performed.
     items:
         -   name: memory_limit
+            displayName: 메모리 제한
             type: int
             default_value: 2097152
             public: false
-            description: Maximum memory usage (in kB) by submissions. This includes the shell which starts the compiled solution and also any interpreter like the Java VM, which takes away approx. 300MB! Can be overridden per problem.
+            description: 제출물의 최대 메모리 사용량(kB 단위). 여기에는 컴파일된 솔루션을 시작하는 쉘과 Java VM과 같은 모든 인터프리터가 포함되며, 이는 약 300MB를 차지합니다! 문제별로 재정의될 수 있습니다.
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: output_limit
+            displayName: 출력 제한
             type: int
             default_value: 8192
             public: false
-            description: Maximum output (in kB) submissions may generate. Any excessive output is truncated, so this should be greater than the maximum testdata output. Can be overridden per problem.
+            description: 제출물이 생성할 수 있는 최대 출력(kB 단위). 초과 출력은 잘리므로, 이 값은 최대 테스트 데이터 출력보다 커야 합니다. 문제별로 재정의될 수 있습니다.
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: process_limit
+            displayName: 프로세스 제한
             type: int
             default_value: 64
             public: false
-            description: Maximum number of processes that the submission is allowed to start (including shell and possibly interpreters).
+            description: 제출이 시작할 수 있는 최대 프로세스 수(쉘 및 가능한 인터프리터 포함).
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: sourcesize_limit
+            displayName: 소스 크기 제한
             type: int
             default_value: 256
             public: true
-            description: Maximum source code size (in kB) of a submission.
+            description: 제출물의 최대 소스 코드 크기(kB 단위).
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: sourcefiles_limit
+            displayName: 소스 파일 제한
             type: int
             default_value: 100
             public: true
-            description: Maximum number of source files in one submission. Set to `1` to disable multi-file submissions.
+            description: 한 번의 제출에 포함될 수 있는 최대 소스 파일 수. 여러 파일 제출을 비활성화하려면 `1`로 설정하십시오.
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: script_timelimit
+            displayName: 스크립트 시간 제한
             type: int
             default_value: 30
             public: false
-            description: Maximum seconds available for compile/compare scripts. This is a safeguard against malicious code and buggy scripts, so a reasonable but large amount should do.
+            description: 컴파일/비교 스크립트에서 사용할 수 있는 최대 시간(초 단위). 이는 악성 코드 및 버그 있는 스크립트에 대한 안전 장치이므로, 합리적이지만 충분한 양이어야 합니다.
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: script_memory_limit
+            displayName: 스크립트 메모리 제한
             type: int
             default_value: 2097152
             public: false
-            description: Maximum memory usage (in kB) by compile/compare scripts. This is a safeguard against malicious code and buggy script, so a reasonable but large amount should do.
+            description: 컴파일/비교 스크립트가 사용할 수 있는 최대 메모리 사용량(kB 단위). 이는 악성 코드 및 버그 있는 스크립트에 대한 안전 장치이므로, 합리적이지만 충분한 양이어야 합니다.
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: script_filesize_limit
+            displayName: 스크립트 파일 크기 제한
             type: int
             default_value: 2621440
             public: false
-            description: Maximum filesize (in kB) compile/compare scripts may write. Submission will fail with compiler-error when trying to write more, so this should be greater than any **intermediate or final** result written by compilers.
+            description: 컴파일/비교 스크립트가 쓸 수 있는 최대 파일 크기(kB 단위). 이보다 많이 쓰려고 하면 제출이 컴파일 오류와 함께 실패하므로, 이 값은 컴파일러가 쓰는 모든 **중간 또는 최종** 결과보다 커야 합니다.
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: timelimit_overshoot
+            displayName: 시간 제한 초과 허용치
             type: string
             default_value: 1s|10%
             public: false
-            description: Time that submissions are kept running beyond timelimit before being killed. Specify as `Xs` for X seconds, `Y%` as percentage, or a combination of both separated by one of `+|&` for the sum, maximum, or minimum of both.
+            description: 시간 제한을 초과하여 제출이 종료되기 전까지 실행을 유지하는 시간. X초의 경우 `Xs`, 백분율의 경우 `Y%`, 또는 이 둘을 `+|&` 중 하나로 구분하여 합, 최대 또는 최소로 지정하십시오.
             regex: /^\d+[s%]([+|&]\d+[s%])?$/
             error_message: Only Xs, Y% or a combination of both separated by one of +|& are allowed.
         -   name: output_storage_limit
+            displayName: 출력 저장소 제한
             type: int
             default_value: 50000
             public: false
-            description: Maximum size of error/system output stored in the database (in bytes); use `-1` to disable any limits. See `Display` / `output_display_limit` for how to control the output *shown*.
+            description: 데이터베이스에 저장되는 오류/시스템 출력의 최대 크기(바이트 단위); 제한을 비활성화하려면 `-1`을 사용하십시오. *표시되는* 출력을 제어하는 방법은 `Display` / `output_display_limit`을 참조하십시오.
             regex: /^([1-9]\d*|-1)$/
-            error_message: A positive number or -1 is required.
+            error_message: 양수 또는 -1이 필요합니다.
         -   name: lazy_eval_results
+            displayName: 결과 지연 평가
             type: int
             default_value: 1
             public: false
-            description: Lazy evaluation of results? If enabled, stops judging as soon as a highest priority result is found, otherwise always all testcases will be judged. On request will not auto-start judging and is typically used when running as analyst system.
+            description: 결과를 지연 평가하나요? 활성화된 경우, 가장 높은 우선순위 결과가 발견되는 즉시 심사를 중지하고, 그렇지 않으면 항상 모든 테스트 케이스가 심사됩니다. 요청 시에는 심사가 자동으로 시작되지 않으며 일반적으로 분석가 시스템으로 실행할 때 사용됩니다.
             options:
                 1: Lazy
                 2: Full judging
@@ -126,118 +143,137 @@
             regex: /^[123]$/
             error_message: A value between 1 and 3 is required.
         -   name: judgehost_warning
+            displayName: Judgehost 경고 시간
             type: int
             default_value: 30
             public: false
-            description: Time in seconds after a judgehost last checked in before showing its status as `warning`.
+            description: Judgehost가 마지막으로 체크인한 후 `warning` 상태를 표시하기까지의 시간(초 단위).
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: judgehost_critical
+            displayName: Judgehost Critical 상태 시간
             type: int
             default_value: 120
             public: false
-            description: Time in seconds after a judgehost last checked in before showing its status as `critical`.
+            description: Judgehost가 마지막으로 체크인한 후 `critical` 상태를 표시하기까지의 시간(초 단위).
             regex: /^[1-9]\d*$/
-            error_message: A positive number is required.
+            error_message: 양수가 필요합니다.
         -   name: diskspace_error
+            displayName: 디스크 공간 오류 한도
             type: int
             default_value: 1048576
             public: false
-            description: Minimum free disk space (in kB) on judgehosts before posting an internal error.
+            description: 내부 오류를 게시하기 전에 Judgehost에 남아 있어야 하는 최소 여유 디스크 공간(kB 단위).
             regex: /^\d+$/
-            error_message: A non-negative number is required.
+            error_message: 음수가 아닌 숫자가 필요합니다.
         -   name: default_compare
+            displayName: 기본 비교 스크립트
             type: string
             default_value: compare
             public: false
-            description: The script used to compare outputs if no special compare script specified.
+            description: 특별한 비교 스크립트가 지정되지 않은 경우 출력을 비교하는 데 사용되는 스크립트입니다.
         -   name: default_run
+            displayName: 기본 실행 스크립트
             type: string
             default_value: run
             public: false
-            description: The script used to run submissions if no special run script specified.
+            description: 특별한 실행 스크립트가 지정되지 않은 경우 제출을 실행하는 데 사용되는 스크립트입니다.
         -   name: default_full_debug
+            displayName: 기본 전체 디버그 스크립트
             type: string
             default_value: full_debug
             public: false
-            description: The script used to compile a full debug package.
+            description: 전체 디버그 패키지를 컴파일하는 데 사용되는 스크립트입니다.
         -   name: enable_parallel_judging
+            displayName: 병렬 심사 활성화
             type: bool
             default_value: true
             public: false
-            description: Are submissions judged by multiple judgehosts in parallel?
+            description: 제출이 여러 Judgehost에 의해 병렬로 심사되나요?
         -   name: judgehost_activated_by_default
+            displayName: Judgehost 기본 활성화
             type: bool
             default_value: true
             public: false
-            description: Activate a judgehost when it registers for the first time.
+            description: Judgehost가 처음 등록할 때 활성화하나요?
 -   category: Clarifications
     description: Options related to clarifications.
     items:
         -   name: clar_categories
+            displayName: 질의응답(설명) 카테고리
             type: array_keyval
             default_value:
-                general: General issue
-                tech: Technical issue
+                general: 일반적인 문제
+                tech: 기술적인 문제
             public: true
-            description: List of additional clarification categories.
+            description: 추가 질의응답(설명) 카테고리 목록입니다.
         -   name: clar_answers
+            displayName: 미리 정의된 질의응답(설명) 답변
             type: array_val
             default_value:
-                - No comment.
-                - Read the problem statement carefully.
+                - 코멘트 없음.
+                - 문제 설명을 주의 깊게 읽으십시오.
             public: false
-            description: List of pre-defined clarification answers.
+            description: 미리 정의된 질의응답(설명) 답변 목록입니다.
         -   name: clar_queues
+            displayName: 질의응답(설명) 큐
             type: array_keyval
             default_value: []
             public: true
-            description: List of clarification queues.
+            description: 질의응답(설명) 큐 목록입니다.
         -   name: clar_default_problem_queue
+            displayName: 문제 질의응답(설명) 기본 큐
             type: string
             default_value: ""
             public: true
-            description: Queue to assign to problem clarifications.
+            description: 문제 질의응답(설명)에 할당할 큐입니다.
 -   category: Display
     description: Options related to the DOMjudge user interface.
     items:
         -   name: output_display_limit
+            displayName: 출력 표시 제한
             type: int
             default_value: 2000
             public: false
-            description: Maximum size of run/diff/error/system output shown in the jury interface (in bytes); use `-1` to disable any limits.
+            description: 심사위원 인터페이스에 표시되는 실행/차이/오류/시스템 출력의 최대 크기(바이트 단위); 제한을 비활성화하려면 `-1`을 사용하십시오.
             regex: /^([1-9]\d*|-1)$/
-            error_message: A positive number or -1 is required.
+            error_message: 양수 또는 -1이 필요합니다.
         -   name: show_pending
+            displayName: 보류 중인 제출 표시
             type: bool
             default_value: true
             public: true
-            description: Show pending submissions on the scoreboard?
+            description: 점수판에 보류 중인 제출을 표시하나요?
         -   name: show_flags
+            displayName: 국기 표시
             type: bool
             default_value: true
             public: true
-            description: Show country information in the interfaces?
+            description: 인터페이스에 국가 정보를 표시하나요?
         -   name: show_affiliations
+            displayName: 소속 표시
             type: bool
             default_value: true
             public: true
-            description: Show affiliation names in the interfaces?
+            description: 인터페이스에 소속 이름을 표시하나요?
         -   name: show_affiliation_logos
+            displayName: 소속 로고 표시
             type: bool
             default_value: false
             public: true
-            description: Show affiliation logos on the scoreboard?
+            description: 점수판에 소속 로고를 표시하나요?
         -   name: show_teams_submissions
+            displayName: 팀 제출 정보 표시
             type: bool
             default_value: true
             public: true
-            description: Show problem columns with submission information on the public and team scoreboards?
+            description: 공개 및 팀 점수판에 제출 정보가 포함된 문제 열을 표시하나요?
         -   name: show_compile
+            displayName: 컴파일 출력 표시
             type: int
             default_value: 2
             public: true
-            description: Show compile output in team webinterface?
+            description: 팀 웹 인터페이스에 컴파일 출력을 표시하나요?
             options:
                 0: never
                 1: only on compilation error(s)
@@ -245,73 +281,85 @@
             regex: /^\d+$/
             error_message: A value between 0 and 2 is required.
         -   name: show_sample_output
+            displayName: 예제 출력 차이 표시
             type: bool
             default_value: false
             public: true
-            description: Should teams be able to view a diff of their and the reference output on sample testcases?
+            description: 팀이 예제 테스트 케이스에서 자신과 참조 출력의 차이를 볼 수 있어야 하나요?
         -   name: show_too_late_result
+            displayName: 너무 늦은 제출 결과 표시
             type: bool
             default_value: false
             public: true
-            description: Show results of TOO-LATE submissions in team interface?
+            description: 팀 인터페이스에 TOO-LATE 제출 결과를 표시하나요?
         -   name: show_balloons_postfreeze
+            displayName: 동결 후 풍선 알림 표시
             type: bool
             default_value: false
             public: true
-            description: Give out balloon notifications after the scoreboard has been frozen?
+            description: 점수판이 동결된 후 풍선 알림을 제공하나요?
         -   name: show_relative_time
+            displayName: 상대 시간 표시
             type: bool
             default_value: false
             public: true
-            description: Print times of contest events relative to contest start (instead of absolute).
+            description: 대회 이벤트 시간을 대회 시작을 기준으로 상대적으로 인쇄합니다(절대 시간 대신).
         -   name: time_format
+            displayName: 시간 형식
             type: string
             default_value: "H:i"
             public: false
-            description: The format used to print times. For formatting options see the [PHP `DateTime::format` function](https://www.php.net/manual/en/datetime.format.php).
+            description: 시간을 인쇄하는 데 사용되는 형식입니다. 형식 지정 옵션은 [PHP `DateTime::format` 함수](https://www.php.net/manual/en/datetime.format.php)를 참조하십시오.
         -   name: thumbnail_size
+            displayName: 썸네일 크기
             type: int
             default_value: 200
             public: false
-            description: Maximum width/height of a thumbnail for uploaded testcase images.
+            description: 업로드된 테스트 케이스 이미지의 최대 너비/높이(픽셀).
             regex: /^\d+$/
-            error_message: A non-negative number is required.
+            error_message: 음수가 아닌 숫자가 필요합니다.
         -   name: show_limits_on_team_page
+            displayName: 팀 페이지에 제한 표시
             type: bool
             default_value: true
             public: true
-            description: Show time and memory limit on the team problems page.
+            description: 팀 문제 페이지에 시간 및 메모리 제한을 표시합니다.
         -   name: allow_team_submission_download
+            displayName: 팀 제출 코드 다운로드 허용
             type: bool
             default_value: false
             public: true
-            description: Allow teams to download their own submission code.
+            description: 팀이 자신의 제출 코드를 다운로드하도록 허용합니다.
             docdescription: |
-                Note that enabling this option means that if someone gets access to the account of a team, they can download
-                the source code of all submissions from that team. When this option is disabled, getting access to the account
-                of a team only allows someone to submit as that team, which can then easily be ignored by the jury later.
+                이 옵션을 활성화하면 누군가 팀 계정에 액세스할 경우 해당 팀의 모든 제출 소스 코드를 다운로드할 수 있다는 점에 유의하십시오.
+                이 옵션이 비활성화된 경우, 팀 계정에 액세스해도 해당 팀으로 제출만 할 수 있으며,
+                이는 나중에 심사위원이 쉽게 무시할 수 있습니다.
         -   name: team_column_width
+            displayName: 팀 열 최대 너비
             type: int
             default_value: 0
             public: false
-            description: Maximum width of team column on scoreboard. Leave `0` for no maximum.
+            description: 점수판의 팀 열 최대 너비입니다. 최대값을 설정하지 않으려면 `0`을 남겨두십시오.
             regex: /^\d+$/
-            error_message: A non-negative number is required.
+            error_message: 음수가 아닌 숫자가 필요합니다.
         -   name: show_public_stats
+            displayName: 공개 통계 표시
             type: bool
             default_value: true
             public: true
-            description: Show submission and problem statistics on the team and public pages.
+            description: 팀 및 공개 페이지에 제출 및 문제 통계를 표시합니다.
         -   name: show_language_versions
+            displayName: 언어 버전 표시
             type: bool
             default_value: false
             public: true
-            description: Show canonical compiler and runner version on the team pages.
+            description: 팀 페이지에 정식 컴파일러 및 러너 버전을 표시합니다.
         -   name: show_teams_on_scoreboard
+            displayName: 점수판에 팀 표시
             type: int
             default_value: 0
             public: true
-            description: Show teams on the scoreboard?
+            description: 점수판에 팀을 표시하나요?
             options:
                 0: Always
                 1: After login
@@ -319,47 +367,53 @@
             regex: /^\d+$/
             error_message: A value between 0 and 2 is required.
         -   name: enable_ranking
+            displayName: 순위 활성화
             type: bool
             default_value: true
             public: true
-            description: If disabled, no ranking information is shown to contestants.
+            description: 비활성화된 경우, 참가자에게 순위 정보가 표시되지 않습니다.
 -   category: Authentication
     description: Options related to authentication.
     items:
         -   name: auth_methods
+            displayName: 허용되는 인증 방법
             type: array_val
             default_value: []
             public: false
-            description: List of allowed additional authentication methods.
+            description: 허용되는 추가 인증 방법 목록입니다.
             docdescription: See :ref:`authentication` for more information.
             options:
                 - ipaddress
                 - xheaders
         -   name: ip_autologin
+            displayName: IP 자동 로그인
             type: bool
             default_value: false
             public: false
-            description: Enable to skip the login page when using IP authentication.
+            description: IP 인증을 사용할 때 로그인 페이지를 건너뛰려면 활성화하십시오.
 -   category: External systems
     description: Miscellaneous configuration options.
     items:
         -   name: print_command
+            displayName: 인쇄 명령
             type: string
             default_value: ""
             public: true
-            description: If set, enable teams and jury to send source code to this command. See admin manual for allowed arguments.
+            description: 설정된 경우, 팀과 심사위원이 소스 코드를 이 명령으로 보낼 수 있도록 활성화합니다. 허용되는 인수에 대해서는 관리자 설명서를 참조하십시오.
             docdescription: See :ref:`printing` for more information.
         -   name: event_feed_format
+            displayName: 이벤트 피드 형식
             type: enum
             default_value: 2022-07
             enum_class: App\Utils\EventFeedFormat
             public: false
-            description: Format of the event feed to use. See [current draft](https://ccs-specs.icpc.io/draft/contest_api#event-feed) and [versions available](https://ccs-specs.icpc.io/).
+            description: 사용할 이벤트 피드의 형식입니다. See [current draft](https://ccs-specs.icpc.io/draft/contest_api#event-feed) and [versions available](https://ccs-specs.icpc.io/).
         -   name: data_source
+            displayName: 데이터 소스
             type: int
             default_value: 0
             public: false
-            description: "Source of data: used to indicate whether internal or external IDs are exposed in the API. `configuration data external` is typically used when loading configuration data from the ICPC CMS, and `configuration and live data external` when running DOMjudge as \"shadow system\"."
+            description: "데이터의 출처: API에서 내부 또는 외부 ID를 노출할지 여부를 나타내는 데 사용됩니다. `configuration data external`은 일반적으로 ICPC CMS에서 구성 데이터를 로드할 때 사용되며, `configuration and live data external`은 DOMjudge를 \"섀도우 시스템\"으로 실행할 때 사용됩니다."
             options:
                 0: all local
                 1: configuration data external
@@ -368,38 +422,44 @@
             error_message: A value between 0 and 2 is required.
             docdescription: See :doc:`the chapter on running DOMjudge as a shadow system<shadow>` for more information.
         -   name: external_contest_sources_allow_untrusted_certificates
+            displayName: 외부 대회 소스 신뢰할 수 없는 인증서 허용
             type: bool
             default_value: false
             public: false
-            description: Whether to allow untrusted TLS certificates when reading from external contest sources.
+            description: 외부 대회 소스에서 읽을 때 신뢰할 수 없는 TLS 인증서를 허용할지 여부입니다.
         -   name: external_judgement_types
+            displayName: 외부 심사 유형
             type: array_keyval
             key_placeholder: ID
             value_placeholder: Name
             default_value: []
             public: true
-            description: List of additional judgement types as reported by the external CCS. All assumed to give a penalty.
+            description: 외부 CCS에서 보고한 추가 심사 유형 목록입니다. 모두 페널티를 주는 것으로 간주됩니다.
         -   name: external_ccs_submission_url
+            displayName: 외부 CCS 제출 URL
             type: string
             default_value: ""
             public: false
-            description: URL of a submission detail page on the external CCS. Placeholder `[id]` will be replaced by submission ID and `[contest]` by the contest ID. Leave empty to not display links to external CCS.
+            description: 외부 CCS의 제출 상세 페이지 URL입니다. Placeholder `[id]` will be replaced by submission ID and `[contest]` by the contest ID. Leave empty to not display links to external CCS.
             docdescription: See :doc:`the chapter on running DOMjudge as a shadow system<shadow>` for more information.
         -   name: icat_url
+            displayName: ICPC iCAT URL
             type: string
             default_value: ""
             public: false
-            description: URL of an ICPC iCAT instance if such is available; will be linked to from the submission verification box.
+            description: ICPC iCAT 인스턴스가 사용 가능한 경우의 URL입니다. will be linked to from the submission verification box.
             docdescription: See https://github.com/icpc-live/autoanalyst
         -   name: external_contest_source_critical
+            displayName: 외부 대회 소스 치명적 상태 시간
             type: int
             default_value: 120
             public: false
-            description: Time in seconds after an external contest source reader last checked in before showing its status as `critical`.
+            description: 외부 대회 소스 리더가 마지막으로 체크인한 후 `critical` 상태를 표시하기까지의 시간(초 단위).
             regex: /^\d+$/
             error_message: A non-negative number is required.
         -   name: adminer_enabled
+            displayName: Adminer 데이터베이스 편집기 활성화
             type: bool
             default_value: false
             public: false
-            description: Is the Adminer Database Editor enabled?
+            description: Adminer 데이터베이스 편집기가 활성화되어 있나요?

@@ -44,7 +44,7 @@ class UserRegistrationType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Username',
+                    'placeholder' => '사용자 이름',
                     'autocomplete' => 'username',
                 ],
             ])
@@ -52,7 +52,7 @@ class UserRegistrationType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Full name (optional)',
+                    'placeholder' => '이름 (선택)',
                     'autocomplete' => 'name',
                 ],
             ])
@@ -60,7 +60,7 @@ class UserRegistrationType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Email address (optional)',
+                    'placeholder' => '이메일 주소 (선택)',
                     'autocomplete' => 'email',
                 ],
                 'constraints' => new Email(),
@@ -68,13 +68,13 @@ class UserRegistrationType extends AbstractType
             ->add('teamName', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Team name',
+                    'placeholder' => '팀 이름',
                 ],
                 'constraints' => [
                     new NotBlank(),
                     new Callback(function ($teamName, ExecutionContext $context) {
                         if ($this->em->getRepository(Team::class)->findOneBy(['name' => $teamName])) {
-                            $context->buildViolation('This team name is already in use.')
+                            $context->buildViolation('이미 사용 중인 팀 이름입니다.')
                                 ->addViolation();
                         }
                     }),
@@ -90,13 +90,13 @@ class UserRegistrationType extends AbstractType
                     'label' => false,
                     'mapped' => false,
                     'choice_label' => 'name',
-                    'placeholder' => '-- Select category --',
+                    'placeholder' => '-- 카테고리 선택 --',
                     'query_builder' => fn(EntityRepository $er) => $er
                         ->createQueryBuilder('c')
                         ->where('c.allow_self_registration = 1')
                         ->orderBy('c.sortorder'),
                     'attr' => [
-                        'placeholder' => 'Category',
+                        'placeholder' => '카테고리',
                     ],
                     'constraints' => [
                         new NotBlank(),
@@ -114,9 +114,9 @@ class UserRegistrationType extends AbstractType
             $builder
                 ->add('affiliation', ChoiceType::class, [
                     'choices' => [
-                        'Use existing affiliation' => 'existing',
-                        'Add new affiliation' => 'new',
-                        'No affiliation' => 'none',
+                        '기존 소속 사용' => 'existing',
+                        '새 소속 추가' => 'new',
+                        '소속 없음' => 'none',
                     ],
                     'expanded' => true,
                     'mapped' => false,
@@ -126,7 +126,7 @@ class UserRegistrationType extends AbstractType
                     'label' => false,
                     'required' => false,
                     'attr' => [
-                        'placeholder' => 'Affiliation name',
+                        'placeholder' => '소속 이름',
                     ],
                     'mapped' => false,
                 ])
@@ -134,7 +134,7 @@ class UserRegistrationType extends AbstractType
                     'label' => false,
                     'required' => false,
                     'attr' => [
-                        'placeholder' => 'Affiliation shortname',
+                        'placeholder' => '소속 약칭',
                         'maxlength' => '32',
                     ],
                     'mapped' => false,
@@ -145,7 +145,7 @@ class UserRegistrationType extends AbstractType
                     'required' => false,
                     'mapped' => false,
                     'choices' => $countries,
-                    'placeholder' => 'No country',
+                    'placeholder' => '국가 없음',
                 ]);
             }
             $builder->add('existingAffiliation', EntityType::class, [
@@ -154,12 +154,12 @@ class UserRegistrationType extends AbstractType
                     'required' => false,
                     'mapped' => false,
                     'choice_label' => 'name',
-                    'placeholder' => '-- Select affiliation --',
+                    'placeholder' => '-- 소속 선택 --',
                     'query_builder' => fn(EntityRepository $er) => $er
                         ->createQueryBuilder('a')
                         ->orderBy('a.name'),
                     'attr' => [
-                        'placeholder' => 'Affiliation',
+                        'placeholder' => '소속',
                     ],
                 ]);
         }
@@ -167,11 +167,11 @@ class UserRegistrationType extends AbstractType
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => '비밀번호가 일치하지 않습니다.',
                 'first_options' => [
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Password',
+                        'placeholder' => '비밀번호',
                         'autocomplete' => 'new-password',
                         'spellcheck' => 'false',
                     ],
@@ -179,7 +179,7 @@ class UserRegistrationType extends AbstractType
                 'second_options' => [
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Repeat Password',
+                        'placeholder' => '비밀번호 확인',
                         'autocomplete' => 'new-password',
                         'spellcheck' => 'false',
                     ],
@@ -187,7 +187,7 @@ class UserRegistrationType extends AbstractType
                 'mapped' => false,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Register',
+                'label' => '등록',
                 'attr' => [
                     'class' => 'btn btn-lg btn-primary btn-block',
                 ],
@@ -220,12 +220,12 @@ class UserRegistrationType extends AbstractType
                         foreach (['Name','ShortName'] as $identifier) {
                             $name = $form->get('affiliation'.$identifier)->getData();
                             if (empty($name)) {
-                                $context->buildViolation('This value should not be blank.')
+                                $context->buildViolation('값을 입력하세요.')
                                     ->atPath('affiliation'.$identifier)
                                     ->addViolation();
                             }
                             if ($this->em->getRepository(TeamAffiliation::class)->findOneBy([strtolower($identifier) => $name])) {
-                                $context->buildViolation('This affiliation '.strtolower($identifier).' is already in use.')
+                                $context->buildViolation('소속 '.strtolower($identifier).'은 이미 사용 중입니다.')
                                     ->atPath('affiliation'.$identifier)
                                     ->addViolation();
                             }
@@ -233,7 +233,7 @@ class UserRegistrationType extends AbstractType
                         break;
                     case 'existing':
                         if (empty($form->get('existingAffiliation')->getData())) {
-                            $context->buildViolation('This value should not be blank.')
+                            $context->buildViolation('값을 선택하세요.')
                                 ->atPath('existingAffiliation')
                                 ->addViolation();
                         }

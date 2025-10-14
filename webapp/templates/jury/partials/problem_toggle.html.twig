@@ -1,4 +1,4 @@
 <form action="{{ path('jury_problem_toggle', {contestId: contestProblem.cid, probId: contestProblem.probId, 'type': type}) }}" method="post" class="d-inline">
-    <input type="checkbox" data-toggle="toggle" data-size="mini" data-on="Yes" data-off="No"
+    <input type="checkbox" data-toggle="toggle" data-size="mini" data-on="예" data-off="아니요"
            name="value" {% if enabled %}checked{% endif %}>
 </form>

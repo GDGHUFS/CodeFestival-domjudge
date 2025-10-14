@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Configuration - {{ parent() }}{% endblock %}
+{% block title %}설정 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -18,7 +18,7 @@
     {% if diffs is not null %}
         {% if diffs %}
             <div class="alert alert-info" role="alert">
-                Saved changes:
+                저장된 변경 사항:
                 <ul>
                     {% for key, change in diffs %}
                         <li>
@@ -32,12 +32,12 @@
             </div>
         {% else %}
             <div class="alert alert-warning" role="alert">
-                <p>No changes made, no changes saved.</p>
+                <p>변경 사항이 없습니다. 저장된 변경 사항도 없습니다.</p>
             </div>
         {% endif %}
 
     {% endif %}
-    <h1>Configuration</h1>
+    <h1>설정</h1>
 
     <form method="post">
         <ul class="nav nav-pills nav-fill" id="configtablist" role="tablist">
@@ -62,7 +62,10 @@
                                             for="config_{{ option.name }}"
                                             {% if option.type =='bool' %} onclick="$('#config_{{ option.name }}').bootstrapToggle('toggle')"{% endif %}
                                         {% endif %}
-                                        >{{ option.name | replace({'_': ' '}) | capitalize }}:</label>
+                                        {# CodeFes start: 설정 디스플레이 이름 추가 #}
+                                        {#>{{ option.name | replace({'_': ' '}) | capitalize }}:</label>#}
+                                        >{{ option.display_name }}:</label>
+                                        {# CodeFes end #}
                                         {% if option.type == 'bool' %}
                                             <input type="checkbox" data-toggle="toggle" data-size="mini" data-on="Yes"
                                                    data-off="No"
@@ -228,7 +231,7 @@
             </div>
         {% endfor %}
         </div>
-        <input class="btn btn-primary" type="submit" value="Save all changes" id="save" name="save">
+        <input class="btn btn-primary" type="submit" value="모든 변경 사항 저장" id="save" name="save">
     </form>
 {% endblock %}
 

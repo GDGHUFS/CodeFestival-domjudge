@@ -1,19 +1,19 @@
 {% extends "partials/modal.html.twig" %}
 
-{% block title %}Delete {{ type }} {{ primaryKey }} - "{{ description }}"{% endblock %}
+{% block title %}삭제: {{ type }} {{ primaryKey }} - "{{ description }}"{% endblock %}
 
 {% block content %}
 
     {% if isError %}
         <div class="alert alert-danger">
-            <strong>Error: {{ messages.0 }}</strong>
+            <strong>오류: {{ messages.0 }}</strong>
         </div>
     {% else %}
-        <p>You're about to delete {{ type }} {{ primaryKey }} "{{ description }}".</p>
+        <p>현재 {{ type }} {{ primaryKey }} "{{ description }}"을(를) 삭제하려고 합니다.</p>
 
         {% if messages is not empty %}
             <p>
-                <strong>Warning, this will:</strong>
+                <strong>경고, 이 작업은 다음을 수행합니다:</strong>
             </p>
             <ul>
                 {% for message in messages %}
@@ -22,13 +22,13 @@
             </ul>
         {% endif %}
 
-        <p>Are you sure?</p>
+        <p>정말로 삭제하시겠습니까?</p>
     {% endif %}
 
 {% endblock %}
 
 {% block closeButtonText %}
-    {% if isError %}OK{% else %}Cancel{% endif %}
+    {% if isError %}확인{% else %}취소{% endif %}
 {% endblock %}
 
-{% block buttonText %}Delete{% endblock %}
+{% block buttonText %}삭제{% endblock %}

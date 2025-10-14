@@ -21,7 +21,7 @@ class ExternalSourceWarningsFilterType extends AbstractType
         sort($endPoints);
         $builder->add("entity-type", ChoiceType::class, [
             "multiple" => true,
-            "label"    => "Filter on entity type(s)",
+            "label"    => "엔티티 타입 필터",
             "required" => false,
             "choices"  => array_combine($endPoints, $endPoints),
             "attr"     => ["data-filter-field" => "entity-type"],
@@ -37,14 +37,14 @@ class ExternalSourceWarningsFilterType extends AbstractType
         asort($types);
         $builder->add("type", ChoiceType::class, [
             "multiple" => true,
-            "label"    => "Filter on warning type(s)",
+            "label"    => "경고 타입 필터",
             "required" => false,
             "choices"  => $types,
             "attr"     => ["data-filter-field" => "type"],
         ]);
 
         $builder->add("clear", ButtonType::class, [
-            "label" => "Clear all filters",
+            "label" => "모든 필터 초기화",
             "attr"  => ["class" => "btn-secondary"],
         ]);
     }

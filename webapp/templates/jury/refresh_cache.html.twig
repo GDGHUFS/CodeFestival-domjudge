@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Refresh cache - {{ parent() }}{% endblock %}
+{% block title %}캐시 새로고침 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,32 +10,32 @@
 
 {% block content %}
 
-    <h1>Refresh cache</h1>
+    <h1>캐시 새로고침</h1>
 
     {% if doRefresh %}
         {{ macros.progress_bar() }}
     {% else %}
         <div class="alert alert-warning">
-            <h5 class="alert-heading">Significant database impact</h5>
+            <h5 class="alert-heading">상당한 데이터베이스 영향</h5>
             <hr>
             <p>
-                Refreshing the scoreboard cache can have a significant impact on the database load,
-                and is not necessary in normal operating circumstances.
+                스코어보드 캐시를 새로고침하는 것은 데이터베이스 부하에 상당한 영향을 미칠 수 있으며,
+                정상적인 운영 환경에서는 필요하지 않습니다.
                 <br/><br/>
-                Refresh scoreboard cache for
+                다음 스코어보드 캐시를 지금 새로고침하시겠습니까? 
                 {% if current_contest is not empty %}
                     {{ current_contest.name }}
                 {% else %}
-                    all active contests
+                    모든 활성 대회
                 {% endif %}
-                now?
+                
             </p>
             <form action="{{ path('jury_refresh_cache') }}" method="post">
                 {% if current_contest is not empty %}
                     <input type="hidden" name="cid" value="{{ current_contest.cid }}"/>
                 {% endif %}
                 <button type="submit" class="btn btn-danger" name="refresh">
-                    <i class="fas fa-sync-alt"></i> Refresh now!
+                    <i class="fas fa-sync-alt"></i> 지금 새로고침!
                 </button>
             </form>
         </div>

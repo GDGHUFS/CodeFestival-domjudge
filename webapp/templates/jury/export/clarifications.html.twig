@@ -50,11 +50,11 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Contest time</th>
-                <th scope="col">From</th>
-                <th scope="col">To</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Answered?</th>
+                <th scope="col">대회 시간</th>
+                <th scope="col">발신자</th>
+                <th scope="col">수신자</th>
+                <th scope="col">주제</th>
+                <th scope="col">답변 완료?</th>
             </tr>
             </thead>
             <tbody>
@@ -66,16 +66,16 @@
                         {% if clarification.sender %}
                             {{ clarification.sender.effectiveName }} {{ clarification.sender | entityIdBadge('t') }}
                         {% else %}
-                            Jury ({{ clarification.juryMember }})
+                            심사위원 ({{ clarification.juryMember }})
                         {% endif %}
                     </td>
                     <td>
                         {% if clarification.recipient and clarification.sender is empty %}
                             {{ clarification.recipient.effectiveName }} {{ clarification.recipient | entityIdBadge('t') }}
                         {% elseif clarification.sender %}
-                            Jury
+                            심사위원단
                         {% else %}
-                            All
+                            전체
                         {% endif %}
                     </td>
                     <td>
@@ -84,7 +84,7 @@
                         {% elseif clarification.category and categories[clarification.category] is defined %}
                             {{ categories[clarification.category] }}
                         {% else %}
-                            General
+                            일반
                         {% endif %}
                     </td>
                     <td>
@@ -92,7 +92,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>Content</b></td>
+                    <td><b>내용</b></td>
                     <td colspan="5">
                         <div class="card-text">{{ clarification.body | markdown_to_html | sanitize_html('app.clarification_sanitizer') }}</div>
                     </td>
@@ -103,9 +103,9 @@
                             <td>
                                 <b>
                                     {% if clarification.replies.count > 1 %}
-                                        Reply #{{ idx + 1 }}
+                                        답변 #{{ idx + 1 }}
                                     {% else %}
-                                        Reply
+                                        답변
                                     {% endif %}
                                 </b>
                             </td>

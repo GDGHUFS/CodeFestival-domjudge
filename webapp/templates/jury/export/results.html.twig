@@ -1,16 +1,16 @@
 {% extends 'jury/export/layout.html.twig' %}
 
 {% block body %}
-    <h2>Awards</h2>
+    <h2>수상 팀</h2>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Place</th>
-            <th scope="col">Team</th>
-            <th scope="col">Award</th>
-            <th scope="col">Solved problems</th>
-            <th scope="col">Total time</th>
-            <th scope="col">Time of last accepted submission</th>
+            <th scope="col">순위</th>
+            <th scope="col">팀</th>
+            <th scope="col">상(Award)</th>
+            <th scope="col">해결한 문제 수</th>
+            <th scope="col">총 페널티 시간</th>
+            <th scope="col">마지막 정답 제출 시간</th>
         </tr>
         </thead>
         <tbody>
@@ -27,13 +27,13 @@
         </tbody>
     </table>
 
-    <h2>Other ranked teams</h2>
+    <h2>기타 순위 팀</h2>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Rank</th>
-            <th scope="col">Team</th>
-            <th scope="col">Solved problems</th>
+            <th scope="col">순위</th>
+            <th scope="col">팀</th>
+            <th scope="col">해결한 문제 수</th>
         </tr>
         </thead>
         <tbody>
@@ -47,7 +47,7 @@
         </tbody>
     </table>
 
-    <h2>Honorable mentions</h2>
+    <h2>가작/장려상 (Honorable mentions)</h2>
     <table class="table">
         <tbody>
         {% for row in honorable|batch(2) %}
@@ -60,13 +60,13 @@
         </tbody>
     </table>
 
-    <h2>Region winners</h2>
+    <h2>지역 우승팀</h2>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Region</th>
-            <th scope="col">Team</th>
-            <th scope="col">Rank</th>
+            <th scope="col">지역</th>
+            <th scope="col">팀</th>
+            <th scope="col">순위</th>
         </tr>
         </thead>
         <tbody>
@@ -80,14 +80,14 @@
         </tbody>
     </table>
 
-    <h2>First to solve</h2>
+    <h2>최초 해결 (First to solve)</h2>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Problem</th>
-            <th scope="col">Team</th>
-            <th scope="col">Rank</th>
-            <th scope="col">Time</th>
+            <th scope="col">문제</th>
+            <th scope="col">팀</th>
+            <th scope="col">순위</th>
+            <th scope="col">시간</th>
         </tr>
         </thead>
         <tbody>
@@ -98,7 +98,7 @@
                     {% if row.team is not null %}
                         {{ row.team }}
                     {% else %}
-                        <i>Not solved</i>
+                        <i>미해결</i>
                     {% endif %}
                 </td>
                 <td>

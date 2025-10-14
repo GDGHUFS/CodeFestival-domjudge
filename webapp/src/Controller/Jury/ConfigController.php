@@ -132,6 +132,7 @@ class ConfigController extends AbstractController
                 }
                 $data[] = [
                     'name' => $specName,
+                    'display_name' => $spec->displayName ?? $specName, // CodeFes: 설정 디스플레이 이름 추가
                     'type' => $spec->type,
                     'value' => isset($options[$specName]) ?
                         $options[$specName]->getValue() :

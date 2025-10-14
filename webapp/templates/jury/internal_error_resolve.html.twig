@@ -6,15 +6,15 @@
     {{ macros.select2_extrahead() }}
 {% endblock %}
 
-{% block title %}Resolve internal error - {{ parent() }}{% endblock %}
+{% block title %}내부 오류 해결 - {{ parent() }}{% endblock %}
 
 {% block content %}
 
-    <h1>Resolving internal error...</h1>
+    <h1>내부 오류를 해결하는 중...</h1>
 
     <div class="row">
         <div class="col-lg-12">
-            {{ macros.progress_bar('Resolving internal error. This might take a while...') }}
+            {{ macros.progress_bar('내부 오류를 해결하는 중입니다. 시간이 걸릴 수 있습니다...') }}
         </div>
     </div>
 

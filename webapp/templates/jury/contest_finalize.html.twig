@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Finalize contest - {{ parent() }}{% endblock %}
+{% block title %}대회 최종 확정 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -9,11 +9,11 @@
 
 {% block content %}
 
-    <h1>Finalize contest</h1>
+    <h1>대회 최종 확정</h1>
 
     {% if blockers is not empty %}
         <div class="alert alert-danger">
-            <h5 class="alert-heading">Contest can not yet be finalized</h5>
+            <h5 class="alert-heading">대회를 아직 최종 확정할 수 없습니다</h5>
             <hr>
             <ul>
                 {% for blocker in blockers %}
@@ -25,19 +25,19 @@
         <div class="col-md-5">
             <table class="table table-sm table-striped">
                 <tr>
-                    <th>Contest ID</th>
+                    <th>대회 ID</th>
                     <td>c{{ contest.cid }}</td>
                 </tr>
                 <tr>
-                    <th>Contest name</th>
+                    <th>대회 이름</th>
                     <td>{{ contest.name }}</td>
                 </tr>
                 <tr>
-                    <th>Started</th>
+                    <th>시작</th>
                     <td>{{ contest.starttime | printtime }}</td>
                 </tr>
                 <tr>
-                    <th>Ended</th>
+                    <th>종료</th>
                     <td>{{ contest.endtime | printtime }}</td>
                 </tr>
             </table>
@@ -47,7 +47,7 @@
         {{ form_row(form.b) }}
         {{ form_row(form.finalizecomment) }}
         {{ form_widget(form.finalize) }}
-        {{ button(path('jury_contest', {'contestId': contest.cid}), 'Cancel', 'secondary') }}
+        {{ button(path('jury_contest', {'contestId': contest.cid}), '취소', 'secondary') }}
         {{ form_end(form) }}
     {% endif %}
 

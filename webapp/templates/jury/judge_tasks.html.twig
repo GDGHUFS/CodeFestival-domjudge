@@ -1,7 +1,7 @@
 {% extends 'jury/base.html.twig' %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Judge tasks for queue task {{ queueTask.queueTaskid }} - {{ parent() }}{% endblock %}
+{% block title %}큐 작업 {{ queueTask.queueTaskid }}에 대한 심사 작업 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,14 +10,14 @@
 
 {% block content %}
 
-    <h1>Judge tasks for queue task {{ queueTask.queueTaskid }}</h1>
+    <h1>큐 작업 {{ queueTask.queueTaskid }}에 대한 심사 작업</h1>
 
     {% if firstJudgeTask is not null %}
         <div class="row">
             <div class="col-lg-4">
                 <table class="table table-sm table-striped">
                     <tr>
-                        <th>Submission</th>
+                        <th>제출물</th>
                         <td>
                             <a href="{{ path('jury_submission', {'submitId': firstJudgeTask.firstJudgingRun.judging.submission.submitid }) }}">
                                 {{ firstJudgeTask.firstJudgingRun.judging.submission.submitid }}
@@ -25,7 +25,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Judging</th>
+                        <th>심사 ID</th>
                         <td>
                             <a href="{{ path('jury_submission_by_judging', {'jid': firstJudgeTask.jobId }) }}">
                                 {{ firstJudgeTask.jobId }}
@@ -33,7 +33,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Priority</th>
+                        <th>우선순위</th>
                         <td>{{ judgeTaksPriority }}</td>
                     </tr>
                     <tr>

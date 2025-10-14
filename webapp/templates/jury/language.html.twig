@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Language {{ language.langid }} - {{ parent() }}{% endblock %}
+{% block title %}언어 {{ language.langid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-    <h1>Language {{ language.name }}</h1>
+    <h1>언어 {{ language.name }}</h1>
 
     <div class="row">
         <div class="col-lg-4">
@@ -22,12 +22,12 @@
                 </tr>
                 {% if showExternalId(language) %}
                     <tr>
-                        <th>External ID</th>
+                        <th>외부 ID</th>
                         <td>{{ language.externalid }}</td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Entry point</th>
+                    <th>진입점</th>
                     <td>
                         {{ language.requireEntryPoint | printYesNo }}
                         {% if language.requireEntryPoint and language.entryPointDescription %}
@@ -36,68 +36,68 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Allow submit</th>
+                    <th>제출 허용</th>
                     <td>
                         {% include 'jury/partials/language_toggle.html.twig' with {path: 'jury_language_toggle_submit', value: language.allowSubmit} %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Allow judge</th>
+                    <th>심사 허용</th>
                     <td>
                         {% include 'jury/partials/language_toggle.html.twig' with {path: 'jury_language_toggle_judge', value: language.allowJudge} %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Time factor</th>
+                    <th>시간 계수</th>
                     <td>{{ language.timeFactor }} &times;</td>
                 </tr>
                 <tr>
-                    <th>Compile script</th>
+                    <th>컴파일 스크립트</th>
                     <td>
                         {% if language.compileExecutable %}
                             <a href="{{ path('jury_executable', {'execId': language.compileExecutable.execid}) }}">{{ language.compileExecutable.execid }}</a>
                         {% else %}
-                            <span class="nodata">none specified</span>
+                            <span class="nodata">지정된 항목 없음</span>
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <th>Extensions</th>
+                    <th>확장자</th>
                     <td>{{ language.extensions | join(', ') }}</td>
                 </tr>
                 <tr>
-                    <th>Filter files passed to compiler by extension list</th>
+                    <th>확장자 목록으로 컴파일러에 전달된 파일 필터링</th>
                     <td>
                         {% include 'jury/partials/language_toggle.html.twig' with {path: 'jury_language_toggle_filter_compiler_files', value: language.filterCompilerFiles} %}
                     </td>
                 </tr>
                     <tr>
-                        <th>Compiler version</th>
+                        <th>컴파일러 버전</th>
                         <td>
                             {% if language.compilerVersionCommand %}
                                 <pre class="output_text">$ {{ language.compilerVersionCommand }}</pre>
                             {% else %}
-                                <p class="nodata">No command specified.</p>
+                                <p class="nodata">지정된 명령 없음.</p>
                             {% endif %}
                             {% if language.compilerVersion %}
                                 <pre class="output_text">{{ language.compilerVersion }}</pre>
                             {% else %}
-                                <p class="nodata">No canonical version recorded.</p>
+                                <p class="nodata">기록된 표준 버전 없음.</p>
                             {% endif %}
                         </td>
                     </tr>
                     <tr>
-                        <th>Runner version</th>
+                        <th>러너 버전</th>
                         <td>
                             {% if language.runnerVersionCommand %}
                                 <pre class="output_text">$ {{ language.runnerVersionCommand }}</pre>
                             {% else %}
-                                <p class="nodata">No command specified.</p>
+                                <p class="nodata">지정된 명령 없음.</p>
                             {% endif %}
                             {% if language.runnerVersion %}
                                 <pre class="output_text">{{ language.runnerVersion }}</pre>
                             {% else %}
-                                <p class="nodata">No canonical version recorded.</p>
+                                <p class="nodata">기록된 표준 버전 없음.</p>
                             {% endif %}
                         </td>
                     </tr>
@@ -107,14 +107,14 @@
 
     <div class="button-row">
         {%- if is_granted('ROLE_ADMIN') -%}
-            {{ button(path('jury_language_edit', {'langId': language.langid}), 'Edit', 'primary', 'edit') }}
-            {{ button(path('jury_language_delete', {'langId': language.langid}), 'Delete', 'danger', 'trash-alt', true) }}
-            {{ button(path('jury_language_request_remaining', {'langId': language.langid}), 'Judge remaining testcases', 'secondary', 'gavel') }}
+            {{ button(path('jury_language_edit', {'langId': language.langid}), '편집', 'primary', 'edit') }}
+            {{ button(path('jury_language_delete', {'langId': language.langid}), '삭제', 'danger', 'trash-alt', true) }}
+            {{ button(path('jury_language_request_remaining', {'langId': language.langid}), '남은 테스트케이스 심사 요청', 'secondary', 'gavel') }}
         {% endif %}
         {% include 'jury/partials/rejudge_form.html.twig' with {table: 'language', id: language.langid, buttonClass: 'btn-secondary'} %}
     </div>
 
-    <h3>Recent submissions</h3>
+    <h3>최근 제출</h3>
 
     <div data-ajax-refresh-target>
         {%- include 'jury/partials/submission_list.html.twig' with {showTestcases: false} %}

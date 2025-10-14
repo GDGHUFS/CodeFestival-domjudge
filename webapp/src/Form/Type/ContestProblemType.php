@@ -28,40 +28,40 @@ class ContestProblemType extends AbstractType
         ]);
 
         $builder->add('shortname', TextType::class, [
-            'label' => 'Short name',
+            'label' => '짧은 이름 (약칭)',
             'empty_data' => '',
         ]);
         $builder->add('points', IntegerType::class, [
-            'label' => 'Points',
+            'label' => '배점',
         ]);
         $builder->add('allowSubmit', ChoiceType::class, [
-            'label' => 'Allow submit',
+            'label' => '제출 허용',
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('allowJudge', ChoiceType::class, [
-            'label' => 'Allow judge',
+            'label' => '채점 허용',
             'choices' => [
-                'Yes' => true,
-                'No' => false,
+                '예' => true,
+                '아니오' => false,
             ],
         ]);
         $builder->add('color', TextType::class, [
             'required' => false,
-            'label' => 'Colour',
+            'label' => '색상',
             'attr' => [
                 'data-color-picker' => '',
             ],
         ]);
         $builder->add('lazyEvalResults', ChoiceType::class, [
-            'label' => 'Lazy eval',
+            'label' => '지연 평가 방식',
             'choices' => [
-                'Default' => DJS::EVAL_DEFAULT,
-                'Yes' => DJS::EVAL_LAZY,
-                'No' => DJS::EVAL_FULL,
-                'On demand' => DJS::EVAL_DEMAND,
+                '기본값' => DJS::EVAL_DEFAULT,
+                '예' => DJS::EVAL_LAZY,
+                '아니오' => DJS::EVAL_FULL,
+                '요청 시' => DJS::EVAL_DEMAND,
             ],
         ]);
     }

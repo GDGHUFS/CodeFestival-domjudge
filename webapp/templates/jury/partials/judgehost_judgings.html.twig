@@ -1,15 +1,15 @@
 {% if not judgings %}
-    <div class="alert alert-warning">No judgings</div>
+    <div class="alert alert-warning">심사가 없습니다</div>
 {% else %}
     <table class="data-table table table-sm table-striped col-lg-4">
         <thead>
         <tr>
             <th>ID</th>
-            <th>started</th>
-            <th>runtime</th>
-            <th>result</th>
-            <th>valid</th>
-            <th>verified</th>
+            <th>시작</th>
+            <th>실행 시간</th>
+            <th>결과</th>
+            <th>유효</th>
+            <th>확인됨</th>
         </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
                 <td>
                     <a href="{{ link }}">
                         {% if judging.aborted %}
-                            [aborted]
+                            [중단됨]
                         {% else %}
                             {{ judging.starttime | printtimediff(judging.endtime) }}
                         {% endif %}

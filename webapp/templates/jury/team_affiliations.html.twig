@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}Affiliations - {{ parent() }}{% endblock %}
+{% block title %}소속 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -10,14 +10,14 @@
 
 {% block content %}
 
-    <h1>Affiliations</h1>
+    <h1>소속</h1>
 
     {{ macros.table(team_affiliations, table_fields) }}
 
     {%- if is_granted('ROLE_ADMIN') %}
 
         <p>
-            {{ button(path('jury_team_affiliation_add'), 'Add new affiliation', 'primary', 'plus') }}
+            {{ button(path('jury_team_affiliation_add'), '새 소속 추가', 'primary', 'plus') }}
         </p>
     {%- endif %}
 

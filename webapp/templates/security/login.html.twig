@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}DOMjudge Login{% endblock %}
+{% block title %}DOMjudge 로그인{% endblock %}
 
 {% block extrahead %}
     <link rel="stylesheet" href="{{ asset('style_login.css') }}">
@@ -18,8 +18,8 @@
         <img class="mb-5" src="{{ asset('images/codefestival_logo.svg') }}" alt="CodeFestival Logo" height="72">
         {% include 'partials/messages.html.twig' %}
         {% if app.user is not null %}
-            {% set message = 'You are currently automatically logged in as ' ~ app.user.username ~ '.
-Use the form below to change login.' %}
+            {% set message = '현재 ' ~ app.user.username ~ '으로(로) 자동 로그인되었습니다.
+로그인을 변경하려면 아래 폼을 사용하십시오.' %}
             {% include 'partials/alert.html.twig' with {type: 'success'} %}
         {% endif %}
 
@@ -27,25 +27,25 @@ Use the form below to change login.' %}
 
         {% if hasaltmethods %}
             <div class="additional-logins me-2">
-                <a class="float-end text-muted" href="#" title="more auth methods"
+                <a class="float-end text-muted" href="#" title="다른 인증 방법"
                    onclick="collapse('.regularLoginform'); return false;" role="button">
                     <i class="fas fa-user-ninja"></i>
                 </a>
                 {% if "xheaders" in allowed_authmethods and auth_xheaders_present %}
-                    <h1 class="h3 mb-3 fw-normal">Preconfigured Sign In</h1>
+                    <h1 class="h3 mb-3 fw-normal">사전 구성된 로그인</h1>
                     <form action="{{ path('login') }}" method="post">
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}">
                         <input type="hidden" name="_username" value="__INVALID__">
                         <div class="login-content">
                             <p>
-                                You can log in using credentials that have been configured by your
-                                administrator.
+                                관리자에 의해 구성된 자격 증명을 사용하여 로그인할
+                                수 있습니다.
                             </p>
                         </div>
                         <button class="mt-auto btn btn-lg btn-success w-100" type="submit"
                                 name="loginmethod" value="xheaders">
-                            Log in using computer credentials
+                            컴퓨터 자격 증명을 사용하여 로그인
                         </button>
                     </form>
                     <script>
@@ -56,23 +56,23 @@ Use the form below to change login.' %}
                 {% endif %}
 
                 {% if "ipaddress" in allowed_authmethods and auth_ipaddress_users|length > 0 %}
-                    <h1 class="h3 mb-3 fw-normal">Sign in with IP</h1>
+                    <h1 class="h3 mb-3 fw-normal">IP로 로그인</h1>
                     <form action="{{ path('login') }}" method="post">
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}">
                         <input type="hidden" name="loginmethod" value="ipaddress">
                         <div class="login-content">
                             <p>
-                                You can log in automatically to an account based on your IP Address.
-                                {% if auth_ipaddress_users == 1 %}The accounts associated with your IP are shown below.
-                                {% else %}The account associated with your IP is shown below.{% endif %}
+                                IP 주소를 기반으로 계정에 자동으로 로그인할 수 있습니다.
+                                {% if auth_ipaddress_users == 1 %}귀하의 IP와 연결된 계정이 아래에 표시됩니다.
+                                {% else %}귀하의 IP와 연결된 계정들이 아래에 표시됩니다.{% endif %}
                             </p>
                         </div>
 
                         {% for u in auth_ipaddress_users %}
                             <button class="btn btn-lg btn-success w-100" type="submit"
                                     name="_username" value="{{ u.username }}">
-                                Log in as {{ u.username }}
+                                {{ u.username }}(으)로 로그인
                             </button>
                         {% endfor %}
                     </form>
@@ -88,7 +88,7 @@ Use the form below to change login.' %}
         {% endif %}
 
         <div class="main-login ms-2 regularLoginform {% if not showregular %} d-none{% endif %}">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal">로그인하십시오</h1>
             <form action="{{ path('login') }}" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <div class="login-content">
@@ -98,21 +98,21 @@ Use the form below to change login.' %}
 
                     <div class="form-floating">
                         <input type="text" id="username" name="_username" class="form-control"
-                               placeholder="Username" required autofocus>
-                        <label for="username">Username</label>
+                               placeholder="사용자 이름" required autofocus>
+                        <label for="username">사용자 이름</label>
                     </div>
                     <div class="form-floating">
                         <input type="password" id="inputPassword" name="_password"
                                class="form-control" spellcheck="false"
-                               placeholder="Password" required autocomplete="current-password">
-                        <label for="inputPassword">Password</label>
+                               placeholder="비밀번호" required autocomplete="current-password">
+                        <label for="inputPassword">비밀번호</label>
                     </div>
                 </div>
-                <button class="btn btn-lg btn-primary w-100" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary w-100" type="submit">로그인</button>
                 {% if allow_registration %}
                     <div class="mt-3">
-                        Don't have an account?<br/>
-                        <a href="{{ path('register') }}">Register now</a>.
+                        계정이 없으십니까?<br/>
+                        <a href="{{ path('register') }}">지금 등록하세요</a>.
                     </div>
                 {% endif %}
             </form>

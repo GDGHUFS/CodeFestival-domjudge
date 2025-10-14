@@ -16,7 +16,8 @@ class ProblemUploadType extends AbstractType
         $builder->add('contest', EntityType::class, [
             'class' => Contest::class,
             'required' => false,
-            'placeholder' => 'Do not add / update contest data',
+            'label' => '대회',
+            'placeholder' => '대회 데이터를 추가/업데이트하지 않음',
             'choice_label' => fn(Contest $contest) => sprintf(
                 'c%d: %s - %s', $contest->getCid(), $contest->getShortname(), $contest->getName()
             ),
@@ -24,10 +25,11 @@ class ProblemUploadType extends AbstractType
         $builder->add('archive', FileType::class, [
             'required' => true,
             'label' => 'Problem archive',
+            'label' => '문제 압축 파일',
             'attr' => [
                 'accept' => 'application/zip',
             ],
         ]);
-        $builder->add('upload', SubmitType::class, ['label' => 'Import', 'icon' => 'fa-upload']);
+        $builder->add('upload', SubmitType::class, ['label' => '가져오기', 'icon' => 'fa-upload']);
     }
 }

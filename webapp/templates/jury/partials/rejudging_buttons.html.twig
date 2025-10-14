@@ -1,14 +1,14 @@
 {% if not rejudging.endtime %}
     <div>
-        {{ button(path('jury_rejudging_finish', {rejudgingId: rejudging.rejudgingid, action: 'cancel'}), 'Cancel rejudging', 'danger', 'times') }}
+        {{ button(path('jury_rejudging_finish', {rejudgingId: rejudging.rejudgingid, action: 'cancel'}), '재심사 취소', 'danger', 'times') }}
         {% if todo == 0 %}
-            {{ button(path('jury_rejudging_finish', {rejudgingId: rejudging.rejudgingid, action: 'apply'}), 'Apply rejudging', 'success', 'check') }}
+            {{ button(path('jury_rejudging_finish', {rejudgingId: rejudging.rejudgingid, action: 'apply'}), '재심사 적용', 'success', 'check') }}
         {% endif %}
     </div>
 {% else %}
     <div>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rejudge-modal">
-            <i class="fas fa-sync"></i> Repeat rejudging
+            <i class="fas fa-sync"></i> 재심사 반복
         </button>
     </div>
 
@@ -16,18 +16,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Repeat rejudging</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">재심사 반복</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
                 </div>
                 <form action="{{ path('jury_create_rejudge') }}" method="post">
                     <div class="modal-body">
                         <input type="hidden" name="table" value="rejudging"/>
                         <input type="hidden" name="id" value="{{ rejudging.rejudgingid }}"/>
-                        This will create a new rejudging with the same submissions as this rejudging.
+                        이 재심사와 동일한 제출 목록으로 새 재심사를 생성합니다.
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" value="Repeat rejudging" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <input type="submit" value="재심사 반복" class="btn btn-primary"/>
                     </div>
                 </form>
             </div>
