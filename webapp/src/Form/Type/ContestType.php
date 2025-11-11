@@ -65,8 +65,7 @@ class ContestType extends AbstractExternalIdEntityType
         ]);
         $builder->add('endtimeString', TextType::class, [
             'label' => '종료 시간',
-            'help' => '이 시간 이후의 제출은 채점되지만 점수에는 반영되지 않으며 (팀과 대중에게 )"너무 늦음(too-late)"으로 표시됩니다.',
-            'help' => 'Time when the contest ends. Submissions made after this time will be accepted and judged but shown (to teams and public) as \'too-late\' and not counted towards the score.',
+            'help' => '이 시간 이후의 제출은 채점되지만 점수에는 반영되지 않으며 (팀과 대중에게) "너무 늦음(too-late)"으로 표시됩니다.',
         ]);
         $builder->add('unfreezetimeString', TextType::class, [
             'label' => '점수판 동결 해제 시간',
@@ -89,12 +88,12 @@ class ContestType extends AbstractExternalIdEntityType
         ]);
         $builder->add('processBalloons', ChoiceType::class, [
             'expanded' => true,
-            'label' => '풍선 기록',
+            'label' => 'Ballons 기록',
             'choices' => [
                 '예' => true,
                 '아니오' => false,
             ],
-            'help' => '풍선 기록을 중단하려면 비활성화하세요. 일반적으로 활성 상태로 두면 됩니다.',
+            'help' => 'Ballons 기록을 중단하려면 비활성화하세요. 일반적으로 활성 상태로 두면 됩니다.',
         ]);
         $builder->add('runtimeAsScoreTiebreaker', ChoiceType::class, [
             'expanded' => true,

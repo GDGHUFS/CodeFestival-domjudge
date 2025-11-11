@@ -3,20 +3,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    Submit {% if problem is not null %}problem {{ problem.name }}{% endif %}
+                    제출 {% if problem is not null %}문제: {{ problem.name }}{% endif %}
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
             </div>
             {% if current_team_contest is empty or (not is_granted('ROLE_JURY') and not current_team_contest.freezeData.started) %}
                 <div class="modal-body">
-                    <div class="alert alert-danger" role="alert">Contest has not yet started - cannot submit.</div>
+                    <div class="alert alert-danger" role="alert">대회가 아직 시작되지 않아 제출할 수 없습니다.</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             {% elseif not current_team_contest.allowSubmit %}
                 <div class="modal-body">
-                    {% include 'partials/alert.html.twig' with {'type': 'danger', 'message': 'Submissions (temporarily) disabled.'} %}
+                    {% include 'partials/alert.html.twig' with {'type': 'danger', 'message': '제출이 (일시적으로) 비활성화되어 있습니다.'} %}
                 </div>
             {% else %}
                 {{ form_start(form) }}
@@ -28,9 +28,9 @@
                     {{ form_row(form.entry_point) }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     <button type="submit" class="btn-success btn">
-                        <i class="fas fa-cloud-upload-alt"></i> Submit
+                        <i class="fas fa-cloud-upload-alt"></i> 제출
                     </button>
                 </div>
                 {{ form_end(form) }}
@@ -52,7 +52,7 @@
             atLeastOneFileRecent = false;
             for (let file of files) {
                 const date = new Date(file.lastModified);
-                const ago = humanReadableTimeDiff((now - date)/1000) + ' ago';
+                const ago = humanReadableTimeDiff((now - date)/1000) + ' 전';
                 if(date > now - five_minutes_in_ms) {
                     atLeastOneFileRecent = true;
                 }
@@ -60,21 +60,21 @@
                 size = humanReadableBytes(file.size);
 
                 className = '';
-                message = `size ${size}`;
-                message += `, last modified ${ago}`;
+                message = `크기: ${size}`;
+                message += `, 마지막 수정 ${ago}`;
                 if(!fileValidChars) {
                     className = 'bg-danger';
-                    message += ', invalid filename';
+                    message += ', 파일 이름이 유효하지 않습니다';
                 }
                 if(file.size == 0) {
                     className = 'bg-warning';
-                    message += ', empty file';
+                    message += ', 파일이 비어 있습니다';
                 }
                 fileInfoHtml += `<li class="${className}"><span class="filename">${file.name}</span> ${message}</li>`;
             }
             result = '<ul>' + fileInfoHtml + '</ul>';
             if(!atLeastOneFileRecent) {
-                result += '<div class="alert alert-warning">None of the selected files have been recently modified</div>';
+                result += '<div class="alert alert-warning">선택한 파일 중 최근에 수정된 파일이 없습니다</div>';
             }
             filesSelected.html(result);
             filesSelected.removeClass('d-none');

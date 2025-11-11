@@ -2,9 +2,9 @@
 
 {% block title %}
 {% if clarification.sender and clarification.sender.teamid == team.teamid %}
-Clarification Request
+질의 요청
 {% else %}
-View clarification
+질의 보기
 {% endif %}
 {% endblock %}
 
@@ -14,6 +14,6 @@ View clarification
 {% block extraButton %}
         <button class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#collapsereplyform"
                 aria-expanded="false" aria-controls="collapsereplyform" id="clarification-reply-button">
-            <i class="fa fa-reply"></i> reply to this clarification
+            <i class="fa fa-reply"></i> 이 질의에 답장하기
         </button>
 {% endblock %}

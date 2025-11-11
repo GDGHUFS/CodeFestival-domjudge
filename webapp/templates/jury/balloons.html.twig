@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}풍선 {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
+{% block title %}Ballons {{ current_contest.shortname | default('') }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -12,14 +12,14 @@
 {% block content %}
 
     {% if current_contest is null %}
-        <h1>풍선</h1>
-        <p class="nodata">활성 콘테스트 없음</p>
+        <h1>Ballons</h1>
+        <p class="nodata">활성 대회 없음</p>
     {% else %}
 
-    <h1>풍선 - {{ current_contest.name }}</h1>
+    <h1>Ballons - {{ current_contest.name }}</h1>
 
     {% if isfrozen %}
-        <div class="alert alert-info"><i class="fas fa-snowflake"></i> 콘테스트 c{{ current_contest.cid }} ({{ current_contest.shortname }})의 스코어보드가 현재 동결되었습니다.</div>
+        <div class="alert alert-info"><i class="fas fa-snowflake"></i> 대회 c{{ current_contest.cid }} ({{ current_contest.shortname }})의 스코어보드가 현재 동결되었습니다.</div>
     {% endif %}
 
     <div class="mb-3">

@@ -3,7 +3,7 @@
 {% set origclar = list|first %}
 {% set claimed = not origclar.answered and origclar.from_jurymember is defined %}
 
-{% block title %}질의응답(설명) 요청 {{ origclar.clarid }} - {{ parent() }}{% endblock %}
+{% block title %}질의 요청 {{ origclar.clarid }} - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -23,7 +23,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm">
-                            질의응답(설명) 요청 {{ clar.clarid }}
+                            질의 요청 {{ clar.clarid }}
                             {% if showExternalId %}
                                 (외부 ID: {{ clar.externalid }})
                             {% endif %}
@@ -161,7 +161,7 @@
 
     <div class="mt-4 collapse {% if not form.vars.valid %}show{% endif%} container clarificationform" id="collapsereplyform">
         <div class="card">
-            <div class="card-header">질의응답(설명) 요청 보내기</div>
+            <div class="card-header">질의 요청 보내기</div>
             <div class="card-body">
                 {%- include 'jury/partials/clarification_form.html.twig' %}
             </div>
@@ -188,7 +188,7 @@
                 var $form = $select.closest('.clarification-' + field + '-form');
                 var clarId = $form.data('clarification-id');
                 var value = $select.find(':selected').text();
-                if (confirm('질의응답(설명) 요청 ' + clarId + '의 ' + (field === 'subject' ? '제목' : '대기열') + '을(를) "' + value + '"(으)로 변경하시겠습니까?')) {
+                if (confirm('질의 요청 ' + clarId + '의 ' + (field === 'subject' ? '제목' : '대기열') + '을(를) "' + value + '"(으)로 변경하시겠습니까?')) {
                     $form.find('form').submit();
                 } else {
                     $select.val($form.data('current-selected-' + field));

@@ -200,33 +200,33 @@
     description: Options related to clarifications.
     items:
         -   name: clar_categories
-            displayName: 질의응답(설명) 카테고리
+            displayName: 질의(설명) 카테고리
             type: array_keyval
             default_value:
-                general: 일반적인 문제
+                general: 일반 문의
                 tech: 기술적인 문제
             public: true
-            description: 추가 질의응답(설명) 카테고리 목록입니다.
+            description: 추가 질의(설명) 카테고리 목록입니다.
         -   name: clar_answers
-            displayName: 미리 정의된 질의응답(설명) 답변
+            displayName: 미리 정의된 질의(설명) 답변
             type: array_val
             default_value:
                 - 코멘트 없음.
                 - 문제 설명을 주의 깊게 읽으십시오.
             public: false
-            description: 미리 정의된 질의응답(설명) 답변 목록입니다.
+            description: 미리 정의된 질의(설명) 답변 목록입니다.
         -   name: clar_queues
-            displayName: 질의응답(설명) 큐
+            displayName: 질의(설명) 큐
             type: array_keyval
             default_value: []
             public: true
-            description: 질의응답(설명) 큐 목록입니다.
+            description: 질의(설명) 큐 목록입니다.
         -   name: clar_default_problem_queue
-            displayName: 문제 질의응답(설명) 기본 큐
+            displayName: 문제 질의(설명) 기본 큐
             type: string
             default_value: ""
             public: true
-            description: 문제 질의응답(설명)에 할당할 큐입니다.
+            description: 문제 질의(설명)에 할당할 큐입니다.
 -   category: Display
     description: Options related to the DOMjudge user interface.
     items:
@@ -239,11 +239,11 @@
             regex: /^([1-9]\d*|-1)$/
             error_message: 양수 또는 -1이 필요합니다.
         -   name: show_pending
-            displayName: 보류 중인 제출 표시
+            displayName: 채점(보류) 중인 제출 표시
             type: bool
             default_value: true
             public: true
-            description: 점수판에 보류 중인 제출을 표시하나요?
+            description: 점수판에 채점(보류) 중인 제출을 표시하나요?
         -   name: show_flags
             displayName: 국기 표시
             type: bool
@@ -293,11 +293,11 @@
             public: true
             description: 팀 인터페이스에 TOO-LATE 제출 결과를 표시하나요?
         -   name: show_balloons_postfreeze
-            displayName: 동결 후 풍선 알림 표시
+            displayName: 동결 후 Ballons 알림 표시
             type: bool
             default_value: false
             public: true
-            description: 점수판이 동결된 후 풍선 알림을 제공하나요?
+            description: 점수판이 동결된 후 Ballons 알림을 제공하나요?
         -   name: show_relative_time
             displayName: 상대 시간 표시
             type: bool

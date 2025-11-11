@@ -1,10 +1,12 @@
 {% if contest is empty %}
-    <h1 id="teamwelcome" class="text-center">Welcome team <span id="teamwelcometeam">{{ team.effectiveName }}</span>!</h1>
-    <h2 id="contestnotstarted" class="text-center">There's no active contest for you (yet).</h2>
+    <h1 id="teamwelcome" class="text-center">환영합니다!</h1>
+    <h6 class="text-center" style="padding-bottom: 1rem;"><span id="teamwelcometeam">{{ team.effectiveName }}</span></h6>
+    <h2 id="contestnotstarted" class="text-center">현재 활성화된 대회가 없습니다.</h2>
 {% elseif not contest.freezeData.started %}
-    <h1 id="teamwelcome" class="text-center">Welcome team <span id="teamwelcometeam">{{ team.effectiveName }}</span>!</h1>
+    <h1 id="teamwelcome" class="text-center">환영합니다!</h1>
+    <h6 class="text-center" style="padding-bottom: 1rem;"><span id="teamwelcometeam">{{ team.effectiveName }}</span></h6>
     <h2 id="contestnotstarted" class="text-center">
-        Contest {{ contest | printContestStart }}
+        대회 {{ contest | printContestStart }}
     </h2>
 {% else %}
 
@@ -24,34 +26,34 @@
     <div class="mt-4" data-flash-messages>
         {% include 'partials/messages.html.twig' %}
         {% if not contest.allowSubmit %}
-            {% include 'partials/alert.html.twig' with {'type': 'danger', 'message': 'Submissions (temporarily) disabled.'} %}
+            {% include 'partials/alert.html.twig' with {'type': 'danger', 'message': '현재 제출 기능이 (일시적으로) 비활성화되었습니다.'} %}
         {% endif %}
     </div>
 
     <div class="row">
         <div class="col">
-            <h1 class="teamoverview">Submissions</h1>
+            <h1 class="teamoverview">제출 현황</h1>
 
             {% include 'team/partials/submission_list.html.twig' %}
         </div>
         <div class="col">
-            <h1 class="teamoverview">Clarifications</h1>
+            <h1 class="teamoverview">공지 / 질의</h1>
             {% if clarifications is empty %}
-                <p class="nodata">No clarifications.</p>
+                <p class="nodata">수신한 공지나 질의가 없습니다.</p>
             {% else %}
                 {% include 'team/partials/clarification_list.html.twig' with {clarifications: clarifications} %}
             {% endif %}
 
-            <h1 class="teamoverview">Clarification Requests</h1>
+            <h1 class="teamoverview">질의 요청</h1>
             {% if clarificationRequests is empty %}
-                <p class="nodata">No clarification request.</p>
+                <p class="nodata">발신한 질의 요청이 없습니다.</p>
             {% else %}
                 {% include 'team/partials/clarification_list.html.twig' with {clarifications: clarificationRequests} %}
             {% endif %}
 
             <div class="m-1">
                 <a href="{{ path('team_clarification_add') }}" class="btn btn-secondary btn-sm" data-ajax-modal data-ajax-modal-after="initModalClarificationPreviewAdd">
-                    request clarification
+                    질의 요청하기
                 </a>
             </div>
         </div>

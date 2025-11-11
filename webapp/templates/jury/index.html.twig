@@ -46,7 +46,7 @@
             <div class="card-body">
                 <ul>
                     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_BALLOON') %}
-                        <li><a href="{{ path('jury_balloons') }}">풍선 상태</a></li>
+                        <li><a href="{{ path('jury_balloons') }}">Ballons 상태</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_CLARIFICATION_RW') %}
                         <li><a href="{{ path('jury_clarifications') }}">질의 응답</a></li>

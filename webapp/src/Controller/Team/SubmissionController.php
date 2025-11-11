@@ -63,9 +63,9 @@ class SubmissionController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($contest === null) {
-                $this->addFlash('danger', 'No active contest');
+                $this->addFlash('danger', '현재 활성화된 대회가 없습니다.');
             } elseif (!$this->dj->checkrole('jury') && !$contest->getFreezeData()->started()) {
-                $this->addFlash('danger', 'Contest has not yet started');
+                $this->addFlash('danger', '대회가 아직 시작되지 않았습니다.');
             } else {
                 /** @var Problem $problem */
                 $problem = $form->get('problem')->getData();
@@ -85,7 +85,7 @@ class SubmissionController extends BaseController
                 if ($submission) {
                     $this->addFlash(
                         'success',
-                        'Submission done! Watch for the verdict in the list below.'
+                        '제출 완료! 결과를 아래 목록에서 확인하세요.'
                     );
                 } else {
                     $this->addFlash('danger', $message);
@@ -144,7 +144,7 @@ class SubmissionController extends BaseController
         $runs = [];
         if ($showSampleOutput && $judging && $judging->getResult() !== 'compiler-error') {
             $outputDisplayLimit    = (int)$this->config->get('output_display_limit');
-            $outputTruncateMessage = sprintf("\n[output display truncated after %d B]\n", $outputDisplayLimit);
+            $outputTruncateMessage = sprintf("\n[출력은 %d B 이후 잘림]\n", $outputDisplayLimit);
 
             $queryBuilder = $this->em->createQueryBuilder()
                 ->from(Testcase::class, 't')
@@ -214,7 +214,7 @@ class SubmissionController extends BaseController
     {
         $allowDownload = (bool)$this->config->get('allow_team_submission_download');
         if (!$allowDownload) {
-            throw new NotFoundHttpException('Submission download not allowed');
+            throw new NotFoundHttpException('제출 다운로드가 허용되지 않습니다.');
         }
 
         $user = $this->dj->getUser();
@@ -232,7 +232,7 @@ class SubmissionController extends BaseController
             ->getOneOrNullResult();
 
         if ($submission === null) {
-            throw new NotFoundHttpException(sprintf('Submission with ID \'%s\' not found',
+            throw new NotFoundHttpException(sprintf('ID가 \'%s\'인 제출이 없습니다.',
                 $submitId));
         }
 

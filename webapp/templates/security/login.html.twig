@@ -88,7 +88,7 @@
         {% endif %}
 
         <div class="main-login ms-2 regularLoginform {% if not showregular %} d-none{% endif %}">
-            <h1 class="h3 mb-3 fw-normal">로그인하십시오</h1>
+            <h1 class="h3 mb-3 fw-normal">로그인</h1>
             <form action="{{ path('login') }}" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <div class="login-content">

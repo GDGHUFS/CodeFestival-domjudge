@@ -136,7 +136,7 @@
 
     {% if not submission.contestProblem %}
         <div class="alert alert-danger">
-            이 제출은 제출이 속한 콘테스트의 일부가 아닌 문제에 대한 것입니다.
+            이 제출은 제출이 속한 대회의 일부가 아닌 문제에 대한 것입니다.
         </div>
     {% endif %}
 
@@ -160,7 +160,7 @@
 
         {% if current_contest.cid != submission.contest.cid %}
             <span>
-                <i class="fas fa-trophy" title="콘테스트:"></i>
+                <i class="fas fa-trophy" title="대회:"></i>
                 <a href="{{ path('jury_contest', {'contestId': submission.contest.cid}) }}">
                     {{ submission.contest.shortname }}
                     {{ submission.contest | entityIdBadge('c') }}

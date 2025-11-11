@@ -2,11 +2,11 @@
     <table class="data-table table table-striped table-hover table-sm" style="width:100%;">
         <thead class="thead-light">
         <tr>
-            <th scope="col">time</th>
-            <th scope="col">from</th>
-            <th scope="col">to</th>
-            <th scope="col">subject</th>
-            <th scope="col">text</th>
+            <th scope="col">시간</th>
+            <th scope="col">보낸 사람</th>
+            <th scope="col">받는 사람</th>
+            <th scope="col">주제</th>
+            <th scope="col">내용</th>
         </tr>
         </thead>
         <tbody>
@@ -20,14 +20,14 @@
                     </a>
                 </td>
                 {%- if clarification.sender is null %}
-                    {%- set sender = 'Jury' %}
+                    {%- set sender = '심사위원' %}
                     {%- if clarification.recipient is null %}
-                        {%- set recipient = 'All' %}
+                        {%- set recipient = '전체 팀' %}
                     {%- else %}
                         {%- set recipient = clarification.recipient.effectiveName %}
                     {%- endif %}
                 {%- else %}
-                    {%- set recipient = 'Jury' %}
+                    {%- set recipient = '심사위원' %}
                     {%- set sender = clarification.sender.effectiveName %}
                 {%- endif %}
 

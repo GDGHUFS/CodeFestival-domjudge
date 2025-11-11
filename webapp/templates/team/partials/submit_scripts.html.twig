@@ -140,14 +140,14 @@
             }
             var extrafiles = '';
             if (auxfileno > 0) {
-                extrafiles = "Additional source files: " + auxfileno + '\n';
+                extrafiles = "추가 소스 파일: " + auxfileno + '\n';
             }
             var question =
-                'Main source file: ' + filename + '\n' +
+                '메인 소스 파일: ' + filename + '\n' +
                 extrafiles + '\n' +
-                'Problem: ' + problemtxt + '\n' +
-                'Language: ' + languagetxt + '\n' +
-                '\nMake submission?';
+                '문제: ' + problemtxt + '\n' +
+                '언어: ' + languagetxt + '\n' +
+                '\n제출하시겠습니까?';
             return confirm(question);
         });
 

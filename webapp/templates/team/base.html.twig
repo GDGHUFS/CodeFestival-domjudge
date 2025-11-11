@@ -13,12 +13,12 @@
         $(function () {
             var $body = $('body');
             $body.on('submit', 'form[name=team_clarification]', function () {
-                return confirm("Send clarification request to Jury?");
+                return confirm("심사위원에게 질의 요청을 하시겠습니까?");
             });
 
             window.replaceClarificationReplyButton = function() {
                 var $replyButton = $('#clarification-reply-button');
-                var $submitButton = $('<button type="submit" name="submit" class="btn btn-primary"><i class="fas fa-envelope"></i> Send</button>');
+                var $submitButton = $('<button type="submit" name="submit" class="btn btn-primary"><i class="fas fa-envelope"></i> 보내기</button>');
                 $replyButton.replaceWith($submitButton);
 
                 $submitButton.on('click', function() {

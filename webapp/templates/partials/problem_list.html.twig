@@ -47,7 +47,6 @@
                                             <h4 class="card-subtitle mb-2 text-muted">
                                                 제한: {{ problem.problem.timelimit }}
                                                 초
-                                                {%- if problem.problem.timelimit > 1 %}s{% endif %}
                                                 {%- if timeFactorDiffers -%}
                                                     <sup>*</sup>
                                                 {% endif %}

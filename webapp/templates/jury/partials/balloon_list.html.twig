@@ -2,7 +2,7 @@
 {# @var \App\Entity\Balloon balloonfoo #}
 
 {% if balloons is empty %}
-    <div class="alert alert-warning">처리할 풍선이 없습니다.</div>
+    <div class="alert alert-warning">처리할 Ballons이 없습니다.</div>
 {% else %}
     <table class="data-table table table-hover table-striped table-sm balloons-table" style="width:auto">
         <thead class="thead-light">
@@ -51,7 +51,7 @@
                 <td>
                     {%- if not balloon.data.done -%}
                     {%- set link = path('jury_balloons_setdone', {balloonId: balloon.data.balloonid}) %}
-                    <a href="{{ link }}" title="풍선 전달 완료 표시">
+                    <a href="{{ link }}" title="Ballons 전달 완료 표시">
                     <i class="fas fa-running"></i>
                     </a>
                 </td>

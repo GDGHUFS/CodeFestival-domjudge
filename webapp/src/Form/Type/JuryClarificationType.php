@@ -91,7 +91,7 @@ class JuryClarificationType extends AbstractType
             'label' => '수신 대상',
             'choices' => $recipientOptions,
             'constraints' => [
-                new NotEqualTo('domjudge-must-select', message: '질의응답(설명) 요청을 보낼 대상을 선택해야 합니다.'),
+                new NotEqualTo('domjudge-must-select', message: '질의 요청을 보낼 대상을 선택해야 합니다.'),
             ],
         ]);
 

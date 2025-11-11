@@ -3,23 +3,23 @@
 function enableNotifications()
 {
     if ( !('Notification' in window) ) {
-        alert('Your browser does not support desktop notifications.');
+        alert('브라우저가 데스크톱 알림을 지원하지 않습니다.');
         return false;
     }
     if ( !('localStorage' in window) || window.localStorage===null ) {
-        alert('Your browser does not support local storage;\n'+
-              'this is required to keep track of sent notifications.');
+        alert('브라우저가 로컬 스토리지를 지원하지 않습니다.\n'+
+              '전송된 알림을 기록하려면 로컬 스토리지가 필요합니다.');
         return false;
     }
     // Ask user (via browser) for permission if not already granted.
     if ( Notification.permission==='denied' ) {
-        alert('Browser denied permission to send desktop notifications.\n' +
-              'Re-enable notification permission in the browser and retry.');
+        alert('브라우저가 알림 전송 권한을 거절하였습니다.\n' +
+              '브라우저의 알림 권한을 활성화한 후에 다시 시도하세요.');
         return false;
     }
     if ( Notification.permission==='granted' ) {
         setCookie('domjudge_notify', 1);
-        sendNotification('DOMjudge notifications enabled.');
+        sendNotification('알림이 활성화되었습니다.');
         $("#notify_disable").removeClass('d-none');
         $("#notify_disable").show();
         $("#notify_enable").hide();
@@ -33,11 +33,11 @@ function enableNotifications()
                 Notification.permission = permission;
             }
             if ( Notification.permission!=='granted' ) {
-                alert('Browser denied permission to send desktop notifications.');
+                alert('브라우저가 알림 전송 권한을 거절하였습니다.');
                 return false;
             }
             setCookie('domjudge_notify', 1);
-            sendNotification('DOMjudge notifications enabled.');
+            sendNotification('알림이 활성화되었습니다.');
             $("#notify_disable").removeClass('d-none');
             $("#notify_disable").show();
             $("#notify_enable").hide();
@@ -157,7 +157,7 @@ function updateClock()
     if ( left ) {
         if ( left > 24*60*60 ) {
             var d = Math.floor(left/(24*60*60));
-            fmt += d + "d ";
+            fmt += d + "일 ";
             left -= d * 24*60*60;
         }
         if ( left > 60*60 ) {
@@ -428,7 +428,7 @@ function clarificationAppendAnswer() {
 }
 
 function confirmLogout() {
-    return confirm("Really log out?");
+    return confirm("정말로 로그아웃 하시겠습니까?");
 }
 
 function processAjaxResponse(jqXHR, data) {
@@ -770,18 +770,18 @@ function pinScoreheader()
 
 function humanReadableTimeDiff(seconds) {
     var intervals = [
-        ['years', 365 * 24 * 60 * 60],
-        ['months', 30 * 24 * 60 * 60],
-        ['days', 24 * 60 * 60],
-        ['hours', 60 * 60],
-        ['minutes', 60],
+        ['년', 365 * 24 * 60 * 60],
+        ['개월', 30 * 24 * 60 * 60],
+        ['일', 24 * 60 * 60],
+        ['시간', 60 * 60],
+        ['분', 60],
     ];
     for (let [name, length] of intervals) {
         if (seconds / length >= 2) {
             return Math.floor(seconds/length) + ' ' + name;
         }
     }
-    return Math.floor(seconds) + ' seconds';
+    return Math.floor(seconds) + ' 초';
 }
 
 function humanReadableBytes(bytes) {

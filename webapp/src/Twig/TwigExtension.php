@@ -505,6 +505,46 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
     {
         $result = strtolower($result ?? '');
         switch ($result) {
+            case 'correct':
+                $display = '정답!';
+                break;
+            case 'too-late':
+                $display = '너무 늦음';
+                break;
+            case 'wrong-answer':
+                $display = '오답';
+                break;
+            case 'timelimit':
+                $display = '시간 초과';
+                break;
+            case 'run-error':
+                $display = '런타임 오류';
+                break;
+            case 'compiler-error':
+                $display = '컴파일 오류';
+                break;
+            case 'no-output':
+                $display = '출력 없음';
+                break;
+            case 'frozen':
+            case 'aborted':
+                $display = '처리 중단';
+                break;
+            case 'output-limit':
+                $display = '과한 출력';
+                break;
+            case '':
+            case 'judging':
+            case 'queued':
+            case 'pending':
+            case 'aborted':
+            case 'n / a':
+                $display = '채점 중...';
+                break;
+            default:
+                $display = $result;
+        }
+        switch ($result) {
             case 'too-late':
                 $style = 'sol_queued';
                 break;
@@ -529,7 +569,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
                 $style = 'sol_incorrect';
         }
 
-        return sprintf('<span class="sol %s">%s</span>', $valid ? $style : 'disabled', $result);
+        return sprintf('<span class="sol %s" style="font-size: small;">%s</span>', $valid ? $style : 'disabled', $display);
     }
 
     public function printValidJuryResult(?string $result): string
@@ -913,16 +953,19 @@ JS;
 
     public function printContestStart(Contest $contest): string
     {
-        $res = "scheduled to start ";
+        $res = "시작 예정: ";
         if (!$contest->getStarttimeEnabled()) {
-            $res = "start delayed, was scheduled ";
+            $res = "시작이 지연됨 (원래 예정된 시간: ";
         }
         if ($this->printtime(Utils::now(), 'Ymd') == $this->printtime($contest->getStarttime(false), 'Ymd')) {
             // Today
-            $res .= "at " . $this->printtime($contest->getStarttime(false));
+            $res .= $this->printtime($contest->getStarttime(false), 'A g:i') . " 시작";
         } else {
             // Print full date
-            $res .= "on " . $this->printtime($contest->getStarttime(false), 'D d M Y H:i:s T');
+            $res .= $this->printtime($contest->getStarttime(false), 'Y년 m월 d일 H:i:s T') . " 시작";
+        }
+        if (!$contest->getStarttimeEnabled()) {
+            $res .= ")";
         }
         return $res;
     }

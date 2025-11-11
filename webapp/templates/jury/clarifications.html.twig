@@ -1,7 +1,7 @@
 {% extends "jury/base.html.twig" %}
 {% import "jury/jury_macros.twig" as macros %}
 
-{% block title %}질의응답(설명) 요청 - {{ parent() }}{% endblock %}
+{% block title %}질의 요청 - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -15,7 +15,7 @@
 
 {% block content %}
 
-    <h1>질의응답(설명) 요청</h1>
+    <h1>질의 요청</h1>
 
     {%- if current_contests is empty %}
 
@@ -24,10 +24,10 @@
 
         <div class="float-end">
             <a href="{{ path('jury_html_export', {'type': 'clarifications'}) }}" target="_blank" class="btn btn-secondary btn-sm">
-                <i class="fas fa-print"></i> 질의응답(설명) 요청 인쇄
+                <i class="fas fa-print"></i> 질의 요청 인쇄
             </a>
             <a href="{{ path('jury_clarification_new') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-envelope"></i> 질의응답(설명) 요청 보내기
+                <i class="fas fa-envelope"></i> 질의 요청 보내기
             </a>
         </div>
 
@@ -74,7 +74,7 @@
         {% if currentFilter is null or currentFilter == 'new' %}
             <h3 id="newrequests">새 요청</h3>
             {%- if newClarifications | length == 0 %}
-                <p class="nodata">새 질의응답(설명) 요청이 없습니다.</p>
+                <p class="nodata">새 질의 요청이 없습니다.</p>
             {%- else %}
                 {%- include 'jury/partials/clarification_list.html.twig' with {clarifications: newClarifications, direction: 'from'} %}
             {%- endif %}
@@ -83,7 +83,7 @@
         {% if currentFilter is null or currentFilter == 'handled' %}
             <h3 id="oldrequests" class="mt-4">처리된 요청</h3>
             {%- if oldClarifications | length == 0 %}
-                <p class="nodata">이전 질의응답(설명) 요청이 없습니다.</p>
+                <p class="nodata">이전 질의 요청이 없습니다.</p>
             {%- else %}
                 {%- include 'jury/partials/clarification_list.html.twig' with {clarifications: oldClarifications, direction: 'from'} %}
             {%- endif %}

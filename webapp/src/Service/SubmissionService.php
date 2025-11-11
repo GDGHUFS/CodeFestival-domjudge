@@ -452,7 +452,7 @@ class SubmissionService
         }
 
         if ($language->getRequireEntryPoint() && empty($entryPoint)) {
-            $message = sprintf("Entry point required for '%s' but none given.", $language->getLangid());
+            $message = sprintf("'%s' 언어에는 Entrypoint가 필요하지만 제공되지 않았습니다.", $language->getLangid());
             if ($forceImportInvalid) {
                 $importError = $message;
             } else {
@@ -466,7 +466,7 @@ class SubmissionService
         }
 
         if (!empty($entryPoint) && !preg_match(self::FILENAME_REGEX, $entryPoint)) {
-            $message = sprintf("Entry point '%s' contains illegal characters.", $entryPoint);
+            $message = sprintf("Entrypoint '%s'에 허용되지 않은 문자가 포함되어 있습니다.", $entryPoint);
             if ($forceImportInvalid) {
                 $importError = $message;
             } else {
@@ -476,17 +476,17 @@ class SubmissionService
 
         if (!$this->dj->checkrole('jury') && !$team->getEnabled()) {
             throw new BadRequestHttpException(
-                sprintf("Team '%d' not found in database or not enabled.", $team->getTeamid()));
+                sprintf("팀 '%d'이(가) 데이터베이스에 없거나 비활성화되어 있습니다.", $team->getTeamid()));
         }
 
         if ($user && !$this->dj->checkrole('jury') && !$user->getEnabled()) {
             throw new BadRequestHttpException(
-                sprintf("User '%d' not found in database or not enabled.", $user->getUserid()));
+                sprintf("사용자 '%d'이(가) 데이터베이스에 없거나 비활성화되어 있습니다.", $user->getUserid()));
         }
 
         if (!$problem->getAllowSubmit()) {
             throw new BadRequestHttpException(
-                sprintf("Problem p%d not submittable [c%d].",
+                sprintf("문제 p%d 는 제출할 수 없습니다. [c%d].",
                         $problem->getProbid(), $contest->getCid()));
         }
 
@@ -503,11 +503,11 @@ class SubmissionService
         $extensionMatchCount = 0;
         foreach ($files as $file) {
             if (!$file->isReadable()) {
-                $message = sprintf("File '%s' not found (or not readable).", $file->getRealPath());
+                $message = sprintf("파일 '%s'을(를) 찾을 수 없거나 읽을 수 없습니다.", $file->getRealPath());
                 return null;
             }
             if (!preg_match(self::FILENAME_REGEX, $file->getClientOriginalName())) {
-                $message = sprintf("Illegal filename '%s'.", $file->getClientOriginalName());
+                $message = sprintf("허용되지 않은 파일 이름 '%s' 입니다.", $file->getClientOriginalName());
                 if ($forceImportInvalid) {
                     $importError = $message;
                 } else {
@@ -532,8 +532,8 @@ class SubmissionService
 
         if ($source !== 'shadowing' && $language->getFilterCompilerFiles() && $extensionMatchCount === 0) {
             $message = sprintf(
-                "None of the submitted files match any of the allowed " .
-                "extensions for %s (allowed: %s)",
+                "제출된 파일 중 어떤 것도 %s 언어에서 허용된 확장자와 " .
+                "일치하지 않습니다. (허용 확장자: %s)",
                 $language->getName(), implode(', ', $language->getExtensions())
             );
             if ($forceImportInvalid) {
@@ -544,7 +544,7 @@ class SubmissionService
         }
 
         if ($totalSize > $sourceSize * 1024) {
-            $message = sprintf("Submission file(s) are larger than %d kB.", $sourceSize);
+            $message = sprintf("제출 파일의 크기가 %d kB를 초과합니다.", $sourceSize);
             if ($forceImportInvalid) {
                 $importError = $message;
             } else {

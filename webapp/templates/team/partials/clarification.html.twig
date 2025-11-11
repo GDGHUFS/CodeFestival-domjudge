@@ -2,13 +2,13 @@
     <div class="card-header">
         <div class="row">
             <div class="col-sm">
-                Subject:
+                주제:
                 {% if clarification.problem %}
-                    Problem {{ clarification.contestProblem.shortname }}: {{ clarification.problem.name }}
+                    문제 {{ clarification.contestProblem.shortname }}: {{ clarification.problem.name }}
                 {% elseif clarification.category %}
                     {{ categories[clarification.category]|default('general') }}
                 {% else %}
-                    General issue
+                    일반 문의
                 {% endif %}
             </div>
             <div class="col-sm text-muted text-end">{{ clarification.submittime | printtimeHover(clarification.contest) }}</div>
@@ -18,20 +18,20 @@
         <div class="card-title">
             <div class="row">
                 <div class="col-sm">
-                    From:
+                    보낸 사람:
                     {% if clarification.sender is not empty %}
                         {{ clarification.sender.effectiveName }} (t{{ clarification.sender.teamid }})
                     {% else %}
-                        Jury
+                        심사위원
                     {% endif %}
                 </div>
-                <div class="col-sm">To:
+                <div class="col-sm">받는 사람:
                     {% if clarification.recipient is not empty %}
                         {{ clarification.recipient.effectiveName }} (t{{ clarification.recipient.teamid }})
                     {% elseif clarification.sender is not null %}
-                        Jury
+                        심사위원
                     {% else %}
-                        <strong>All</strong>
+                        <strong>전체</strong>
                     {% endif %}
                 </div>
             </div>

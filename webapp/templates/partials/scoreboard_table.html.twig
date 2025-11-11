@@ -295,9 +295,9 @@
                                     {% if matrixItem.isCorrect %}{{ time }}{% else %}&nbsp;{% endif %}
                                     <span>
                                         {% if numSubmissions is same as(1) %}
-                                            1 try
+                                            1 시도
                                         {% else %}
-                                            {{ numSubmissions }} tries
+                                            {{ numSubmissions }} 시도
                                         {% endif %}
                                     </span>
                                 </div>
@@ -360,9 +360,9 @@
 
     {% if showTeamSubmissions or jury %}
         {% if scoreboard.getRuntimeAsScoreTiebreaker() %}
-            {% set cellColors = {first: '해결, 가장 빠름', correct: '해결', incorrect: '시도, 오답', pending: '시도, 보류 중', neutral: '시도 안 함'} %}
+            {% set cellColors = {first: '가장 빠르게 해결함', correct: '해결', incorrect: '시도했으나 오답', pending: '채점 중', neutral: '시도하지 않음'} %}
         {% else %}
-            {% set cellColors = {first: '가장 먼저 해결', correct: '해결', incorrect: '시도, 오답', pending: '시도, 보류 중', neutral: '시도 안 함'} %}
+            {% set cellColors = {first: '가장 먼저 해결함', correct: '해결', incorrect: '시도했으나 오답', pending: '채점 중', neutral: '시도하지 않음'} %}
         {% endif %}
         <table id="cell_legend" class="scoreboard scorelegend {% if jury %}scoreboard_jury{% endif %}">
             <thead>
@@ -386,13 +386,23 @@
         <table class="scoreboard scorelegend {% if jury %}scoreboard_jury{% endif %}">
             <thead>
             <tr>
-                <th scope="col">메달 {% if not scoreboard.freezeData.showFinal %}(잠정){% endif %}</th>
+                <th scope="col">메달 {% if not scoreboard.freezeData.showFinal %}(예상){% endif %}</th>
             </tr>
             </thead>
             <tbody>
                 {% for medalType in ['Gold', 'Silver', 'Bronze'] %}
                     <tr class="{{ medalType | lower }}-medal">
-                        <td>{{ medalType }} 메달</td>
+                        <td>
+                            {% if medalType == 'Gold' %}
+                                금메달
+                            {% elseif medalType == 'Silver' %}
+                                은메달
+                            {% elseif medalType == 'Bronze' %}
+                                동메달
+                            {% else %}
+                                {{ medalType }} 메달
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

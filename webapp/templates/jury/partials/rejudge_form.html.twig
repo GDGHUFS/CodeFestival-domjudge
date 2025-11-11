@@ -28,7 +28,7 @@
 
         {% if is_granted('ROLE_ADMIN') %}
             {% if not validResult %}
-                {% set questionText = '보류 중인 제출 s' ~ id ~ '의 심사를 재시작하시겠습니까? 확실합니까?' %}
+                {% set questionText = '채점(보류) 중인 제출 s' ~ id ~ '의 심사를 재시작하시겠습니까? 확실합니까?' %}
                 {% set buttonText = '심사 재시작' %}
                 {% set isRestart = true %}
             {% elseif validResult == 'correct' %}
