@@ -54,6 +54,26 @@
                     <a class="nav-link" href="{{ path('jury_index') }}"><i class="fas fa-arrow-right"></i> Jury</a>
                 </li>
             {% endif %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="langRefDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-book"></i> 언어 레퍼런스
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="langRefDropdown">
+                    <li>
+                        <a class="dropdown-item" href="https://devdocs.io/c/" target="_blank" rel="noopener noreferrer">C 레퍼런스</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="https://devdocs.io/cpp/" target="_blank" rel="noopener noreferrer">C++ 레퍼런스</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="https://devdocs.io/openjdk~17/" target="_blank" rel="noopener noreferrer">Java 레퍼런스</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="https://devdocs.io/python~3.9/" target="_blank" rel="noopener noreferrer">Python 레퍼런스</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
 
         <div class="ml-auto me-3">
