@@ -15,7 +15,7 @@
     {% set showregular = not hasaltmethods or error %}
 
     <div class="form-signin" id="loginform">
-        <img class="mb-4" src="{{ asset('images/DOMjudgelogo.svg') }}" alt="DOMjudge" width="72">
+        <img class="mb-5" src="{{ asset('images/codefestival_logo.svg') }}" alt="CodeFestival Logo" height="72">
         {% include 'partials/messages.html.twig' %}
         {% if app.user is not null %}
             {% set message = 'You are currently automatically logged in as ' ~ app.user.username ~ '.
