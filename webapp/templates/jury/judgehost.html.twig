@@ -38,6 +38,16 @@
                         {% endif %}
                     </td>
                 </tr>
+                <tr>
+                    <th>연결된 대회</th>
+                    <td>
+                        {% if judgehost.contest %}
+                            {{ judgehost.contest.name }} (ID: {{ judgehost.contest.cid }})
+                        {% else %}
+                            Judgehost가 어떤 대회에도 연결되지 않았습니다.
+                        {% endif %}
+                    </td>
+                </tr>
             </table>
         </div>
     </div>

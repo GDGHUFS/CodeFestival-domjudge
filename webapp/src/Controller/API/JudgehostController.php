@@ -1522,7 +1522,7 @@ class JudgehostController extends AbstractFOSRestController
 
         // First try to get any debug info tasks that are assigned to this host.
         /** @var JudgeTask[] $judgetasks */
-        $judgetasks = $this->em
+        $qb = $this->em
             ->createQueryBuilder()
             ->from(JudgeTask::class, 'jt')
             ->select('jt')
@@ -1531,8 +1531,14 @@ class JudgehostController extends AbstractFOSRestController
             ->andWhere('jt.valid = 1')
             ->andWhere('jt.type = :type')
             ->setParameter('judgehost', $judgehost)
-            ->setParameter('type', JudgeTaskType::DEBUG_INFO)
-            ->addOrderBy('jt.priority')
+            ->setParameter('type', JudgeTaskType::DEBUG_INFO);
+
+        if ($judgehost->getContest()) {
+            $qb->andWhere('jt.contest = :contest OR jt.contest IS NULL')
+               ->setParameter('contest', $judgehost->getContest());
+        }
+
+        $qb ->addOrderBy('jt.priority')
             ->addOrderBy('jt.judgetaskid')
             ->setMaxResults(1)
             ->getQuery()
@@ -1556,7 +1562,7 @@ class JudgehostController extends AbstractFOSRestController
          */
 
         // This is case 1) from above: continue what we have started.
-        $lastJobId = $this->em->createQueryBuilder()
+        $qb = $this->em->createQueryBuilder()
             ->from(JudgeTask::class, 'jt')
             // Note: we are joining on queue tasks here since if there is no more queue task, there is also no more
             // work to be done. If we would not do this join, the getJudgetasks would try to delete the queue task,
@@ -1566,7 +1572,14 @@ class JudgehostController extends AbstractFOSRestController
             ->andWhere('jt.judgehost = :judgehost')
             ->andWhere('jt.type = :type')
             ->setParameter('judgehost', $judgehost)
-            ->setParameter('type', JudgeTaskType::JUDGING_RUN)
+            ->setParameter('type', JudgeTaskType::JUDGING_RUN);
+
+        if ($judgehost->getContest()) {
+            $qb->andWhere('jt.contest = :contest OR jt.contest IS NULL')
+               ->setParameter('contest', $judgehost->getContest());
+        }
+
+        $lastJobId = $qb
             ->orderBy('jt.starttime', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
@@ -1581,12 +1594,18 @@ class JudgehostController extends AbstractFOSRestController
         // This runs transactional to prevent a queue task being picked up twice.
         $judgetasks = null;
         $this->em->wrapInTransaction(function () use ($judgehost, $max_batchsize, &$judgetasks) {
-            $jobid = $this->em->createQueryBuilder()
+            $qb = $this->em->createQueryBuilder()
                 ->from(QueueTask::class, 'qt')
                 ->innerJoin('qt.judging', 'j')
                 ->select('j.judgingid')
-                ->andWhere('qt.startTime IS NULL')
-                ->addOrderBy('qt.priority')
+                ->andWhere('qt.startTime IS NULL');
+
+            if ($judgehost->getContest()) {
+                $qb->andWhere('j.contest = :contest OR j.contest IS NULL')
+                   ->setParameter('contest', $judgehost->getContest());
+            }
+
+            $jobid = $qb->addOrderBy('qt.priority')
                 ->addOrderBy('qt.teamPriority')
                 ->setMaxResults(1)
                 ->getQuery()
@@ -1611,12 +1630,19 @@ class JudgehostController extends AbstractFOSRestController
         if ($this->config->get('enable_parallel_judging')) {
             // This is case 2.b) from above: contribute to a job someone else has started,
             // but we have not contributed yet.
-            $jobid = $this->em->createQueryBuilder()
+            $qb = $this->em->createQueryBuilder()
                 ->from(QueueTask::class, 'qt')
                 ->innerJoin('qt.judging', 'j')
                 ->select('j.judgingid')
                 ->addOrderBy('qt.priority')
-                ->addOrderBy('qt.teamPriority')
+                ->addOrderBy('qt.teamPriority');
+
+            if ($judgehost->getContest()) {
+                $qb->andWhere('j.contest = :contest OR j.contest IS NULL')
+                   ->setParameter('contest', $judgehost->getContest());
+            }
+
+            $jobid = $qb
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
@@ -1629,7 +1655,7 @@ class JudgehostController extends AbstractFOSRestController
         // TODO: Dedup with the code from above.
         // If there's no judging work to do, let's check if we need to prefetch things.
         /** @var JudgeTask[] $judgetasks */
-        $judgetasks = $this->em
+        $qb = $this->em
             ->createQueryBuilder()
             ->from(JudgeTask::class, 'jt')
             ->select('jt')
@@ -1638,7 +1664,14 @@ class JudgehostController extends AbstractFOSRestController
             ->andWhere('jt.valid = 1')
             ->andWhere('jt.type = :type')
             ->setParameter('judgehost', $judgehost)
-            ->setParameter('type', JudgeTaskType::PREFETCH)
+            ->setParameter('type', JudgeTaskType::PREFETCH);
+
+        if ($judgehost->getContest()) {
+            $qb->andWhere('jt.contest = :contest OR jt.contest IS NULL')
+               ->setParameter('contest', $judgehost->getContest());
+        }
+
+        $judgetasks = $qb
             ->addOrderBy('jt.priority')
             ->addOrderBy('jt.judgetaskid')
             // TODO: is 50 a good value here?

@@ -20,6 +20,7 @@ use JMS\Serializer\Annotation as Serializer;
     ]
 )]
 #[ORM\Index(columns: ['judgehostid'], name: 'judgehostid')]
+#[ORM\Index(columns: ['contestid'], name: 'cid')]
 #[ORM\Index(columns: ['priority'], name: 'priority')]
 #[ORM\Index(columns: ['jobid'], name: 'jobid')]
 #[ORM\Index(columns: ['submitid'], name: 'submitid')]
@@ -41,6 +42,10 @@ class JudgeTask
     #[ORM\JoinColumn(name: 'judgehostid', referencedColumnName: 'judgehostid')]
     #[Serializer\Exclude]
     private ?Judgehost $judgehost = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: 'contestid', referencedColumnName: 'cid', onDelete: 'SET NULL')]
+    private ?Contest $contest = null;
 
     #[ORM\Column(
         type: 'judge_task_type',
@@ -185,6 +190,17 @@ class JudgeTask
     public function getJudgehost(): ?Judgehost
     {
         return $this->judgehost;
+    }
+
+    public function setContest(?Contest $contest = null): JudgeTask
+    {
+        $this->contest = $contest;
+        return $this;
+    }
+
+    public function getContest(): ?Contest
+    {
+        return $this->contest;
     }
 
     public function setType(string $type): JudgeTask

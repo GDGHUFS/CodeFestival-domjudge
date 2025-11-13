@@ -701,6 +701,7 @@ class ContestController extends BaseController
                     $judgeTask
                         ->setType(JudgeTaskType::PREFETCH)
                         ->setJudgehost($judgehost)
+                        ->setContest($contest)
                         ->setPriority(JudgeTask::PRIORITY_DEFAULT)
                         ->setTestcaseId($testcase->getTestcaseid())
                         ->setTestcaseHash($testcase->getMd5sumInput() . '_' . $testcase->getMd5sumOutput());
@@ -720,6 +721,7 @@ class ContestController extends BaseController
                 $judgeTask
                     ->setType(JudgeTaskType::PREFETCH)
                     ->setJudgehost($judgehost)
+                    ->setContest($contest)
                     ->setPriority(JudgeTask::PRIORITY_DEFAULT)
                     ->setCompareScriptId($compareExec->getImmutableExecId())
                     ->setCompareConfig($this->dj->jsonEncode(['hash' => $compareExec->getHash()]))
@@ -741,6 +743,7 @@ class ContestController extends BaseController
                 $judgeTask
                     ->setType(JudgeTaskType::PREFETCH)
                     ->setJudgehost($judgehost)
+                    ->setContest($contest)
                     ->setPriority(JudgeTask::PRIORITY_DEFAULT)
                     ->setCompileScriptId($compileExec->getImmutableExecId())
                     ->setCompileConfig($this->dj->jsonEncode(['hash' => $compileExec->getHash()]));

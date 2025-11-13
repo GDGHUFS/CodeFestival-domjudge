@@ -2,7 +2,9 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Contest;
 use App\Entity\Judgehost;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,7 +17,7 @@ class JudgehostType extends AbstractType
     {
         $builder->add('hostname', TextType::class, [
             'label' => 'Hostname',
-            'attr' => ['readonly' => true],
+            //'attr' => ['readonly' => true],
         ]);
         $builder->add('enabled', ChoiceType::class, [
             'label' => 'Enabled',
@@ -30,6 +32,15 @@ class JudgehostType extends AbstractType
                 'yes' => true,
                 'no' => false,
             ],
+        ]);
+        $builder->add('contest', EntityType::class, [
+            'class' => Contest::class,
+            'choice_label' => fn(Contest $contest) => sprintf(
+                'c%d: %s - %s', $contest->getCid(), $contest->getShortname(), $contest->getName()
+            ),
+            'label' => '연결할 대회',
+            'placeholder' => '선택 안 함',
+            'required' => false,
         ]);
     }
 

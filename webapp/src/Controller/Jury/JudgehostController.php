@@ -56,6 +56,7 @@ class JudgehostController extends BaseController
             'enabled' => ['title' => 'enabled'],
             'status' => ['title' => 'status'],
             'last_judgingid' => ['title' => 'last judging'],
+            'contest' => ['title' => 'contest'],
         ];
 
         $now = Utils::now();
@@ -73,6 +74,12 @@ class JudgehostController extends BaseController
                 if ($propertyAccessor->isReadable($judgehost, $k)) {
                     $judgehostdata[$k] = ['value' => $propertyAccessor->getValue($judgehost, $k)];
                 }
+            }
+
+            // render contest info
+            if ($judgehostdata['contest']['value']) {
+                $v = $judgehostdata['contest']['value'];
+                $judgehostdata['contest']['value'] = $v->getName() . " (" . $v->getCid() . ")";
             }
 
             // render hostname nicely

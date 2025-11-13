@@ -614,6 +614,7 @@ class SubmissionController extends BaseController
                 $judgeTask
                     ->setType(JudgeTaskType::DEBUG_INFO)
                     ->setJudgehost($judgehost)
+                    ->setContest($jid->getContest())
                     ->setSubmission($submission)
                     ->setPriority(JudgeTask::PRIORITY_HIGH)
                     ->setJobId($jid->getJudgingid())
@@ -649,6 +650,7 @@ class SubmissionController extends BaseController
         $judgeTask
             ->setType(JudgeTaskType::DEBUG_INFO)
             ->setJudgehost($jrid->getJudgeTask()->getJudgehost())
+            ->setContest($jid->getContest())
             ->setSubmission($submission)
             ->setPriority(JudgeTask::PRIORITY_HIGH)
             ->setJobId($jid->getJudgingid())

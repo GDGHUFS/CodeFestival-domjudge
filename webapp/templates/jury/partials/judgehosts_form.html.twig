@@ -6,6 +6,7 @@
         <th>{{ form.judgehosts.vars.prototype.hostname.vars.label }}</th>
         <th>{{ form.judgehosts.vars.prototype.enabled.vars.label }}</th>
         <th>{{ form.judgehosts.vars.prototype.hidden.vars.label }}</th>
+        <th>{{ form.judgehosts.vars.prototype.contest.vars.label }}</th>
     </tr>
     </thead>
     <tbody data-collection-holder>
@@ -21,6 +22,9 @@
             <td style="width: 10%">
                 {{ form_widget(judgehost.hidden) }}
                 {{ form_errors(judgehost.hidden) }}
+            </td>
+            <td style="width: 10%">
+                {{ form_widget(judgehost.contest) }}
             </td>
         </tr>
     {% endfor %}

@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     'comment' => 'Hostnames of the autojudgers',
 ])]
 #[ORM\UniqueConstraint(name: 'hostname', columns: ['hostname'])]
+#[ORM\Index(columns: ['cid'], name: 'cid')]
 class Judgehost
 {
     #[ORM\Id]
@@ -53,6 +54,10 @@ class Judgehost
 
     #[ORM\Column(options: ['comment' => 'Should this host be hidden in the overview?', 'default' => 0])]
     private bool $hidden = false;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: 'cid', referencedColumnName: 'cid', onDelete: 'SET NULL')]
+    private ?Contest $contest = null;
 
     public function __construct()
     {
@@ -125,5 +130,16 @@ class Judgehost
     public function getHidden(): bool
     {
         return $this->hidden;
+    }
+
+    public function setContest(?Contest $contest = null): Judgehost
+    {
+        $this->contest = $contest;
+        return $this;
+    }
+
+    public function getContest(): ?Contest
+    {
+        return $this->contest;
     }
 }
