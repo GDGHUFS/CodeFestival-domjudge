@@ -196,6 +196,7 @@ class ScoreboardController extends AbstractApiController
                     numJudged: $matrixItem->numSubmissions,
                     numPending: $matrixItem->numSubmissionsPending,
                     solved: $matrixItem->isCorrect,
+                    point: $contestProblem->getPoints(),
                 );
 
                 if ($contest->getRuntimeAsScoreTiebreaker()) {

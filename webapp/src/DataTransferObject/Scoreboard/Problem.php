@@ -14,6 +14,8 @@ class Problem
         public readonly int $numJudged,
         public readonly int $numPending,
         public readonly bool $solved,
+        #[Serializer\Exclude(if: 'object.point === null')]
+        public ?int $point = null,
         #[Serializer\Exclude(if: 'object.time === null')]
         public ?int $time = null,
         #[Serializer\Groups([ARC::GROUP_NONSTRICT])]
