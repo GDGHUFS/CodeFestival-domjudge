@@ -4,6 +4,7 @@ namespace App\Controller\API;
 
 use App\DataTransferObject\AddUser;
 use App\DataTransferObject\UpdateUser;
+use App\DataTransferObject\UpdateUserPatch;
 use App\Entity\Role;
 use App\Entity\Team;
 use App\Entity\User;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @extends AbstractRestController<User, User>
@@ -412,6 +414,112 @@ class UserController extends AbstractRestController
         $this->em->persist($user);
         $this->em->flush();
         $this->dj->auditlog('user', $user->getUserid(), 'added');
+
+        return $this->renderCreateData($request, $user, 'user', $user->getUserid());
+    }
+
+    /**
+     * Partially update an existing User
+     */
+    #[IsGranted('ROLE_API_WRITER')]
+    #[Rest\Patch('/{id}')]
+    #[OA\RequestBody(
+        required: true,
+        content: [
+            new OA\MediaType(
+                mediaType: 'multipart/form-data',
+                schema: new OA\Schema(ref: new Model(type: UpdateUserPatch::class))
+            ),
+        ]
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Returns the updated user',
+        content: new Model(type: User::class)
+    )]
+    public function patchAction(
+        int $id,
+        #[MapRequestPayload(validationFailedStatusCode: Response::HTTP_BAD_REQUEST)]
+        UpdateUserPatch $updateUser,
+        Request $request
+    ): Response {
+        $user = $this->em->getRepository(User::class)->find($id);
+        if (!$user) {
+            throw new NotFoundHttpException(sprintf("User with id %d not found", $id));
+        }
+
+        if ($updateUser->username !== null) {
+            $user->setUsername($updateUser->username);
+        }
+
+        if ($updateUser->name !== null) {
+            $user->setName($updateUser->name);
+        }
+
+        if ($updateUser->email !== null) {
+            $user->setEmail($updateUser->email);
+        }
+
+        if ($updateUser->ip !== null) {
+            $user->setIpAddress($updateUser->ip);
+        }
+
+        if ($updateUser->password !== null) {
+            $user->setPlainPassword($updateUser->password);
+        }
+
+        if ($updateUser->enabled !== null) {
+            $user->setEnabled($updateUser->enabled);
+        }
+
+        if ($updateUser->teamId !== null) {
+            /** @var Team|null $team */
+            $team = $this->em->createQueryBuilder()
+                ->from(Team::class, 't')
+                ->select('t')
+                ->andWhere(sprintf('t.%s = :team',
+                    $this->eventLogService->externalIdFieldForEntity(Team::class) ?? 'teamid'))
+                ->setParameter('team', $updateUser->teamId)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if ($team === null) {
+                throw new BadRequestHttpException(sprintf("Team %s not found", $updateUser->teamId));
+            }
+            $user->setTeam($team);
+        }
+
+        if ($updateUser->roles !== null) {
+            foreach ($user->getUserRoles() as $role) {
+                $user->removeUserRole($role);
+            }
+
+            $roles = $updateUser->roles;
+            // For the file import we change a CDS user to the roles needed for ICPC CDS.
+            if ($user->getUsername() === 'cds') {
+                $roles = ['cds'];
+            }
+            if (in_array('cds', $roles)) {
+                $roles = ['api_source_reader', 'api_writer', 'api_reader', ...array_diff($roles, ['cds'])];
+            }
+            foreach ($roles as $djRole) {
+                if ($djRole === '') {
+                    continue;
+                }
+                if ($djRole === 'judge') {
+                    $djRole = 'jury';
+                }
+                $role = $this->em->getRepository(Role::class)->findOneBy(['dj_role' => $djRole]);
+                if ($role === null) {
+                    throw new BadRequestHttpException(sprintf("Role %s not found", $djRole));
+                }
+                $user->addUserRole($role);
+            }
+        }
+
+        $this->em->persist($user);
+        $this->em->flush();
+        $this->dj->auditlog('user', $user->getUserid(), 'updated');
 
         return $this->renderCreateData($request, $user, 'user', $user->getUserid());
     }
